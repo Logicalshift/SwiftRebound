@@ -27,6 +27,11 @@ private class QueueBindingContext {
 ///
 public class BindingContext {
     ///
+    /// The dependencies that have been created in this context
+    ///
+    var _dependencies = [Changeable]();
+    
+    ///
     /// Call BindingContext.current to get the binding context for the current queue
     ///
     private init() {
@@ -104,7 +109,17 @@ public class BindingContext {
     ///
     /// Adds a new dependency to the current context (the current context item will be marked as changed)
     ///
-    public func addDependency<TBoundType>(dependentOn: Bound<TBoundType>) {
-        
+    public func addDependency(dependentOn: Changeable) {
+        _dependencies.append(dependentOn);
+    }
+    
+    ///
+    /// The changeable objects that have been added as dependencies for this context
+    ///
+    public var dependencies: [Changeable] {
+        @inline(__always)
+        get {
+            return _dependencies;
+        }
     }
 };
