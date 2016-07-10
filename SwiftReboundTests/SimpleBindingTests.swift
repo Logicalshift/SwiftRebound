@@ -106,7 +106,9 @@ class SimpleBindingTests : XCTestCase {
         
         self.measureBlock {
             for _ in 0..<100000 {
-                XCTAssertEqual(1, boundInt.value);
+                if boundInt.value != 1 {
+                    XCTAssert(false);
+                };
             }
         }
     }
@@ -116,7 +118,9 @@ class SimpleBindingTests : XCTestCase {
         
         self.measureBlock {
             for _ in 0..<100000 {
-                XCTAssertEqual(1, unboundInt);
+                if unboundInt != 1 {
+                    XCTAssert(false);
+                }
             }
         }
     }
