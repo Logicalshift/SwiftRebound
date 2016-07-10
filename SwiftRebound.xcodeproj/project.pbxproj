@@ -283,12 +283,14 @@
 		4B2EAEF01D323D9A006D9138 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ENABLE_TESTABILITY = YES;
 			};
 			name = Debug;
 		};
 		4B2EAEF11D323D9A006D9138 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ENABLE_TESTABILITY = YES;
 			};
 			name = Release;
 		};
