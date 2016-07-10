@@ -16,6 +16,8 @@
 		4B2EAF171D325505006D9138 /* SimpleBindingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF161D325505006D9138 /* SimpleBindingTests.swift */; };
 		4B2EAF191D32574C006D9138 /* BoundValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF181D32574C006D9138 /* BoundValue.swift */; };
 		4B2EAF1C1D325BAE006D9138 /* Lifetime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF1B1D325BAE006D9138 /* Lifetime.swift */; };
+		4B2EAF1E1D325E08006D9138 /* CallbackLifetime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF1D1D325E08006D9138 /* CallbackLifetime.swift */; };
+		4B2EAF201D325F24006D9138 /* LifetimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF1F1D325F24006D9138 /* LifetimeTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +43,8 @@
 		4B2EAF161D325505006D9138 /* SimpleBindingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleBindingTests.swift; sourceTree = "<group>"; };
 		4B2EAF181D32574C006D9138 /* BoundValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoundValue.swift; sourceTree = "<group>"; };
 		4B2EAF1B1D325BAE006D9138 /* Lifetime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lifetime.swift; sourceTree = "<group>"; };
+		4B2EAF1D1D325E08006D9138 /* CallbackLifetime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallbackLifetime.swift; sourceTree = "<group>"; };
+		4B2EAF1F1D325F24006D9138 /* LifetimeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LifetimeTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +100,7 @@
 			children = (
 				4B2EAF061D323E28006D9138 /* SwiftReboundTests.swift */,
 				4B2EAF161D325505006D9138 /* SimpleBindingTests.swift */,
+				4B2EAF1F1D325F24006D9138 /* LifetimeTests.swift */,
 				4B2EAF081D323E28006D9138 /* Info.plist */,
 			);
 			path = SwiftReboundTests;
@@ -116,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				4B2EAF1B1D325BAE006D9138 /* Lifetime.swift */,
+				4B2EAF1D1D325E08006D9138 /* CallbackLifetime.swift */,
 			);
 			name = Lifetime;
 			path = SwiftRebound/Lifetime;
@@ -233,6 +239,7 @@
 				4B2EAF111D324773006D9138 /* Bound.swift in Sources */,
 				4B2EAF151D325410006D9138 /* Binding.swift in Sources */,
 				4B2EAF131D325066006D9138 /* MutableBound.swift in Sources */,
+				4B2EAF1E1D325E08006D9138 /* CallbackLifetime.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,6 +248,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B2EAF071D323E28006D9138 /* SwiftReboundTests.swift in Sources */,
+				4B2EAF201D325F24006D9138 /* LifetimeTests.swift in Sources */,
 				4B2EAF171D325505006D9138 /* SimpleBindingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

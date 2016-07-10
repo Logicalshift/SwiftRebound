@@ -11,17 +11,6 @@ import XCTest
 @testable import SwiftRebound
 
 class SimpleBindingTests: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
     func testCreateSimpleBinding() {
         // Should be able to create a binding to a simple value and be able to read that value
         let boundInt = Binding.create(1);
