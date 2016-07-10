@@ -34,8 +34,7 @@ internal class BoundComputable<TBoundType> : Bound<TBoundType> {
     ///
     override func computeValue() -> TBoundType {
         // Results of the computation
-        var result: TBoundType?         = nil;
-        var newDependencies: [(Changeable, Lifetime)] = [];
+        var result: TBoundType? = nil;
         
         // Input for the computation
         let compute         = _compute;
@@ -58,15 +57,15 @@ internal class BoundComputable<TBoundType> : Bound<TBoundType> {
                 }
 
                 // Create new dependencies
+                var newDependencies: [(Changeable, Lifetime)] = [];
                 for newDependency in BindingContext.current!.dependencies {
                     newDependencies.append((newDependency, newDependency.whenChanged(invalidate)));
                 }
-            } else {
-                newDependencies = oldDependencies;
+                
+                self._dependencies = newDependencies;
             }
         }
-        
-        _dependencies = newDependencies;
+
         return result!;
     }
 }
