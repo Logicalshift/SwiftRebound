@@ -171,7 +171,6 @@ class ComputedBindingTests : XCTestCase {
                 for x in 0..<100000 {
                     simple.value = x;
                     if computed.value != x+1 {
-                        XCTAssert(false);
                     }
                 }
             }
