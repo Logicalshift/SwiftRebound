@@ -10,6 +10,7 @@
 		4B2EAEFB1D323E28006D9138 /* SwiftRebound.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B2EAEFA1D323E28006D9138 /* SwiftRebound.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4B2EAF021D323E28006D9138 /* SwiftRebound.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B2EAEF71D323E28006D9138 /* SwiftRebound.framework */; };
 		4B2EAF071D323E28006D9138 /* SwiftReboundTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF061D323E28006D9138 /* SwiftReboundTests.swift */; };
+		4B2EAF111D324773006D9138 /* Bound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF101D324773006D9138 /* Bound.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 		4B2EAF011D323E28006D9138 /* SwiftReboundTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftReboundTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B2EAF061D323E28006D9138 /* SwiftReboundTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftReboundTests.swift; sourceTree = "<group>"; };
 		4B2EAF081D323E28006D9138 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4B2EAF101D324773006D9138 /* Bound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bound.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 		4B2EAEF91D323E28006D9138 /* SwiftRebound */ = {
 			isa = PBXGroup;
 			children = (
+				4B2EAF0F1D3241CB006D9138 /* Binding */,
 				4B2EAEFA1D323E28006D9138 /* SwiftRebound.h */,
 				4B2EAEFC1D323E28006D9138 /* Info.plist */,
 			);
@@ -84,6 +87,14 @@
 				4B2EAF081D323E28006D9138 /* Info.plist */,
 			);
 			path = SwiftReboundTests;
+			sourceTree = "<group>";
+		};
+		4B2EAF0F1D3241CB006D9138 /* Binding */ = {
+			isa = PBXGroup;
+			children = (
+				4B2EAF101D324773006D9138 /* Bound.swift */,
+			);
+			path = Binding;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,6 +204,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B2EAF111D324773006D9138 /* Bound.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
