@@ -28,7 +28,17 @@ class BindingContextTests : XCTestCase {
             }
         }
     }
-    
+
+    func testNewContextPerformanceWithNesting() {
+        BindingContext.withNewContext {
+            self.measureBlock {
+                for _ in 0..<100000 {
+                    BindingContext.withNewContext { };
+                }
+            }
+        }
+    }
+
     func testReadContextPerformance() {
         BindingContext.withNewContext {
             self.measureBlock {
