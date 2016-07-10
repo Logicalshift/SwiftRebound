@@ -61,6 +61,8 @@ internal class BoundComputable<TBoundType> : Bound<TBoundType> {
                 for newDependency in BindingContext.current!.dependencies {
                     newDependencies.append((newDependency, newDependency.whenChanged(invalidate)));
                 }
+            } else {
+                newDependencies = oldDependencies;
             }
         }
         
