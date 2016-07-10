@@ -9,11 +9,28 @@
 import Foundation
 
 ///
+/// Protocol implemented by objects that can change
+///
+public protocol Changeable {
+    ///
+    /// Mark this item as having been changed
+    ///
+    /// The next time the value is resolved, it will register as a change and the observers will be called.
+    ///
+    func markAsChanged();
+
+    ///
+    /// Calls a function any time this value is marked as changed
+    ///
+    func whenChanged(action: () -> ()) -> Lifetime;
+}
+
+///
 /// A bound value represents a storage location whose changes can be observed by other objects.
 ///
 /// Bound values are the core of SwiftRebound.
 ///
-public class Bound<TBoundType> {
+public class Bound<TBoundType> : Changeable {
     ///
     /// The value that's current bound to this object, or nil if it has been changed and needs recomputing
     ///
@@ -39,7 +56,7 @@ public class Bound<TBoundType> {
     ///
     /// Causes any observers to be notified that this object has changed
     ///
-    final func notifyChange() {
+    public final func notifyChange() {
         // Run any actions that result from this value being updated
         for (_, action) in _actionsOnChanged {
             action();
@@ -49,7 +66,7 @@ public class Bound<TBoundType> {
     ///
     /// Recomputes and rebinds the value associated with this object (even if it's not marked as being changed)
     ///
-    final func rebind() -> TBoundType {
+    public final func rebind() -> TBoundType {
         // Update the current value
         let currentValue    = computeValue();
         _currentValue       = currentValue;
@@ -62,7 +79,7 @@ public class Bound<TBoundType> {
     /// changed, forces it to update)
     ///
     @inline(__always)
-    final func resolve() -> TBoundType {
+    public final func resolve() -> TBoundType {
         // Resolving a binding creates a dependency in the current context
         BindingContext.current?.addDependency(self);
         
@@ -80,7 +97,7 @@ public class Bound<TBoundType> {
     ///
     /// The next time the value is resolved, it will register as a change and the observers will be called.
     ///
-    func markAsChanged() {
+    public func markAsChanged() {
         if _currentValue != nil {
             _currentValue = nil;
             notifyChange();
@@ -90,7 +107,7 @@ public class Bound<TBoundType> {
     ///
     /// Reads the value that this object is bound to
     ///
-    var value: TBoundType {
+    public var value: TBoundType {
         @inline(__always)
         get {
             return resolve();
@@ -100,7 +117,7 @@ public class Bound<TBoundType> {
     ///
     /// Calls a function any time this value is marked as changed
     ///
-    final func whenChanged(action: () -> ()) -> Lifetime {
+    public final func whenChanged(action: () -> ()) -> Lifetime {
         // Record this action so we can re-run it when the value changes
         let thisActionId = _nextActionId;
         _nextActionId += 1;
@@ -119,7 +136,7 @@ public class Bound<TBoundType> {
     /// Calls a function any time this value is changed. The function will be called at least once
     /// with the current value of this bound object
     ///
-    final func observe(action: (TBoundType) -> ()) -> Lifetime {
+    public final func observe(action: (TBoundType) -> ()) -> Lifetime {
         // As soon as we start observing a value, call the action to generate the initial binding
         action(resolve());
         
