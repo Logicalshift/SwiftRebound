@@ -61,6 +61,7 @@ public class Bound<TBoundType> {
     /// Ensures that the value associated with this binding has been resolved (if this item has been marked as
     /// changed, forces it to update)
     ///
+    @inline(__always)
     final func resolve() -> TBoundType {
         if let currentValue = _currentValue {
             // If the current value is not dirty (ie, we've got it cached), then use that
