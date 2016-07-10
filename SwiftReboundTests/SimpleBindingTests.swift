@@ -37,6 +37,16 @@ class SimpleBindingTests: XCTestCase {
         XCTAssertEqual(2, boundInt.value);
     }
     
+    func testSimpleBindingCanBeMarkedChanged() {
+        // Should be able to update a binding to a new value
+        let boundInt = Binding.create(1);
+        XCTAssertEqual(1, boundInt.value);
+        
+        boundInt.markAsChanged();
+        
+        XCTAssertEqual(1, boundInt.value);
+    }
+    
     func testObserveSimpleBinding() {
         // Should be able to attach an observer to a binding and get callbacks when it has changed
         var observed = 1;
@@ -59,5 +69,20 @@ class SimpleBindingTests: XCTestCase {
         boundInt.value = 2;
         XCTAssertEqual(3, observed);
         XCTAssertEqual(2, boundInt.value);
+    }
+    
+    func testMarkingSimpleBindingAsChangedNotifiesObservers() {
+        var notificationCount = 0;
+        let boundInt = Binding.create(1);
+        
+        boundInt.observe { newValue in notificationCount += 1 };
+        
+        XCTAssertEqual(1, notificationCount);
+        
+        // The implementation may choose to notify immediately as part of markAsChanged but only has to once resolve() is called
+        boundInt.markAsChanged();
+        boundInt.resolve();
+        
+        XCTAssertEqual(2, notificationCount);
     }
 }
