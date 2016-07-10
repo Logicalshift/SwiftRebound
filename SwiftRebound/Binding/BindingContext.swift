@@ -12,6 +12,14 @@ private let _contextSpecificNameString  = "io.logicalshift.SwiftRebound.BindingC
 private let _contextSpecificName        = UnsafePointer<Void>((_contextSpecificNameString as NSString).UTF8String);
 
 ///
+/// Binding context queue to use if the current queue is not already a binding queue
+///
+/// This is not used for the purposes of serialization but rather because creating new queues is bad for performance.
+/// This can have the unexpected consequence that all computed values are computed on the same queue.
+///
+private let _defaultContextQueue = BindingContext.createQueueWithNewContext();
+
+///
 /// Stores the binding context for the current queue
 ///
 private class QueueBindingContext {
@@ -97,7 +105,7 @@ public class BindingContext {
             existingStorage.context = oldContext;
         } else {
             // Create a queue to use the context in
-            let queue = BindingContext.createQueueWithNewContext();
+            let queue = _defaultContextQueue;
             
             // Perform the action with this context in effect
             dispatch_sync(queue, {
