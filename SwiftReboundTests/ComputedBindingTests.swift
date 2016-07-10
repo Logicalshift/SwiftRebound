@@ -103,12 +103,29 @@ class ComputedBindingTests : XCTestCase {
     }
     
     func testPerformanceWithoutBindings() {
+        // Part of a baseline: measure time taken to just update a value
         let simple      = Binding.create(1);
         
         self.measureBlock {
             for x in 0..<100000 {
                 simple.value = x;
                 if simple.value+1 != x+1 {
+                    XCTAssert(false);
+                }
+            }
+        }
+    }
+    
+    func testObserveSimpleUpdatePerformance() {
+        // Other part of baseline: update a binding using observe() rather than the automated computed stuff
+        let simple      = Binding.create(1);
+        let simple2     = Binding.create(2);
+        simple.observe { newValue in simple2.value = newValue+1 }.keep();
+        
+        self.measureBlock {
+            for x in 0..<100000 {
+                simple.value = x;
+                if simple2.value != x+1 {
                     XCTAssert(false);
                 }
             }
@@ -128,7 +145,7 @@ class ComputedBindingTests : XCTestCase {
             }
         }
     }
-    
+
     func testUpdateComputablePerformanceWithObservation() {
         let simple      = Binding.create(1);
         let computed    = Binding.computed({ return 1 + simple.value });
