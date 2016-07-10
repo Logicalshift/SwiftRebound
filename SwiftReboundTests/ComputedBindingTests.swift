@@ -31,6 +31,16 @@ class ComputedBindingTests : XCTestCase {
         XCTAssertEqual(4, computed.value);
     }
     
+    func testInvalidatesAfterChangeChain() {
+        let simple      = Binding.create(1);
+        let computed    = Binding.computed({ return 1 + simple.value });
+        let chained     = Binding.computed({ return 1 + computed.value });
+        XCTAssertEqual(3, chained.value);
+        
+        simple.value = 3;
+        XCTAssertEqual(5, chained.value);
+    }
+    
     func testObserveAfterChange() {
         let simple      = Binding.create(1);
         let computed    = Binding.computed({ return 1 + simple.value });
