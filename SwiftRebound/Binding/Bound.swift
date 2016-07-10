@@ -74,7 +74,7 @@ public class Bound<TBoundType> {
     ///
     /// The next time the value is resolved, it will register as a change and the observers will be called.
     ///
-    final func markAsChanged() {
+    func markAsChanged() {
         _currentValue = nil;
     }
     

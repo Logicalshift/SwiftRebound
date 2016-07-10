@@ -14,6 +14,7 @@
 		4B2EAF131D325066006D9138 /* MutableBound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF121D325066006D9138 /* MutableBound.swift */; };
 		4B2EAF151D325410006D9138 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF141D325410006D9138 /* Binding.swift */; };
 		4B2EAF171D325505006D9138 /* SimpleBindingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF161D325505006D9138 /* SimpleBindingTests.swift */; };
+		4B2EAF191D32574C006D9138 /* BoundValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF181D32574C006D9138 /* BoundValue.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +38,7 @@
 		4B2EAF121D325066006D9138 /* MutableBound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MutableBound.swift; sourceTree = "<group>"; };
 		4B2EAF141D325410006D9138 /* Binding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
 		4B2EAF161D325505006D9138 /* SimpleBindingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleBindingTests.swift; sourceTree = "<group>"; };
+		4B2EAF181D32574C006D9138 /* BoundValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoundValue.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 				4B2EAF141D325410006D9138 /* Binding.swift */,
 				4B2EAF101D324773006D9138 /* Bound.swift */,
 				4B2EAF121D325066006D9138 /* MutableBound.swift */,
+				4B2EAF181D32574C006D9138 /* BoundValue.swift */,
 			);
 			path = Binding;
 			sourceTree = "<group>";
@@ -213,6 +216,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B2EAF191D32574C006D9138 /* BoundValue.swift in Sources */,
 				4B2EAF111D324773006D9138 /* Bound.swift in Sources */,
 				4B2EAF151D325410006D9138 /* Binding.swift in Sources */,
 				4B2EAF131D325066006D9138 /* MutableBound.swift in Sources */,

@@ -20,6 +20,6 @@ public class Binding {
     /// Creates a simple binding to a value of a particular type
     ///
     static func create<TBoundType>(value: TBoundType) -> MutableBound<TBoundType> {
-        fatalError("not implemented");
+        return BoundValue(value: value);
     }
 };
