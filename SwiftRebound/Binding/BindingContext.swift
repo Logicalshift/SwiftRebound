@@ -147,7 +147,6 @@ public class BindingContext {
     ///
     /// Adds a new dependency to the current context (the current context item will be marked as changed)
     ///
-    @inline(__always)
     public final func addDependency(dependentOn: Changeable) {
         if _dependencyCount >= _expectedDependencies.count || _expectedDependencies[_dependencyCount] !== dependentOn {
             _dependenciesDiffer = true;
