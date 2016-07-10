@@ -17,7 +17,7 @@ public class Bound<TBoundType> {
     ///
     /// The value that's current bound to this object, or nil if it has been changed and needs recomputing
     ///
-    private var _currentValue: TBoundType? = nil;
+    internal var _currentValue: TBoundType? = nil;
     
     ///
     /// The actions that should be executed when this bound value is changed
@@ -32,6 +32,16 @@ public class Bound<TBoundType> {
     }
     
     ///
+    /// Causes any observers to be notified that this object has changed
+    ///
+    final func notifyChange(newValue: TBoundType) {
+        // Run any actions that result from this value being updated
+        for action in _actions {
+            action(newValue);
+        }
+    }
+    
+    ///
     /// Recomputes and rebinds the value associated with this object (even if it's not marked as being changed)
     ///
     final func rebind() -> TBoundType {
@@ -39,10 +49,8 @@ public class Bound<TBoundType> {
         let currentValue    = computeValue();
         _currentValue       = currentValue;
         
-        // Run any actions that result from this value being updated
-        for action in _actions {
-            action(currentValue);
-        }
+        // Notify the observers
+        notifyChange(currentValue);
         
         return currentValue;
     }
@@ -62,7 +70,9 @@ public class Bound<TBoundType> {
     }
     
     ///
-    /// Mark this item as having been changed (will be recomputed if the value is retrieved or resolve() is called)
+    /// Mark this item as having been changed
+    ///
+    /// The next time the value is resolved, it will register as a change and the observers will be called.
     ///
     final func markAsChanged() {
         _currentValue = nil;
@@ -71,7 +81,7 @@ public class Bound<TBoundType> {
     ///
     /// Reads the value that this object is bound to
     ///
-    final var value: TBoundType {
+    var value: TBoundType {
         get {
             return resolve();
         }

@@ -11,6 +11,7 @@
 		4B2EAF021D323E28006D9138 /* SwiftRebound.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B2EAEF71D323E28006D9138 /* SwiftRebound.framework */; };
 		4B2EAF071D323E28006D9138 /* SwiftReboundTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF061D323E28006D9138 /* SwiftReboundTests.swift */; };
 		4B2EAF111D324773006D9138 /* Bound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF101D324773006D9138 /* Bound.swift */; };
+		4B2EAF131D325066006D9138 /* MutableBound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF121D325066006D9138 /* MutableBound.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +32,7 @@
 		4B2EAF061D323E28006D9138 /* SwiftReboundTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftReboundTests.swift; sourceTree = "<group>"; };
 		4B2EAF081D323E28006D9138 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B2EAF101D324773006D9138 /* Bound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bound.swift; sourceTree = "<group>"; };
+		4B2EAF121D325066006D9138 /* MutableBound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MutableBound.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				4B2EAF101D324773006D9138 /* Bound.swift */,
+				4B2EAF121D325066006D9138 /* MutableBound.swift */,
 			);
 			path = Binding;
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B2EAF111D324773006D9138 /* Bound.swift in Sources */,
+				4B2EAF131D325066006D9138 /* MutableBound.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
