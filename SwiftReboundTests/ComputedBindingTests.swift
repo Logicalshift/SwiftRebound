@@ -74,4 +74,20 @@ class ComputedBindingTests : XCTestCase {
             }
         }
     }
+    
+    func testUpdateComputablePerformanceInExistingContext() {
+        let simple      = Binding.create(1);
+        let computed    = Binding.computed({ return 1 + simple.value });
+        
+        BindingContext.withNewContext {
+            self.measureBlock {
+                for x in 0..<100000 {
+                    simple.value = x;
+                    if computed.value != x+1 {
+                        XCTAssert(false);
+                    }
+                }
+            }
+        }
+    }
 }
