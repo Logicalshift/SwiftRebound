@@ -125,14 +125,15 @@ public class BindingContext {
     ///
     /// Adds a new dependency to the current context (the current context item will be marked as changed)
     ///
-    public func addDependency(dependentOn: Changeable) {
+    @inline(__always)
+    public final func addDependency(dependentOn: Changeable) {
         _dependencies.append(dependentOn);
     }
     
     ///
     /// The changeable objects that have been added as dependencies for this context
     ///
-    public var dependencies: [Changeable] {
+    public final var dependencies: [Changeable] {
         @inline(__always)
         get {
             return _dependencies;
