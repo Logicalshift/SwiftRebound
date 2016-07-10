@@ -104,12 +104,20 @@ public class BindingContext {
             action();
             existingStorage.context = oldContext;
         } else {
-            // Create a queue to use the context in
-            let queue = _defaultContextQueue;
-            
-            // Perform the action with this context in effect
-            dispatch_sync(queue, {
+            // Current queue doesn't have any context stored, move on to the default queue
+            // Could also call createQueueWithNewContext() here, but that is slow
+            dispatch_sync(_defaultContextQueue, {
+                let existingStorage = BindingContext.currentStorage!;
+                
+                // Generate a new context
+                let oldContext  = existingStorage.context;
+                let newContext  = BindingContext();
+                
+                // If there's an existing context, append the new context to it and perform the action rather than creating a whole new context
+                // Creating new contexts is expensive
+                existingStorage.context = newContext;
                 action();
+                existingStorage.context = oldContext;
             });
         }
     }
