@@ -21,6 +21,16 @@ public protocol Notifiable : class {
     
 }
 
+internal class CallFunctionOnNotification : Notifiable {
+    private let _action: () -> ();
+    
+    init(action: () -> ()) {
+        _action = action;
+    }
+    
+    func markAsChanged() { _action(); }
+}
+
 ///
 /// Protocol implemented by objects that can notify other objects that it has changed
 ///
@@ -28,7 +38,7 @@ public protocol Changeable : class {
     ///
     /// Calls a function any time this value is marked as changed
     ///
-    func whenChanged(action: () -> ()) -> Lifetime;
+    func whenChanged(what: Notifiable) -> Lifetime;
 }
 
 ///
@@ -45,7 +55,7 @@ public class Bound<TBoundType> : Changeable, Notifiable {
     ///
     /// The actions that should be executed when this bound value is changed
     ///
-    private var _actionsOnChanged: [(Int, () -> ())] = [];
+    private var _actionsOnChanged: [(Int, Notifiable)] = [];
     
     ///
     /// Next ID to assign to an action
@@ -62,10 +72,10 @@ public class Bound<TBoundType> : Changeable, Notifiable {
     ///
     /// Causes any observers to be notified that this object has changed
     ///
-    public final func notifyChange() {
+    internal final func notifyChange() {
         // Run any actions that result from this value being updated
         for (_, action) in _actionsOnChanged {
-            action();
+            action.markAsChanged();
         }
     }
     
@@ -123,7 +133,7 @@ public class Bound<TBoundType> : Changeable, Notifiable {
     ///
     /// Calls a function any time this value is marked as changed
     ///
-    public final func whenChanged(action: () -> ()) -> Lifetime {
+    public final func whenChanged(action: Notifiable) -> Lifetime {
         // Record this action so we can re-run it when the value changes
         let thisActionId = _nextActionId;
         _nextActionId += 1;
@@ -147,9 +157,9 @@ public class Bound<TBoundType> : Changeable, Notifiable {
         action(resolve());
         
         // Call and resolve the action whenever this item is changed
-        return whenChanged {
+        return whenChanged(CallFunctionOnNotification(action: {
             action(self.resolve());
-        }
+        }));
     }
     
     ///

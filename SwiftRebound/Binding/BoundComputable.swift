@@ -39,7 +39,6 @@ internal class BoundComputable<TBoundType> : Bound<TBoundType> {
         // Input for the computation
         let compute         = _compute;
         let oldDependencies = _dependencies;
-        let invalidate      = { self.markAsChanged(); }
 
         BindingContext.withNewContext {
             let currentContext = BindingContext.current!;
@@ -59,7 +58,7 @@ internal class BoundComputable<TBoundType> : Bound<TBoundType> {
                 // Create new dependencies
                 var newDependencies: [(Changeable, Lifetime)] = [];
                 for newDependency in currentContext.dependencies {
-                    newDependencies.append((newDependency, newDependency.whenChanged(invalidate)));
+                    newDependencies.append((newDependency, newDependency.whenChanged(self)));
                 }
                 
                 self._dependencies = newDependencies;
