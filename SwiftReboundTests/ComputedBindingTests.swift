@@ -132,6 +132,24 @@ class ComputedBindingTests : XCTestCase {
         }
     }
     
+    func testObserveManualUpdatePerformance() {
+        // More baselines: performance without the triggering methods
+        var simple      = 1;
+        let computed    = Binding.computed({ simple + 1 });
+        
+        BindingContext.withNewContext {
+            self.measureBlock {
+                for x in 0..<100000 {
+                    simple = x;
+                    computed.markAsChanged();
+                    if computed.value != x+1 {
+                        XCTAssert(false);
+                    }
+                }
+            }
+        }
+    }
+    
     func testUpdateComputablePerformance() {
         let simple      = Binding.create(1);
         let computed    = Binding.computed({ return 1 + simple.value });
