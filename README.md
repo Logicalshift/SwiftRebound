@@ -17,7 +17,7 @@ binding.observe { newValue in print(newValue); }
 binding.value = 3; /// prints '3'
 ```
 
-Derive a comuted binding
+Derive a computed binding
 
 ```swift
 let computed = Binding.computed { binding.value + 1 };
