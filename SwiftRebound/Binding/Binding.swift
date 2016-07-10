@@ -23,6 +23,12 @@ public class Binding {
         return BoundValue(value: value);
     }
     
+    ///
+    /// Creates a computed binding
+    ///
+    /// Computed bindings can access other bindings and will be automatically invalidated when those
+    /// bindings change.
+    ///
     static func computed<TBoundType>(compute: () -> TBoundType) -> Bound<TBoundType> {
         return BoundComputable(compute: compute);
     }
