@@ -89,26 +89,29 @@ class ComputedBindingTests : XCTestCase {
         XCTAssertEqual(4, computed.value);
     }
     
-    func doComputedBinding(binding: MutableBound<Int>, onCompute: () -> ()) {
-        let computed = Binding.computed({ () -> Int in onCompute(); return binding.value + 1 });
-        computed.observe { newValue in }.keep();
+    func doComputedBinding(binding: MutableBound<Int>, onChange: () -> ()) {
+        let computed = Binding.computed({ () -> Int in return binding.value + 1 });
+        computed.whenChanged { newValue in onChange() }.keep();
         
         XCTAssert(computed.value == binding.value + 1);
         
         binding.value = 2;
         XCTAssert(computed.value == 2 + 1);
+        
+        binding.value = 3;
+        XCTAssert(computed.value == 3 + 1);
     }
     
     func testComputedValuesGoAway() {
         let binding = Binding.create(1);
-        var computedCount = 0;
+        var changeCount = 0;
         
-        doComputedBinding(binding, onCompute: { computedCount += 1 });
+        doComputedBinding(binding, onChange: { changeCount += 1 });
         
-        XCTAssertEqual(2, computedCount);
+        XCTAssertEqual(2, changeCount);
         
-        binding.value = 3;
-        XCTAssertEqual(2, computedCount);
+        binding.value = 4;
+        XCTAssertEqual(2, changeCount);
     }
     
     func testReadComputablePerformance() {
