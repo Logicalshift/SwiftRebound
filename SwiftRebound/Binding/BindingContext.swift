@@ -40,6 +40,21 @@ public class BindingContext {
     private var _dependencies = [Changeable]();
     
     ///
+    /// Dependencies that we expected to see
+    ///
+    private var _expectedDependencies = [Changeable]();
+    
+    ///
+    /// Number of dependencies that we've seen
+    ///
+    private var _dependencyCount = 0;
+    
+    ///
+    /// Set to true if addDependencies hasn't seen the expected dependencies in the right order
+    ///
+    private var _dependenciesDiffer = false;
+    
+    ///
     /// Call BindingContext.current to get the binding context for the current queue
     ///
     private init() {
@@ -123,10 +138,22 @@ public class BindingContext {
     }
     
     ///
+    /// Sets the set of expected dependencies for this item
+    ///
+    public final func setExpectedDependencies(dependencies: [Changeable]) {
+        _expectedDependencies = dependencies;
+    }
+    
+    ///
     /// Adds a new dependency to the current context (the current context item will be marked as changed)
     ///
     @inline(__always)
     public final func addDependency(dependentOn: Changeable) {
+        if _dependencyCount >= _expectedDependencies.count || _expectedDependencies[_dependencyCount] !== dependentOn {
+            _dependenciesDiffer = true;
+        }
+        _dependencyCount += 1;
+        
         _dependencies.append(dependentOn);
     }
     
@@ -137,6 +164,16 @@ public class BindingContext {
         @inline(__always)
         get {
             return _dependencies;
+        }
+    }
+    
+    ///
+    /// True if the expected dependencies and the actual dependencies differ
+    ///
+    public final var dependenciesDiffer: Bool {
+        get {
+            return true;
+            // return _dependenciesDiffer || _dependencyCount != _expectedDependencies.count;
         }
     }
 };

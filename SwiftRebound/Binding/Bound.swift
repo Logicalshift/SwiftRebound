@@ -11,7 +11,7 @@ import Foundation
 ///
 /// Protocol implemented by objects that can change
 ///
-public protocol Changeable {
+public protocol Changeable : class {
     ///
     /// Mark this item as having been changed
     ///

@@ -19,7 +19,7 @@ internal class BoundComputable<TBoundType> : Bound<TBoundType> {
     private let _compute: () -> TBoundType;
     
     /// Dependencies created the last time this value was computed
-    private var _dependencies: [Lifetime] = [];
+    private var _dependencies: [(Changeable, Lifetime)] = [];
     
     init(compute: () -> TBoundType) {
         _compute = compute;
@@ -35,7 +35,7 @@ internal class BoundComputable<TBoundType> : Bound<TBoundType> {
     override func computeValue() -> TBoundType {
         // Results of the computation
         var result: TBoundType?         = nil;
-        var newDependencies: [Lifetime] = [];
+        var newDependencies: [(Changeable, Lifetime)] = [];
         
         // Input for the computation
         let compute         = _compute;
@@ -43,18 +43,24 @@ internal class BoundComputable<TBoundType> : Bound<TBoundType> {
         let invalidate      = { self.markAsChanged(); }
 
         BindingContext.withNewContext {
-            // Clear existing dependencies
-            // TODO: dependencies are often the same before and after a computation, so this would be faster if we didn't clear in the case that they are the same
-            for dependency in oldDependencies {
-                dependency.done();
-            }
+            let currentContext = BindingContext.current!;
+            
+            // Mark the expected dependencies
+            currentContext.setExpectedDependencies(oldDependencies.map { (dep, _) in return dep });
             
             // Compute the result
             result = compute();
             
-            // Create new dependencies
-            for newDependency in BindingContext.current!.dependencies {
-                newDependencies.append(newDependency.whenChanged(invalidate));
+            if currentContext.dependenciesDiffer {
+                // Clear existing dependencies
+                for (_, lifetime) in oldDependencies {
+                    lifetime.done();
+                }
+
+                // Create new dependencies
+                for newDependency in BindingContext.current!.dependencies {
+                    newDependencies.append((newDependency, newDependency.whenChanged(invalidate)));
+                }
             }
         }
         
