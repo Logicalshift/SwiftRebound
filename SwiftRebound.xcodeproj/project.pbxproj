@@ -15,6 +15,7 @@
 		4B2EAF151D325410006D9138 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF141D325410006D9138 /* Binding.swift */; };
 		4B2EAF171D325505006D9138 /* SimpleBindingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF161D325505006D9138 /* SimpleBindingTests.swift */; };
 		4B2EAF191D32574C006D9138 /* BoundValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF181D32574C006D9138 /* BoundValue.swift */; };
+		4B2EAF1C1D325BAE006D9138 /* Lifetime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF1B1D325BAE006D9138 /* Lifetime.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +40,7 @@
 		4B2EAF141D325410006D9138 /* Binding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
 		4B2EAF161D325505006D9138 /* SimpleBindingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleBindingTests.swift; sourceTree = "<group>"; };
 		4B2EAF181D32574C006D9138 /* BoundValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoundValue.swift; sourceTree = "<group>"; };
+		4B2EAF1B1D325BAE006D9138 /* Lifetime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lifetime.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				4B2EAF0F1D3241CB006D9138 /* Binding */,
+				4B2EAF1A1D325BA2006D9138 /* Lifetime */,
 				4B2EAEFA1D323E28006D9138 /* SwiftRebound.h */,
 				4B2EAEFC1D323E28006D9138 /* Info.plist */,
 			);
@@ -108,6 +111,15 @@
 			);
 			path = Binding;
 			sourceTree = "<group>";
+		};
+		4B2EAF1A1D325BA2006D9138 /* Lifetime */ = {
+			isa = PBXGroup;
+			children = (
+				4B2EAF1B1D325BAE006D9138 /* Lifetime.swift */,
+			);
+			name = Lifetime;
+			path = SwiftRebound/Lifetime;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -216,6 +228,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B2EAF1C1D325BAE006D9138 /* Lifetime.swift in Sources */,
 				4B2EAF191D32574C006D9138 /* BoundValue.swift in Sources */,
 				4B2EAF111D324773006D9138 /* Bound.swift in Sources */,
 				4B2EAF151D325410006D9138 /* Binding.swift in Sources */,
