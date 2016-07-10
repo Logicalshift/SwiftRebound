@@ -22,4 +22,8 @@ public class Binding {
     static func create<TBoundType>(value: TBoundType) -> MutableBound<TBoundType> {
         return BoundValue(value: value);
     }
+    
+    static func computed<TBoundType>(compute: () -> TBoundType) -> Bound<TBoundType> {
+        return BoundComputable(compute: compute);
+    }
 };

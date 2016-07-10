@@ -10,7 +10,7 @@ import Foundation
 import XCTest
 @testable import SwiftRebound
 
-class SimpleBindingTests: XCTestCase {
+class SimpleBindingTests : XCTestCase {
     func testCreateSimpleBinding() {
         // Should be able to create a binding to a simple value and be able to read that value
         let boundInt = Binding.create(1);
