@@ -90,9 +90,13 @@ class ComputedBindingTests : XCTestCase {
     }
     
     func doComputedBinding(binding: MutableBound<Int>, onChange: () -> ()) {
+        // Create a simple computed value
         let computed = Binding.computed({ () -> Int in return binding.value + 1 });
+        
+        // Monitor when it gets notified of changes (once it's removed from memory, it'll stop getting notifications)
         computed.whenChanged { newValue in onChange() }.keep();
         
+        // Update it a couple of times and make sure it changes twice (initial value doesn't count as a change)
         XCTAssert(computed.value == binding.value + 1);
         
         binding.value = 2;
@@ -108,8 +112,10 @@ class ComputedBindingTests : XCTestCase {
         
         doComputedBinding(binding, onChange: { changeCount += 1 });
         
+        // doComputedBinding should have caused two change events
         XCTAssertEqual(2, changeCount);
         
+        // The computed should now be gone, so changing the value again should have no effect
         binding.value = 4;
         XCTAssertEqual(2, changeCount);
     }
