@@ -61,6 +61,31 @@ class ComputedBindingTests : XCTestCase {
         computedObservation.done();
     }
     
+    func testCanChangeDependenciesDueToChange() {
+        let simple1 = Binding.create(1);
+        let simple2 = Binding.create(2);
+        
+        // Only evaluates simple2 if simple1 is 0, so the dependencies change
+        let computed = Binding.computed({ () -> Int in
+            if simple1.value == 0 {
+                return simple2.value;
+            } else {
+                return simple1.value;
+            }
+        });
+        
+        XCTAssertEqual(1, computed.value);
+
+        simple1.value = 3;
+        XCTAssertEqual(3, computed.value);
+        
+        simple1.value = 0;
+        XCTAssertEqual(2, computed.value);
+        
+        simple2.value = 4;
+        XCTAssertEqual(4, computed.value);
+    }
+    
     func testReadComputablePerformance() {
         let simple      = Binding.create(1);
         let computed    = Binding.computed({ return 1 + simple.value });
