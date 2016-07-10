@@ -172,8 +172,7 @@ public class BindingContext {
     ///
     public final var dependenciesDiffer: Bool {
         get {
-            return true;
-            // return _dependenciesDiffer || _dependencyCount != _expectedDependencies.count;
+            return _dependenciesDiffer || _dependencyCount != _expectedDependencies.count;
         }
     }
 };
