@@ -22,6 +22,7 @@
 		4B2EAF261D32750A006D9138 /* ComputedBindingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF251D32750A006D9138 /* ComputedBindingTests.swift */; };
 		4B2EAF2A1D327A93006D9138 /* BindingContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF291D327A93006D9138 /* BindingContext.swift */; };
 		4B2EAF2E1D32844D006D9138 /* BindingContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF2D1D32844D006D9138 /* BindingContextTests.swift */; };
+		4B2EAF301D32B1EF006D9138 /* CallbackNotifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF2F1D32B1EF006D9138 /* CallbackNotifiable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		4B2EAF251D32750A006D9138 /* ComputedBindingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComputedBindingTests.swift; sourceTree = "<group>"; };
 		4B2EAF291D327A93006D9138 /* BindingContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindingContext.swift; sourceTree = "<group>"; };
 		4B2EAF2D1D32844D006D9138 /* BindingContextTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindingContextTests.swift; sourceTree = "<group>"; };
+		4B2EAF2F1D32B1EF006D9138 /* CallbackNotifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallbackNotifiable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 				4B2EAF121D325066006D9138 /* MutableBound.swift */,
 				4B2EAF181D32574C006D9138 /* BoundValue.swift */,
 				4B2EAF231D327417006D9138 /* BoundComputable.swift */,
+				4B2EAF2F1D32B1EF006D9138 /* CallbackNotifiable.swift */,
 			);
 			path = Binding;
 			sourceTree = "<group>";
@@ -246,6 +249,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B2EAF301D32B1EF006D9138 /* CallbackNotifiable.swift in Sources */,
 				4B2EAF1C1D325BAE006D9138 /* Lifetime.swift in Sources */,
 				4B2EAF241D327417006D9138 /* BoundComputable.swift in Sources */,
 				4B2EAF191D32574C006D9138 /* BoundValue.swift in Sources */,

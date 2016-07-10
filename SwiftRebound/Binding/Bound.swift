@@ -21,16 +21,6 @@ public protocol Notifiable : class {
     
 }
 
-internal class CallFunctionOnNotification : Notifiable {
-    private let _action: () -> ();
-    
-    init(action: () -> ()) {
-        _action = action;
-    }
-    
-    func markAsChanged() { _action(); }
-}
-
 ///
 /// Protocol implemented by objects that can notify other objects that it has changed
 ///
@@ -157,7 +147,7 @@ public class Bound<TBoundType> : Changeable, Notifiable {
         action(resolve());
         
         // Call and resolve the action whenever this item is changed
-        return whenChanged(CallFunctionOnNotification(action: {
+        return whenChanged(CallbackNotifiable(action: {
             action(self.resolve());
         }));
     }
