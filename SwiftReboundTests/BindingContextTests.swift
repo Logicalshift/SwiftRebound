@@ -33,7 +33,9 @@ class BindingContextTests : XCTestCase {
         BindingContext.withNewContext {
             self.measureBlock {
                 for _ in 0..<100000 {
-                    XCTAssert(BindingContext.current != nil);
+                    if BindingContext.current == nil {
+                        XCTAssert(false);
+                    }
                 }
             }
         }
