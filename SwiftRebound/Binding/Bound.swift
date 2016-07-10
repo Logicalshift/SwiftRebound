@@ -9,16 +9,22 @@
 import Foundation
 
 ///
-/// Protocol implemented by objects that can change
+/// Protocol implemented by objects that can be notified that they need to recalculate themselves
 ///
-public protocol Changeable : class {
+public protocol Notifiable : class {
     ///
     /// Mark this item as having been changed
     ///
     /// The next time the value is resolved, it will register as a change and the observers will be called.
     ///
     func markAsChanged();
+    
+}
 
+///
+/// Protocol implemented by objects that can notify other objects that it has changed
+///
+public protocol Changeable : class {
     ///
     /// Calls a function any time this value is marked as changed
     ///
@@ -30,7 +36,7 @@ public protocol Changeable : class {
 ///
 /// Bound values are the core of SwiftRebound.
 ///
-public class Bound<TBoundType> : Changeable {
+public class Bound<TBoundType> : Changeable, Notifiable {
     ///
     /// The value that's current bound to this object, or nil if it has been changed and needs recomputing
     ///
