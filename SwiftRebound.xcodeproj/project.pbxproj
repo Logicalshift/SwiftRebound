@@ -20,6 +20,8 @@
 		4B2EAF201D325F24006D9138 /* LifetimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF1F1D325F24006D9138 /* LifetimeTests.swift */; };
 		4B2EAF241D327417006D9138 /* BoundComputable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF231D327417006D9138 /* BoundComputable.swift */; };
 		4B2EAF261D32750A006D9138 /* ComputedBindingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF251D32750A006D9138 /* ComputedBindingTests.swift */; };
+		4B2EAF2A1D327A93006D9138 /* BindingContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF291D327A93006D9138 /* BindingContext.swift */; };
+		4B2EAF2E1D32844D006D9138 /* BindingContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF2D1D32844D006D9138 /* BindingContextTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		4B2EAF1F1D325F24006D9138 /* LifetimeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LifetimeTests.swift; sourceTree = "<group>"; };
 		4B2EAF231D327417006D9138 /* BoundComputable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoundComputable.swift; sourceTree = "<group>"; };
 		4B2EAF251D32750A006D9138 /* ComputedBindingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComputedBindingTests.swift; sourceTree = "<group>"; };
+		4B2EAF291D327A93006D9138 /* BindingContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindingContext.swift; sourceTree = "<group>"; };
+		4B2EAF2D1D32844D006D9138 /* BindingContextTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindingContextTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +110,7 @@
 				4B2EAF161D325505006D9138 /* SimpleBindingTests.swift */,
 				4B2EAF251D32750A006D9138 /* ComputedBindingTests.swift */,
 				4B2EAF1F1D325F24006D9138 /* LifetimeTests.swift */,
+				4B2EAF2D1D32844D006D9138 /* BindingContextTests.swift */,
 				4B2EAF081D323E28006D9138 /* Info.plist */,
 			);
 			path = SwiftReboundTests;
@@ -115,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				4B2EAF141D325410006D9138 /* Binding.swift */,
+				4B2EAF291D327A93006D9138 /* BindingContext.swift */,
 				4B2EAF101D324773006D9138 /* Bound.swift */,
 				4B2EAF121D325066006D9138 /* MutableBound.swift */,
 				4B2EAF181D32574C006D9138 /* BoundValue.swift */,
@@ -247,6 +253,7 @@
 				4B2EAF151D325410006D9138 /* Binding.swift in Sources */,
 				4B2EAF131D325066006D9138 /* MutableBound.swift in Sources */,
 				4B2EAF1E1D325E08006D9138 /* CallbackLifetime.swift in Sources */,
+				4B2EAF2A1D327A93006D9138 /* BindingContext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,6 +261,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B2EAF2E1D32844D006D9138 /* BindingContextTests.swift in Sources */,
 				4B2EAF261D32750A006D9138 /* ComputedBindingTests.swift in Sources */,
 				4B2EAF071D323E28006D9138 /* SwiftReboundTests.swift in Sources */,
 				4B2EAF201D325F24006D9138 /* LifetimeTests.swift in Sources */,
