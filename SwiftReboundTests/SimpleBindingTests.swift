@@ -104,6 +104,7 @@ class SimpleBindingTests : XCTestCase {
     func testSecondObservationContinuesEvenWhenFirstIsDone() {
         // Should be able to attach an observer to a binding and get callbacks when it has changed
         var observed = 1;
+        var alsoObserved = 1;
         
         let boundInt = Binding.create(1);
         
@@ -113,7 +114,10 @@ class SimpleBindingTests : XCTestCase {
             observed += 1;
         };
         
-        let otherObservationLifetime = boundInt.observe { newValue in };
+        let otherObservationLifetime = boundInt.observe { newValue in
+            XCTAssertEqual(alsoObserved, newValue);
+            alsoObserved += 1;
+        };
         
         XCTAssertEqual(1, boundInt.value);
         
@@ -123,25 +127,34 @@ class SimpleBindingTests : XCTestCase {
         // Update
         boundInt.value = 2;
         
-        // Should still be observed
+        // Should still be observed: both observers should have the same count
         XCTAssertEqual(2, boundInt.value);
         XCTAssertEqual(3, observed);
+        XCTAssertEqual(3, alsoObserved);
         
         // Stop the second observer
         otherObservationLifetime.done();
+        XCTAssertEqual(3, observed);
         
-        // Should still be observed any more (observed will remain at 2)
+        // Should still be observed by the first observer but not the second
         boundInt.value = 3;
         XCTAssertEqual(3, boundInt.value);
         XCTAssertEqual(4, observed);
-        
+        XCTAssertEqual(3, alsoObserved);
+
+        boundInt.value = 4;
+        XCTAssertEqual(4, boundInt.value);
+        XCTAssertEqual(5, observed);
+        XCTAssertEqual(3, alsoObserved);
+
         // Finish the first lifetime
         observationLifetime.done();
         
         // Should no longer generate observations
-        boundInt.value = 4;
-        XCTAssertEqual(4, boundInt.value);
-        XCTAssertEqual(4, observed);
+        boundInt.value = 5;
+        XCTAssertEqual(5, boundInt.value);
+        XCTAssertEqual(5, observed);
+        XCTAssertEqual(3, alsoObserved);
     }
 
     func test100kReads() {
