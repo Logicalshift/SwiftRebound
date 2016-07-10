@@ -100,4 +100,34 @@ class SimpleBindingTests : XCTestCase {
         XCTAssertEqual(2, observed);
         XCTAssertEqual(2, boundInt.value);
     }
+
+    func test100kReads() {
+        let boundInt = Binding.create(1);
+        
+        self.measureBlock {
+            for _ in 0..<100000 {
+                XCTAssertEqual(1, boundInt.value);
+            }
+        }
+    }
+
+    func test100kReadsNotBound() {
+        let unboundInt = 1;
+        
+        self.measureBlock {
+            for _ in 0..<100000 {
+                XCTAssertEqual(1, unboundInt);
+            }
+        }
+    }
+
+    func test100kWrites() {
+        let boundInt = Binding.create(1);
+        
+        self.measureBlock {
+            for _ in 0..<100000 {
+                boundInt.value = 2;
+            }
+        }
+    }
 }
