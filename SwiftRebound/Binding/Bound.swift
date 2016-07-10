@@ -28,7 +28,18 @@ public protocol Changeable : class {
     ///
     /// Calls a function any time this value is marked as changed
     ///
-    func whenChanged(what: Notifiable) -> Lifetime;
+    func whenChanged(target: Notifiable) -> Lifetime;
+}
+
+///
+/// Wrapper that can be used to determine whether or not a particular notification target still exists
+///
+private class NotificationWrapper {
+    private var target : Notifiable?;
+    
+    init(target: Notifiable) {
+        self.target = target;
+    }
 }
 
 ///
@@ -45,12 +56,7 @@ public class Bound<TBoundType> : Changeable, Notifiable {
     ///
     /// The actions that should be executed when this bound value is changed
     ///
-    private var _actionsOnChanged: [(Int, Notifiable)] = [];
-    
-    ///
-    /// Next ID to assign to an action
-    ///
-    private var _nextActionId = 0;
+    private var _actionsOnChanged: [NotificationWrapper] = [];
     
     ///
     /// Must be overridden by subclasses: can't be initialised directly
@@ -63,9 +69,23 @@ public class Bound<TBoundType> : Changeable, Notifiable {
     /// Causes any observers to be notified that this object has changed
     ///
     internal final func notifyChange() {
+        var needToTidy = false;
+        
         // Run any actions that result from this value being updated
-        for (_, action) in _actionsOnChanged {
-            action.markAsChanged();
+        for notificationWrapper in _actionsOnChanged {
+            if let action = notificationWrapper.target {
+                action.markAsChanged();
+            } else {
+                needToTidy = true;
+            }
+        }
+        
+        if needToTidy {
+            _actionsOnChanged = _actionsOnChanged.filter { notificationWrapper in
+                return notificationWrapper.target != nil
+            };
+            
+            
         }
     }
     
@@ -123,18 +143,14 @@ public class Bound<TBoundType> : Changeable, Notifiable {
     ///
     /// Calls a function any time this value is marked as changed
     ///
-    public final func whenChanged(action: Notifiable) -> Lifetime {
+    public final func whenChanged(target: Notifiable) -> Lifetime {
         // Record this action so we can re-run it when the value changes
-        let thisActionId = _nextActionId;
-        _nextActionId += 1;
-        _actionsOnChanged.append((thisActionId, action));
+        let wrapper = NotificationWrapper(target: target);
+        _actionsOnChanged.append(wrapper);
         
         // Stop observing the action once the lifetime expires
         return CallbackLifetime(done: {
-            let index = self._actionsOnChanged.indexOf({ (id, _) in return id == thisActionId; });
-            if let index = index {
-                self._actionsOnChanged.removeAtIndex(index);
-            }
+            wrapper.target = nil;
         });
     }
 
