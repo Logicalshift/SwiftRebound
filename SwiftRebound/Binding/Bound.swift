@@ -137,7 +137,14 @@ public class Bound<TBoundType> : Changeable, Notifiable {
             }
         });
     }
-    
+
+    ///
+    /// Calls a function any time this value is marked as changed
+    ///
+    public final func whenChanged(action: () -> ()) -> Lifetime {
+        return whenChanged(CallbackNotifiable(action: action));
+    }
+
     ///
     /// Calls a function any time this value is changed. The function will be called at least once
     /// with the current value of this bound object
@@ -147,9 +154,9 @@ public class Bound<TBoundType> : Changeable, Notifiable {
         action(resolve());
         
         // Call and resolve the action whenever this item is changed
-        return whenChanged(CallbackNotifiable(action: {
+        return whenChanged {
             action(self.resolve());
-        }));
+        };
     }
     
     ///
