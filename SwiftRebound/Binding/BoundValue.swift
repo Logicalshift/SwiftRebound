@@ -28,7 +28,7 @@ internal class BoundValue<TBoundType> : MutableBound<TBoundType> {
         // notifyChange can occur at any point after markAsChanged() is called, but must occur before a following
         // resolve() call completes. Here we notify early so we don't need to remember the state for the next
         // resolve call.
-        notifyChange(value);
+        notifyChange();
     }
     
     override func computeValue() -> TBoundType {

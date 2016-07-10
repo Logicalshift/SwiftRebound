@@ -29,10 +29,10 @@ public class MutableBound<TBoundType> : Bound<TBoundType> {
             // Tell any observers that the change has occurred
             if let lastValue = lastValue {
                 if isChanged(oldValue: lastValue, newValue: finalValue) {
-                    notifyChange(finalValue);
+                    notifyChange();
                 }
             } else {
-                notifyChange(finalValue);
+                notifyChange();
             }
         }
     }
