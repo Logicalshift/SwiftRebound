@@ -36,6 +36,7 @@ public class CallbackLifetime : Lifetime {
     ///
     public func keep() -> Void {
         _isKept = true;
+        _done = nil;
     }
     
     ///

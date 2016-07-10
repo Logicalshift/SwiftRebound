@@ -46,7 +46,7 @@ class SimpleBindingTests: XCTestCase {
             // Will get called with the initial value (1) then again with the updated value (2)
             XCTAssertEqual(observed, newValue);
             observed += 1;
-        };
+        }.keep();
         
         XCTAssertEqual(1, boundInt.value);
         
@@ -64,7 +64,7 @@ class SimpleBindingTests: XCTestCase {
         var notificationCount = 0;
         let boundInt = Binding.create(1);
         
-        boundInt.observe { newValue in notificationCount += 1 };
+        boundInt.observe { newValue in notificationCount += 1 }.keep();
         
         XCTAssertEqual(1, notificationCount);
         
@@ -73,5 +73,31 @@ class SimpleBindingTests: XCTestCase {
         boundInt.resolve();
         
         XCTAssertEqual(2, notificationCount);
+    }
+    
+    func testStopObservingWhenLifetimeDone() {
+        // Should be able to attach an observer to a binding and get callbacks when it has changed
+        var observed = 1;
+        
+        let boundInt = Binding.create(1);
+        
+        let observationLifetime = boundInt.observe { newValue in
+            // Will get called with the initial value (1) then again with the updated value (2)
+            XCTAssertEqual(observed, newValue);
+            observed += 1;
+            };
+        
+        XCTAssertEqual(1, boundInt.value);
+        
+        // Should be observed once. Observed will be 2 indicating the value we expect next time it's observed.
+        XCTAssertEqual(2, observed);
+        
+        // Stop observing
+        observationLifetime.done();
+        
+        // Should not be observed any more (observed will remain at 2)
+        boundInt.value = 2;
+        XCTAssertEqual(2, observed);
+        XCTAssertEqual(2, boundInt.value);
     }
 }

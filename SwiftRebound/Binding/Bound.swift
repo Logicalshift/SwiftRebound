@@ -22,7 +22,12 @@ public class Bound<TBoundType> {
     ///
     /// The actions that should be executed when this bound value is changed
     ///
-    private var _actions: [(TBoundType) -> ()] = [];
+    private var _actions: [(Int, (TBoundType) -> ())] = [];
+    
+    ///
+    /// Next ID to assign to an action
+    ///
+    private var _nextActionId = 0;
     
     ///
     /// Must be overridden by subclasses: can't be initialised directly
@@ -36,7 +41,7 @@ public class Bound<TBoundType> {
     ///
     final func notifyChange(newValue: TBoundType) {
         // Run any actions that result from this value being updated
-        for action in _actions {
+        for (_, action) in _actions {
             action(newValue);
         }
     }
@@ -91,14 +96,24 @@ public class Bound<TBoundType> {
     /// Calls a function any time this value is changed. The function will be called at least once
     /// with the current value of this bound object
     ///
-    final func observe(action: (TBoundType) -> ()) -> () {
+    final func observe(action: (TBoundType) -> ()) -> Lifetime {
         // TODO: track bindings as we observe so we can update
         
         // As soon as we start observing a value, call the action to generate the initial binding
         action(resolve());
         
         // Record this action so we can re-run it when the value changes
-        _actions.append(action);
+        let thisActionId = _nextActionId;
+        _nextActionId += 1;
+        _actions.append((thisActionId, action));
+        
+        // Stop observing the action once the lifetime expires
+        return CallbackLifetime(done: {
+            let index = self._actions.indexOf({ (id, _) in return id == thisActionId; });
+            if let index = index {
+                self._actions.removeAtIndex(index);
+            }
+        });
     }
     
     ///
