@@ -23,7 +23,8 @@ internal class BoundValue<TBoundType> : MutableBound<TBoundType> {
     }
     
     override func markAsChanged() {
-        // These aren't computed, so we can't mark them as changed
+        // These aren't computed, so we can't mark them as changed. We should notify the observers however.
+        notifyChange(value);
     }
     
     override func computeValue() -> TBoundType {
