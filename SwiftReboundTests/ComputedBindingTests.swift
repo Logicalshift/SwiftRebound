@@ -61,6 +61,19 @@ class ComputedBindingTests : XCTestCase {
         computedObservation.done();
     }
     
+    func testReadComputablePerformance() {
+        let simple      = Binding.create(1);
+        let computed    = Binding.computed({ return 1 + simple.value });
+        
+        self.measureBlock {
+            for _ in 0..<100000 {
+                if computed.value != 2 {
+                    XCTAssert(false);
+                }
+            }
+        }
+    }
+    
     func testUpdateComputablePerformance() {
         let simple      = Binding.create(1);
         let computed    = Binding.computed({ return 1 + simple.value });
