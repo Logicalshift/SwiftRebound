@@ -30,6 +30,9 @@ internal class BoundComputable<TBoundType> : Bound<TBoundType> {
     /// The queue that is used to perform the computations
     private let _queue = _defaultComputableQueue;
     
+    /// Dependencies created the last time this value was computed
+    private var _dependencies: [Lifetime] = [];
+    
     init(compute: () -> TBoundType) {
         _compute = compute;
 
@@ -42,20 +45,32 @@ internal class BoundComputable<TBoundType> : Bound<TBoundType> {
     /// Subclasses must override this to describe how a bound value is updated
     ///
     override func computeValue() -> TBoundType {
-        var result: TBoundType? = nil;
+        // Results of the computation
+        var result: TBoundType?         = nil;
+        var newDependencies: [Lifetime] = [];
         
-        let compute = _compute;
-        dispatch_sync(_queue, {
-            BindingContext.withNewContext {
-                // TODO: Clear existing dependencies
-                
-                // Compute the result
-                result = compute();
-                
-                // TODO: Create new dependencies
+        // Input for the computation
+        let compute         = _compute;
+        let oldDependencies = _dependencies;
+        let invalidate      = { self.markAsChanged(); }
+
+        BindingContext.withNewContext {
+            // Clear existing dependencies
+            // TODO: dependencies are often the same before and after a computation, so this would be faster if we didn't clear in the case that they are the same
+            for dependency in oldDependencies {
+                dependency.done();
             }
-        });
+            
+            // Compute the result
+            result = compute();
+            
+            // Create new dependencies
+            for newDependency in BindingContext.current!.dependencies {
+                newDependencies.append(newDependency.whenChanged(invalidate));
+            }
+        }
         
+        _dependencies = newDependencies;
         return result!;
     }
 }

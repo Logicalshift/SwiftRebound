@@ -29,7 +29,7 @@ public class BindingContext {
     ///
     /// The dependencies that have been created in this context
     ///
-    var _dependencies = [Changeable]();
+    private var _dependencies = [Changeable]();
     
     ///
     /// Call BindingContext.current to get the binding context for the current queue
