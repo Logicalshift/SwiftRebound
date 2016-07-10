@@ -46,26 +46,39 @@ public class BindingContext {
     }
     
     ///
-    /// Creates a new binding context (which can be retreived with current) and performs the specified action with
+    /// Creates a new dispatch queue with a new binding context
+    ///
+    public static func createQueueWithNewContext() -> dispatch_queue_t {
+        // Generate a new context
+        let newContext  = BindingContext();
+        
+        // Create a queue to use the context in
+        let queue       = dispatch_queue_create("io.logicalshift.binding", nil);
+        let retained    = Unmanaged<BindingContext>.passRetained(newContext).toOpaque();
+        
+        dispatch_queue_set_specific(queue, _contextSpecificName, UnsafeMutablePointer<Void>(retained), { context in
+            // Release the context
+            Unmanaged<BindingContext>.fromOpaque(COpaquePointer(context)).release();
+        });
+        
+        return queue;
+    }
+    
+    ///
+    /// Creates a new binding context (which can be retrieved with current) and performs the specified action with
     /// it in effect
     ///
     public static func withNewContext(action: () -> ()) {
-        // Generate a new context
-        let newContext  = BindingContext();
-
         if let existingContext = BindingContext.current {
+            // Generate a new context
+            let newContext  = BindingContext();
+            
             // If there's an existing context, append the new context to it and perform the action rather than creating a whole new context
             // Creating new contexts is expensive
             existingContext.usingContext(action, newContext: newContext);
         } else {
             // Create a queue to use the context in
-            let queue       = dispatch_queue_create("io.logicalshift.binding", nil);
-            let retained    = Unmanaged<BindingContext>.passRetained(newContext).toOpaque();
-            
-            dispatch_queue_set_specific(queue, _contextSpecificName, UnsafeMutablePointer<Void>(retained), { context in
-                // Release the context
-                Unmanaged<BindingContext>.fromOpaque(COpaquePointer(context)).release();
-            });
+            let queue = BindingContext.createQueueWithNewContext();
             
             // Perform the action with this context in effect
             dispatch_sync(queue, {
