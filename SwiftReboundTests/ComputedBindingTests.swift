@@ -29,6 +29,9 @@ class ComputedBindingTests : XCTestCase {
         
         simple.value = 3;
         XCTAssertEqual(4, computed.value);
+        
+        simple.value = 4;
+        XCTAssertEqual(5, computed.value);
     }
     
     func testInvalidatesAfterChangeChain() {
