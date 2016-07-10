@@ -45,16 +45,20 @@ internal class BoundComputable<TBoundType> : Bound<TBoundType> {
         BindingContext.withNewContext {
             // Clear existing dependencies
             // TODO: dependencies are often the same before and after a computation, so this would be faster if we didn't clear in the case that they are the same
-            for dependency in oldDependencies {
-                dependency.done();
-            }
+            //for dependency in oldDependencies {
+            //    dependency.done();
+            //}
             
             // Compute the result
             result = compute();
             
             // Create new dependencies
-            for newDependency in BindingContext.current!.dependencies {
-                newDependencies.append(newDependency.whenChanged(invalidate));
+            if oldDependencies.count == 0 {
+                for newDependency in BindingContext.current!.dependencies {
+                    newDependencies.append(newDependency.whenChanged(invalidate));
+                }
+            } else {
+                newDependencies = oldDependencies;
             }
         }
         
