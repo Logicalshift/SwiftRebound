@@ -58,7 +58,7 @@ internal class BoundComputable<TBoundType> : Bound<TBoundType> {
 
                 // Create new dependencies
                 var newDependencies: [(Changeable, Lifetime)] = [];
-                for newDependency in BindingContext.current!.dependencies {
+                for newDependency in currentContext.dependencies {
                     newDependencies.append((newDependency, newDependency.whenChanged(invalidate)));
                 }
                 
