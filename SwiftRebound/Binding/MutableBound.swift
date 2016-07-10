@@ -17,6 +17,7 @@ public class MutableBound<TBoundType> : Bound<TBoundType> {
     /// Gets or sets the value attached to this bound value
     ///
     override var value: TBoundType {
+        @inline(__always)
         get {
             return resolve();
         }

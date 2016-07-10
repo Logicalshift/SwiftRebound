@@ -87,6 +87,7 @@ public class Bound<TBoundType> {
     /// Reads the value that this object is bound to
     ///
     var value: TBoundType {
+        @inline(__always)
         get {
             return resolve();
         }
