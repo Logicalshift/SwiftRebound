@@ -63,6 +63,9 @@ public class Bound<TBoundType> {
     ///
     @inline(__always)
     final func resolve() -> TBoundType {
+        // Resolving a binding creates a dependency in the current context
+        BindingContext.current?.addDependency(self);
+        
         if let currentValue = _currentValue {
             // If the current value is not dirty (ie, we've got it cached), then use that
             return currentValue;
