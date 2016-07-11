@@ -67,12 +67,14 @@ class PebkacTests : XCTestCase {
     
     func testObservablesNotCalledRecursively() {
         // If an observer updates a binding, then the observer should get called again only after it has returned
+        // Recursively calling bindings would result in stack overflows if they cause many side-effects before resolving
+        // (Non-recursive bindings can create infinite loops)
         let binding = Binding.create(1);
         
         binding.observe { newValue in
             if newValue < 5 {
                 binding.value = newValue + 1;
-                XCTAssert(binding.value == newValue + 1);
+                XCTAssertEqual(newValue+1, binding.value);
             }
         }.forever();
 

@@ -166,13 +166,15 @@ public class Bound<TBoundType> : Changeable, Notifiable {
     /// with the current value of this bound object
     ///
     public final func observe(action: (TBoundType) -> ()) -> Lifetime {
-        // As soon as we start observing a value, call the action to generate the initial binding
-        action(resolve());
-        
         // Call and resolve the action whenever this item is changed
-        return whenChanged {
+        let lifetime = whenChanged {
             action(self.resolve());
         };
+
+        // As soon as we start observing a value, call the action to generate the initial binding
+        action(resolve());
+
+        return lifetime;
     }
     
     ///
