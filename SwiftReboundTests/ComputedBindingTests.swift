@@ -94,7 +94,7 @@ class ComputedBindingTests : XCTestCase {
         let computed = Binding.computed({ () -> Int in return binding.value + 1 });
         
         // Monitor when it gets notified of changes (once it's removed from memory, it'll stop getting notifications)
-        computed.whenChanged { newValue in onChange() }.keep();
+        computed.whenChanged { newValue in onChange() }.forever();
         
         // Update it a couple of times and make sure it changes twice (initial value doesn't count as a change)
         XCTAssert(computed.value == binding.value + 1);
@@ -151,7 +151,7 @@ class ComputedBindingTests : XCTestCase {
         // Other part of baseline: update a binding using observe() rather than the automated computed stuff
         let simple      = Binding.create(1);
         let simple2     = Binding.create(2);
-        simple.observe { newValue in simple2.value = newValue+1 }.keep();
+        simple.observe { newValue in simple2.value = newValue+1 }.forever();
         
         self.measureBlock {
             for x in 0..<100000 {
@@ -199,7 +199,7 @@ class ComputedBindingTests : XCTestCase {
         let simple      = Binding.create(1);
         let computed    = Binding.computed({ return 1 + simple.value });
         
-        computed.observe({ newValue in }).keep();
+        computed.observe({ newValue in }).forever();
         
         self.measureBlock {
             for x in 0..<100000 {

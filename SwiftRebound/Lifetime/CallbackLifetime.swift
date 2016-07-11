@@ -34,7 +34,7 @@ public class CallbackLifetime : Lifetime {
     ///
     /// Indicates that this object should survive even when this Lifetime object has been deinitialised
     ///
-    public func keep() -> Void {
+    public func forever() -> Void {
         _isKept = true;
         _done = nil;
     }

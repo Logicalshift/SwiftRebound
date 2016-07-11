@@ -23,7 +23,7 @@ public protocol Lifetime {
     ///
     /// Indicates that this object should survive even when this Lifetime object has been deinitialised
     ///
-    func keep() -> Void;
+    func forever() -> Void;
     
     ///
     /// Indicates that this object has been finished with

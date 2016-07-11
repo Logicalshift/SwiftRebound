@@ -28,7 +28,7 @@ class LifetimeTests : XCTestCase {
     
     func keepAlive(callback: () -> ()) {
         let alive = CallbackLifetime(done: callback);
-        alive.keep();
+        alive.forever();
     }
     
     func testCallbackLifetimeDeinit() {

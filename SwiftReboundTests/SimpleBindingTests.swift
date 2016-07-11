@@ -46,7 +46,7 @@ class SimpleBindingTests : XCTestCase {
             // Will get called with the initial value (1) then again with the updated value (2)
             XCTAssertEqual(observed, newValue);
             observed += 1;
-        }.keep();
+        }.forever();
         
         XCTAssertEqual(1, boundInt.value);
         
@@ -64,7 +64,7 @@ class SimpleBindingTests : XCTestCase {
         var notificationCount = 0;
         let boundInt = Binding.create(1);
         
-        boundInt.observe { newValue in notificationCount += 1 }.keep();
+        boundInt.observe { newValue in notificationCount += 1 }.forever();
         
         XCTAssertEqual(1, notificationCount);
         

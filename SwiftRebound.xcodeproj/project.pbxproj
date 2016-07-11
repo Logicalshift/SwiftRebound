@@ -36,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4B1BA3451D3430AC000E4223 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4B2EAEF71D323E28006D9138 /* SwiftRebound.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftRebound.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B2EAEFA1D323E28006D9138 /* SwiftRebound.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftRebound.h; sourceTree = "<group>"; };
 		4B2EAEFC1D323E28006D9138 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -81,6 +82,7 @@
 			children = (
 				4B2EAEF91D323E28006D9138 /* SwiftRebound */,
 				4B2EAF051D323E28006D9138 /* SwiftReboundTests */,
+				4B1BA3451D3430AC000E4223 /* README.md */,
 				4B2EAEF81D323E28006D9138 /* Products */,
 			);
 			sourceTree = "<group>";
