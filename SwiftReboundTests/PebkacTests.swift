@@ -57,7 +57,7 @@ class PebkacTests : XCTestCase {
             if newValue < 5 {
                 binding.value = newValue + 1;
             }
-        }
+        }.forever();
         
         XCTAssertEqual(5, binding.value );
         
@@ -74,6 +74,11 @@ class PebkacTests : XCTestCase {
                 binding.value = newValue + 1;
                 XCTAssert(binding.value == newValue + 1);
             }
-        }
+        }.forever();
+
+        XCTAssertEqual(5, binding.value);
+        
+        binding.value = 0;
+        XCTAssertEqual(5, binding.value);
     }
 }

@@ -85,7 +85,7 @@ class SimpleBindingTests : XCTestCase {
             // Will get called with the initial value (1) then again with the updated value (2)
             XCTAssertEqual(observed, newValue);
             observed += 1;
-            };
+        };
         
         XCTAssertEqual(1, boundInt.value);
         
