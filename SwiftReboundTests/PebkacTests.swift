@@ -65,14 +65,36 @@ class PebkacTests : XCTestCase {
         XCTAssertEqual(5, binding.value);
     }
     
-    func testObservablesNotCalledRecursively() {
-        // If an observer updates a binding, then the observer should get called again only after it has returned
-        // Recursively calling bindings would result in stack overflows if they cause many side-effects before resolving
-        // (Non-recursive bindings can create infinite loops)
+    func testObservablesCalledAgainOnSideEffectPerformance() {
+        // If an observer updates a binding, it should get called again with the new value
         let binding = Binding.create(1);
         
         binding.observe { newValue in
             if newValue < 5 {
+                binding.value = newValue + 1;
+            }
+            }.forever();
+        
+        XCTAssertEqual(5, binding.value );
+        
+        self.measureBlock {
+            binding.value = -100000;
+            XCTAssertEqual(5, binding.value);
+        }
+    }
+    
+    func testSideEffectsCauseObservablesToBeCalledIteratively() {
+        // If an observer updates a binding, then the observer should get called again only after it has returned
+        // Recursively calling bindings would result in stack overflows if they cause many side-effects before resolving
+        // (Non-recursive bindings can create infinite loops as well as potentially change the values of bindings in
+        // ways that appear odd)
+        let binding = Binding.create(1);
+        
+        binding.observe { newValue in
+            if newValue < 5 {
+                // If this resolved recursively then the binding value would end up as '5' after we update it
+                // If we iterate, then we can continue after the binding and read the value just set (but it'll 
+                // update to 5 as far as an outside observer is concerned)
                 binding.value = newValue + 1;
                 XCTAssertEqual(newValue+1, binding.value);
             }
