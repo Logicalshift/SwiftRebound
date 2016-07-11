@@ -166,13 +166,30 @@ public class Bound<TBoundType> : Changeable, Notifiable {
     /// with the current value of this bound object
     ///
     public final func observe(action: (TBoundType) -> ()) -> Lifetime {
-        // Call and resolve the action whenever this item is changed
-        let lifetime = whenChanged {
-            action(self.resolve());
+        var resolving           = false;
+        var resolveAgain        = false;
+        
+        let performObservation  = {
+            if !resolving {
+                // If we get a side-effect that causes this to need to be fired again, then do so iteratively rather than recursively
+                repeat {
+                    resolveAgain = false;
+                    
+                    resolving = true;
+                    action(self.resolve());
+                    resolving = false;
+                } while (resolveAgain);
+            } else {
+                // Something is currently resolving this observable, cause it to run again
+                resolveAgain = true;
+            }
         };
+        
+        // Call and resolve the action whenever this item is changed
+        let lifetime = whenChanged(performObservation);
 
         // As soon as we start observing a value, call the action to generate the initial binding
-        action(resolve());
+        performObservation();
 
         return lifetime;
     }
