@@ -18,7 +18,7 @@ public class CallbackLifetime : Lifetime {
     /// True if we should not call done() from deinit
     private var _isKept = false;
     
-    init(done: () -> ()) {
+    public init(done: () -> ()) {
         _done = done;
     }
     
