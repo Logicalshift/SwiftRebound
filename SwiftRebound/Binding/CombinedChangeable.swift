@@ -11,11 +11,11 @@ import Foundation
 ///
 /// Changeable implementation that works by combined many changeable objects into one
 ///
-internal class CombinedChangeable : Changeable {
+public class CombinedChangeable : Changeable {
     /// The chageables that are combined in this one
     private var _combined: [Changeable];
     
-    init(changeables: [Changeable]) {
+    public init(changeables: [Changeable]) {
         var flatChangeables = [Changeable]();
         
         // Flatten out the list so that we don't create nested combined changeables
@@ -32,7 +32,7 @@ internal class CombinedChangeable : Changeable {
     ///
     /// Calls a function any time this value is marked as changed
     ///
-    func whenChanged(target: Notifiable) -> Lifetime {
+    public func whenChanged(target: Notifiable) -> Lifetime {
         var lifetimes = [Lifetime]();
         
         // Combine the changeables and generate a lifetime for each one
@@ -48,14 +48,14 @@ internal class CombinedChangeable : Changeable {
     ///
     /// Adds a new changeable to the changeable items being managed by this object
     ///
-    func addChangeable(newChangeable: Changeable) {
+    public func addChangeable(newChangeable: Changeable) {
         _combined.append(newChangeable);
     }
     
     ///
     /// Finds if this represents the same changeable as the specified combined changeable
     ///
-    func isSameAs(compareTo: CombinedChangeable) -> Bool {
+    public func isSameAs(compareTo: CombinedChangeable) -> Bool {
         // Lengths must be the same
         if _combined.count != compareTo._combined.count {
             return false;
