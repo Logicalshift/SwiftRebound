@@ -11,7 +11,7 @@ import Foundation
 ///
 /// A trigger is a function whose operation is monitored for bound variables
 ///
-internal class Trigger : Changeable, Notifiable {
+internal class Trigger : Changeable, Notifiable, Lifetime {
     /// The action that this trigger monitors
     let action: () -> ();
     
@@ -90,5 +90,19 @@ internal class Trigger : Changeable, Notifiable {
                 return notificationWrapper.target != nil
             };
         }
+    }
+
+    ///
+    /// Indicates that this object should survive even when this Lifetime object has been deinitialised
+    ///
+    func forever() -> Void {
+        // We only implement Lifetime so this object can be put into a CombinedLifetime to ensure it's kept around
+    }
+    
+    ///
+    /// Indicates that this object has been finished with
+    ///
+    func done() -> Void {
+        // We only implement Lifetime so this object can be put into a CombinedLifetime to ensure it's kept around
     }
 }

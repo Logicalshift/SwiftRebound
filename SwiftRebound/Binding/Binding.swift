@@ -52,9 +52,9 @@ public class Binding {
     /// This is something like a drawing function where it can be triggered to update by calling `setNeedsDisplay()`.
     ///
     static func trigger(action: () -> (), causeUpdate: () -> ()) -> (() -> (), Lifetime) {
-        let (boundAction, actionDependencies) = bindAction(action);
-        let lifetime = actionDependencies.whenChanged(causeUpdate);
+        let trigger     = Trigger(action: action);
+        let lifetime    = trigger.whenChanged(causeUpdate).liveAsLongAs(trigger);
         
-        return (boundAction, lifetime);
+        return (trigger.performAction, lifetime);
     }
 };

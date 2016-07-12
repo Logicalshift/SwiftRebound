@@ -79,7 +79,7 @@ class TriggerTests : XCTestCase {
         let (triggerFn, lifetime) = Binding.trigger({
             triggerValue = binding.value;
             triggerCount += 1;
-            }, causeUpdate: { updateCount += 1 });
+        }, causeUpdate: { updateCount += 1 });
         
         triggerFn();
         XCTAssertEqual(1, triggerCount);

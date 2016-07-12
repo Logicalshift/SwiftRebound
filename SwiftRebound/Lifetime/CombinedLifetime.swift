@@ -12,7 +12,7 @@ import Foundation
 /// Lifetime object that represents the combination of many lifetimes into one
 ///
 public class CombinedLifetime : Lifetime {
-    private let _combined: [Lifetime];
+    private var _combined: [Lifetime];
     
     public init(lifetimes: [Lifetime]) {
         var flatLifetimes = [Lifetime]();
@@ -46,6 +46,8 @@ public class CombinedLifetime : Lifetime {
         for lifetime in _combined {
             lifetime.done();
         }
+        
+        _combined = [];
     }
 }
 
