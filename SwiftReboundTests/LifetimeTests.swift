@@ -42,4 +42,19 @@ class LifetimeTests : XCTestCase {
         keepAlive({ done = true });
         XCTAssert(!done);
     }
+    
+    func testCompositeLifetime() {
+        var doneFirst   = false;
+        var doneSecond  = false;
+
+        let first       = CallbackLifetime(done: { doneFirst = true; });
+        let second      = CallbackLifetime(done: { doneSecond = true; });
+        let combined    = first.liveAsLongAs(second);
+        
+        XCTAssert(!doneFirst);
+        XCTAssert(!doneSecond);
+        combined.done();
+        XCTAssert(doneFirst);
+        XCTAssert(doneSecond);
+    }
 }

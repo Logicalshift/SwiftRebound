@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4B1BA3471D3432AD000E4223 /* PebkacTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1BA3461D3432AD000E4223 /* PebkacTests.swift */; };
+		4B1EBA221D34D0220013489E /* CompositeLifetime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1EBA211D34D0220013489E /* CompositeLifetime.swift */; };
 		4B2EAEFB1D323E28006D9138 /* SwiftRebound.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B2EAEFA1D323E28006D9138 /* SwiftRebound.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4B2EAF021D323E28006D9138 /* SwiftRebound.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B2EAEF71D323E28006D9138 /* SwiftRebound.framework */; };
 		4B2EAF111D324773006D9138 /* Bound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF101D324773006D9138 /* Bound.swift */; };
@@ -38,6 +39,7 @@
 /* Begin PBXFileReference section */
 		4B1BA3451D3430AC000E4223 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4B1BA3461D3432AD000E4223 /* PebkacTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PebkacTests.swift; sourceTree = "<group>"; };
+		4B1EBA211D34D0220013489E /* CompositeLifetime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeLifetime.swift; sourceTree = "<group>"; };
 		4B2EAEF71D323E28006D9138 /* SwiftRebound.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftRebound.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B2EAEFA1D323E28006D9138 /* SwiftRebound.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftRebound.h; sourceTree = "<group>"; };
 		4B2EAEFC1D323E28006D9138 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 			children = (
 				4B2EAF1B1D325BAE006D9138 /* Lifetime.swift */,
 				4B2EAF1D1D325E08006D9138 /* CallbackLifetime.swift */,
+				4B1EBA211D34D0220013489E /* CompositeLifetime.swift */,
 			);
 			name = Lifetime;
 			path = SwiftRebound/Lifetime;
@@ -259,6 +262,7 @@
 				4B2EAF151D325410006D9138 /* Binding.swift in Sources */,
 				4B2EAF131D325066006D9138 /* MutableBound.swift in Sources */,
 				4B2EAF1E1D325E08006D9138 /* CallbackLifetime.swift in Sources */,
+				4B1EBA221D34D0220013489E /* CompositeLifetime.swift in Sources */,
 				4B2EAF2A1D327A93006D9138 /* BindingContext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
