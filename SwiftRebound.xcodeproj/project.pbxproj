@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4B1BA3471D3432AD000E4223 /* PebkacTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1BA3461D3432AD000E4223 /* PebkacTests.swift */; };
+		4B1DAC9E1D3586C1001B0DEF /* TriggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1DAC9D1D3586C1001B0DEF /* TriggerTests.swift */; };
 		4B1EBA221D34D0220013489E /* CombinedLifetime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1EBA211D34D0220013489E /* CombinedLifetime.swift */; };
 		4B1EBA241D34D4170013489E /* CombinedChangeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1EBA231D34D4170013489E /* CombinedChangeable.swift */; };
 		4B1EBA261D34DB440013489E /* Trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1EBA251D34DB440013489E /* Trigger.swift */; };
@@ -43,6 +44,7 @@
 /* Begin PBXFileReference section */
 		4B1BA3451D3430AC000E4223 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4B1BA3461D3432AD000E4223 /* PebkacTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PebkacTests.swift; sourceTree = "<group>"; };
+		4B1DAC9D1D3586C1001B0DEF /* TriggerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggerTests.swift; sourceTree = "<group>"; };
 		4B1EBA211D34D0220013489E /* CombinedLifetime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CombinedLifetime.swift; sourceTree = "<group>"; };
 		4B1EBA231D34D4170013489E /* CombinedChangeable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CombinedChangeable.swift; sourceTree = "<group>"; };
 		4B1EBA251D34DB440013489E /* Trigger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trigger.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 			children = (
 				4B2EAF161D325505006D9138 /* SimpleBindingTests.swift */,
 				4B2EAF251D32750A006D9138 /* ComputedBindingTests.swift */,
+				4B1DAC9D1D3586C1001B0DEF /* TriggerTests.swift */,
 				4B2EAF1F1D325F24006D9138 /* LifetimeTests.swift */,
 				4B2EAF2D1D32844D006D9138 /* BindingContextTests.swift */,
 				4B1BA3461D3432AD000E4223 /* PebkacTests.swift */,
@@ -287,6 +290,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B1DAC9E1D3586C1001B0DEF /* TriggerTests.swift in Sources */,
 				4B2EAF2E1D32844D006D9138 /* BindingContextTests.swift in Sources */,
 				4B2EAF261D32750A006D9138 /* ComputedBindingTests.swift in Sources */,
 				4B2EAF201D325F24006D9138 /* LifetimeTests.swift in Sources */,
