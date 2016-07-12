@@ -51,4 +51,23 @@ internal class CombinedChangeable : Changeable {
     func addChangeable(newChangeable: Changeable) {
         _combined.append(newChangeable);
     }
+    
+    ///
+    /// Finds if this represents the same changeable as the specified combined changeable
+    ///
+    func isSameAs(compareTo: CombinedChangeable) -> Bool {
+        // Lengths must be the same
+        if _combined.count != compareTo._combined.count {
+            return false;
+        }
+        
+        // Changeables must be the same
+        for index in 0..<_combined.count {
+            if _combined[index] !== compareTo._combined[index] {
+                return false;
+            }
+        }
+        
+        return true;
+    }
 }
