@@ -32,4 +32,17 @@ public class Binding {
     static func computed<TBoundType>(compute: () -> TBoundType) -> Bound<TBoundType> {
         return BoundComputable(compute: compute);
     }
+    
+    ///
+    /// Binds an action function
+    ///
+    /// This returns a bound function and a Changeable that can be used to monitor it. The changeable will
+    /// notify `whenChanged` whenever any of the dependencies used by the last time through the bound function
+    /// are changed. (Note that it won't fire until the action function is run at least once)
+    ///
+    static func bindAction(action: () -> ()) -> (() -> (), Changeable) {
+        let trigger = Trigger(action: action);
+        
+        return (trigger.performAction, trigger);
+    }
 };

@@ -9,23 +9,6 @@
 import Foundation
 
 ///
-/// Class that makes a notification target weak (doesn't call it if it ceases to exist)
-///
-internal class WeakNotifiable : Notifiable {
-    weak var target : Notifiable?;
-    
-    init(target: Notifiable) {
-        self.target = target;
-    }
-    
-    func markAsChanged() {
-        if let target = target {
-            target.markAsChanged();
-        }
-    }
-}
-
-///
 /// Represents a bound item whose value is computed by a function
 ///
 /// If the function resolves other bindable methods, then those will be automatically added as dependencies -

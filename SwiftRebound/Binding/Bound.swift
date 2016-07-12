@@ -18,7 +18,6 @@ public protocol Notifiable : class {
     /// The next time the value is resolved, it will register as a change and the observers will be called.
     ///
     func markAsChanged();
-    
 }
 
 ///
@@ -29,17 +28,6 @@ public protocol Changeable : class {
     /// Calls a function any time this value is marked as changed
     ///
     func whenChanged(target: Notifiable) -> Lifetime;
-}
-
-///
-/// Wrapper that can be used to determine whether or not a particular notification target still exists
-///
-private class NotificationWrapper {
-    private var target : Notifiable?;
-    
-    init(target: Notifiable) {
-        self.target = target;
-    }
 }
 
 ///
@@ -84,8 +72,6 @@ public class Bound<TBoundType> : Changeable, Notifiable {
             _actionsOnChanged = _actionsOnChanged.filter { notificationWrapper in
                 return notificationWrapper.target != nil
             };
-            
-            
         }
     }
     
