@@ -30,6 +30,15 @@ public protocol Changeable : class {
     func whenChanged(target: Notifiable) -> Lifetime;
 }
 
+public extension Changeable {
+    ///
+    /// Calls a function any time this value is marked as changed
+    ///
+    public final func whenChanged(action: () -> ()) -> Lifetime {
+        return whenChanged(CallbackNotifiable(action: action));
+    }
+}
+
 ///
 /// A bound value represents a storage location whose changes can be observed by other objects.
 ///
@@ -138,13 +147,6 @@ public class Bound<TBoundType> : Changeable, Notifiable {
         return CallbackLifetime(done: {
             wrapper.target = nil;
         });
-    }
-
-    ///
-    /// Calls a function any time this value is marked as changed
-    ///
-    public final func whenChanged(action: () -> ()) -> Lifetime {
-        return whenChanged(CallbackNotifiable(action: action));
     }
 
     ///
