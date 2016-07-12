@@ -47,9 +47,9 @@ internal class Trigger : Changeable, Notifiable, Lifetime {
             if currentContext.dependenciesDiffer {
                 self._dependencyLifetime?.done();
                 
-                let newDependencies = currentContext.dependencies;
-                self._dependencies  = newDependencies;
-                newDependencies.whenChanged(WeakNotifiable(target: self));
+                let newDependencies         = currentContext.dependencies;
+                self._dependencies          = newDependencies;
+                self._dependencyLifetime    = newDependencies.whenChanged(WeakNotifiable(target: self));
             }
         }
     }
