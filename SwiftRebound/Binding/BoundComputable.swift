@@ -31,12 +31,15 @@ internal class WeakNotifiable : Notifiable {
 /// If the function resolves other bindable methods, then those will be automatically added as dependencies -
 /// that is, when those values are changed, so is the computable.
 ///
-internal class BoundComputable<TBoundType> : Bound<TBoundType> {
+internal final class BoundComputable<TBoundType> : Bound<TBoundType> {
     /// The function to compute
     private let _compute: () -> TBoundType;
     
     /// Dependencies created the last time this value was computed
-    private var _dependencies: [(Changeable, Lifetime)] = [];
+    private var _dependencies: CombinedChangeable?;
+    
+    /// Lifetime of the dependencies
+    private var _dependencyLifetime: Lifetime?;
     
     init(compute: () -> TBoundType) {
         _compute = compute;
@@ -61,24 +64,21 @@ internal class BoundComputable<TBoundType> : Bound<TBoundType> {
             let currentContext = BindingContext.current!;
             
             // Mark the expected dependencies
-            currentContext.setExpectedDependencies(oldDependencies.map { (dep, _) in return dep });
+            if let oldDependencies = oldDependencies {
+                currentContext.setExpectedDependencies(oldDependencies);
+            }
             
             // Compute the result
             result = compute();
             
             if currentContext.dependenciesDiffer {
                 // Clear existing dependencies
-                for (_, lifetime) in oldDependencies {
-                    lifetime.done();
-                }
+                self._dependencyLifetime?.done();
 
                 // Create new dependencies
-                var newDependencies: [(Changeable, Lifetime)] = [];
-                for newDependency in currentContext.dependencies {
-                    newDependencies.append((newDependency, newDependency.whenChanged(WeakNotifiable(target: self))));
-                }
-                
-                self._dependencies = newDependencies;
+                let newDependencies         = currentContext.dependencies;
+                self._dependencies          = newDependencies;
+                self._dependencyLifetime    = newDependencies.whenChanged(WeakNotifiable(target: self));
             }
         }
 

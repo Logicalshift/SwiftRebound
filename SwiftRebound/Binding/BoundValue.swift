@@ -11,7 +11,7 @@ import Foundation
 ///
 /// Represents a value that is bound to a simple value that can be updated from outside
 ///
-internal class BoundValue<TBoundType> : MutableBound<TBoundType> {
+internal final class BoundValue<TBoundType> : MutableBound<TBoundType> {
     init(value: TBoundType) {
         super.init();
         

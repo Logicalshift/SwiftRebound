@@ -11,9 +11,13 @@ import Foundation
 ///
 /// Changeable implementation that works by combined many changeable objects into one
 ///
-public class CombinedChangeable : Changeable {
+public final class CombinedChangeable : Changeable {
     /// The chageables that are combined in this one
     private var _combined: [Changeable];
+    
+    public init() {
+        _combined = [];
+    }
     
     public init(changeables: [Changeable]) {
         var flatChangeables = [Changeable]();

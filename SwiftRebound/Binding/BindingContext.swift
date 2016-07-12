@@ -37,22 +37,12 @@ public class BindingContext {
     ///
     /// The dependencies that have been created in this context
     ///
-    private var _dependencies = [Changeable]();
+    private var _dependencies = CombinedChangeable();
     
     ///
     /// Dependencies that we expected to see
     ///
-    private var _expectedDependencies = [Changeable]();
-    
-    ///
-    /// Number of dependencies that we've seen
-    ///
-    private var _dependencyCount = 0;
-    
-    ///
-    /// Set to true if addDependencies hasn't seen the expected dependencies in the right order
-    ///
-    private var _dependenciesDiffer = false;
+    private var _expectedDependencies: CombinedChangeable?;
     
     ///
     /// Call BindingContext.current to get the binding context for the current queue
@@ -140,7 +130,7 @@ public class BindingContext {
     ///
     /// Sets the set of expected dependencies for this item
     ///
-    public final func setExpectedDependencies(dependencies: [Changeable]) {
+    public final func setExpectedDependencies(dependencies: CombinedChangeable) {
         _expectedDependencies = dependencies;
     }
     
@@ -148,18 +138,13 @@ public class BindingContext {
     /// Adds a new dependency to the current context (the current context item will be marked as changed)
     ///
     public final func addDependency(dependentOn: Changeable) {
-        if _dependencyCount >= _expectedDependencies.count || _expectedDependencies[_dependencyCount] !== dependentOn {
-            _dependenciesDiffer = true;
-        }
-        _dependencyCount += 1;
-        
-        _dependencies.append(dependentOn);
+        _dependencies.addChangeable(dependentOn);
     }
     
     ///
     /// The changeable objects that have been added as dependencies for this context
     ///
-    public final var dependencies: [Changeable] {
+    public final var dependencies: CombinedChangeable {
         @inline(__always)
         get {
             return _dependencies;
@@ -171,7 +156,11 @@ public class BindingContext {
     ///
     public final var dependenciesDiffer: Bool {
         get {
-            return _dependenciesDiffer || _dependencyCount != _expectedDependencies.count;
+            if let expectedDependencies = _expectedDependencies {
+                return !expectedDependencies.isSameAs(_dependencies);
+            } else {
+                return true;
+            }
         }
     }
 };
