@@ -13,7 +13,7 @@ import Foundation
 ///
 internal class CombinedChangeable : Changeable {
     /// The chageables that are combined in this one
-    private let _combined: [Changeable];
+    private var _combined: [Changeable];
     
     init(changeables: [Changeable]) {
         var flatChangeables = [Changeable]();
@@ -43,5 +43,12 @@ internal class CombinedChangeable : Changeable {
         
         // Result is a combined lifetime
         return CombinedLifetime(lifetimes: lifetimes);
+    }
+    
+    ///
+    /// Adds a new changeable to the changeable items being managed by this object
+    ///
+    func addChangeable(newChangeable: Changeable) {
+        _combined.append(newChangeable);
     }
 }
