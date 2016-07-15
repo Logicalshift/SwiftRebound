@@ -12,7 +12,42 @@ import Foundation
 /// Collects all the bindings attached to a particular object
 ///
 private class ObserverBindings : NSObject {
+    /// The active bindings on this observer
     private var _attachedBindings = [String: KvoBound]();
+    
+    /// The target object, or nil if there are no attached bindings
+    ///
+    /// Cocoa throws an exception if there are any observers attached to an object when it is deinitialised.
+    ////
+    /// Often, it's unstable in terms of deallocation order of things, so the observers may not get deallocated
+    /// first, so this exception is random,
+    ///
+    /// Therefore, we have to keep the object alive for as long as anything is attached to it.
+    /// (Ideally, we'd just consider it as a weak reference as a dead object can't update itself, but there's no
+    /// way to control object deallocation order sufficiently. This is annoying as for 'natural' bindings the
+    /// behaviour is that if a binding goes away it stops updating)
+    private var _target: NSObject? = 0;
+    
+    /// How many active attached bindings there are
+    private var _attachCount: Int = 0;
+    
+    ///
+    /// Attaches a binding and ensures that the target object is kept in memory
+    ///
+    func attachBinding(target: NSObject) {
+        _attachCount    += 1;
+        _target         = target;
+    }
+    
+    ///
+    /// Detaches a binding, allowing the target object to be released if the reference count goes low enough
+    ///
+    func detachBinding() {
+        _attachCount -= 1;
+        if _attachCount == 0 {
+            _target = nil;
+        }
+    }
 
     /// Callback when an observed binding changes
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
@@ -57,6 +92,7 @@ private class KvoBound : Bound<AnyObject?> {
             let bindings = target.getObserverBindings();
             
             // Activate the observer for this key path
+            bindings.attachBinding(target);
             target.addObserver(bindings, forKeyPath: _keyPath, options: NSKeyValueObservingOptions.New, context: nil);
             _observing = true;
         }
@@ -67,6 +103,7 @@ private class KvoBound : Bound<AnyObject?> {
             let bindings = target.getObserverBindings();
             
             // Deactivate the observer for this key path
+            bindings.detachBinding();
             target.removeObserver(bindings, forKeyPath: _keyPath, context: nil);
             _observing = false;
         }
@@ -110,6 +147,8 @@ public extension NSObject {
 
     ///
     /// Creates a binding that is updated when the specified key path is changed
+    ///
+    /// Note that if anything is observing the binding, then the target object will be kept in memory (this includes computed bindings)
     ///
     public func bindKeyPath(keyPath: String) -> Bound<AnyObject?> {
         // Fetch the bindings attached to this object
