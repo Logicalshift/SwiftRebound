@@ -20,7 +20,7 @@ class KvoTests : XCTestCase {
         let binding     = observable.bindKeyPath("someNumber");
         
         var changeCount = 0;
-        binding.observe { newValue in changeCount += 1 }.forever();
+        let lifetime = binding.observe { newValue in changeCount += 1 };
         
         XCTAssertEqual(1, changeCount);
         XCTAssertEqual(0, binding.value as? Int);
@@ -28,6 +28,9 @@ class KvoTests : XCTestCase {
         observable.someNumber = 2;
         XCTAssertEqual(2, binding.value as? Int);
         XCTAssertEqual(2, changeCount);
+        
+        // Need to remove all observers before it's safe to deallocate observable (you get an inconsistency exception otherwise)
+        lifetime.done();
         
         // Note: triggering the inconsistency exception here when built for release will crash XCode instead of failing the test
     }

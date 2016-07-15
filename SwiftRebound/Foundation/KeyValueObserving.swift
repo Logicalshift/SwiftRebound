@@ -8,8 +8,11 @@
 
 import Foundation
 
+///
+/// Collects all the bindings attached to a particular object
+///
 private class ObserverBindings : NSObject {
-    private var _attachedBindings = [String: MutableBound<AnyObject?>]();
+    private var _attachedBindings = [String: KvoBound]();
 
     /// Callback when an observed binding changes
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
@@ -17,14 +20,50 @@ private class ObserverBindings : NSObject {
         if let keyPath = keyPath {
             // Must be observing the keypath
             if let binding = _attachedBindings[keyPath] {
-                // Change must exist
-                if let change = change {
-                    // Change must have a new value
-                    if let newValue = change[NSKeyValueChangeNewKey] {
-                        binding.value = newValue;
-                    }
-                }
+                // This binding has changed
+                binding.markAsChanged();
             }
+        }
+    }
+}
+
+///
+/// Binding that is used to attach to a KVO path in an object
+///
+private class KvoBound : Bound<AnyObject?> {
+    /// The object we're bound to, or nil if it has gone away
+    private weak var _target: NSObject?;
+    
+    /// The observer bindings object marks changes as having happened
+    private weak var _observerBindings: ObserverBindings?;
+    
+    /// The key path that we're bound to
+    private let _keyPath: String;
+    
+    init(target: NSObject, keyPath: String) {
+        _target     = target;
+        _keyPath    = keyPath;
+    }
+    
+    override private func computeValue() -> AnyObject? {
+        return _target?.valueForKey(_keyPath);
+    }
+    
+    override private func beginObserving() {
+        if let target = _target {
+            let bindings = target.getObserverBindings();
+            
+            // Activate the observer for this key path
+            target.addObserver(bindings, forKeyPath: _keyPath, options: NSKeyValueObservingOptions.New, context: nil);
+        }
+    }
+    
+    override private func doneObserving() {
+        if let target = _target {
+            let bindings = target.getObserverBindings();
+            
+            // Deactivate the observer for this key path
+            target.removeObserver(bindings, forKeyPath: _keyPath, context: nil);
         }
     }
 }
@@ -34,10 +73,13 @@ private var _observerBindingsKey = 0;
 
 public extension NSObject {
     ///
-    /// Creates a binding that is updated when the specified key path is changed
+    /// Retrieves the observer bindings attached to a NSObject
     ///
-    public func bindKeyPath(keyPath: String) -> Bound<AnyObject?> {
-        // Fetch the bindings attached to this object
+    private func getObserverBindings() -> ObserverBindings {
+        // We're a swift object and don't conform to NSObject, so we use an ObserverBindings object which does conform as the target
+        // (this also ensures that we only add one observer in total)
+        
+        // Fetch the bindings attached to the target
         let lastBindings = objc_getAssociatedObject(self, &_observerBindingsKey) as? ObserverBindings;
         var attachedBindings: ObserverBindings;
         
@@ -48,6 +90,16 @@ public extension NSObject {
             objc_setAssociatedObject(self, &_observerBindingsKey, attachedBindings, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN);
         }
         
+        return attachedBindings;
+    }
+
+    ///
+    /// Creates a binding that is updated when the specified key path is changed
+    ///
+    public func bindKeyPath(keyPath: String) -> Bound<AnyObject?> {
+        // Fetch the bindings attached to this object
+        let attachedBindings = self.getObserverBindings();
+        
         // Try to fetch the existing binding
         if let existingBinding = attachedBindings._attachedBindings[keyPath] {
             // Use the existing binding
@@ -55,11 +107,9 @@ public extension NSObject {
         } else {
             // Create binding, and observe it
             // TODO: make it so we don't read the value or attach the observer until the binding is first resolved
-            let initialValue    = self.valueForKey(keyPath);
-            let newBinding      = Binding.create(initialValue);
+            let newBinding      = KvoBound(target: self, keyPath: keyPath);
             
             attachedBindings._attachedBindings[keyPath] = newBinding;
-            self.addObserver(attachedBindings, forKeyPath: keyPath, options: NSKeyValueObservingOptions.New, context: nil);
             
             return newBinding;
         }
