@@ -29,22 +29,22 @@ private class ObserverBindings : NSObject {
     private var _target: NSObject? = 0;
     
     /// How many active attached bindings there are
-    private var _attachCount: Int = 0;
+    private var _attachCount: Int32 = 0;
     
     ///
     /// Attaches a binding and ensures that the target object is kept in memory
     ///
     func attachBinding(target: NSObject) {
-        _attachCount    += 1;
-        _target         = target;
+        OSAtomicIncrement32(&_attachCount);
+        _target = target;
     }
     
     ///
     /// Detaches a binding, allowing the target object to be released if the reference count goes low enough
     ///
     func detachBinding() {
-        _attachCount -= 1;
-        if _attachCount == 0 {
+        let newAttachCount = OSAtomicDecrement32(&_attachCount);
+        if newAttachCount == 0 {
             _target = nil;
         }
     }
