@@ -87,6 +87,16 @@ class KvoTests : XCTestCase {
         
         observable.someNumber = 3;
         XCTAssertEqual(3, binding.value);
+        
+        // Can fail with exception because the computed watches the observable and we can't detach it.
+        //
+        // If we add an observable, it's necessary to remove it before the object is deinitialised. AFAICT
+        // it's not possible to work out when the object is about to be deinitialised so we can remove it.
+        // Recomputing the value every time would work but it screws up the rest of the architecture.
+        //
+        // Seems to only fail in release builds, which is great. (If the computed value is deallocated first
+        // then there's no error; if the observable is deallocated first then there is. Tend to think that this
+        // is a logic bug in Apple's code as the behaviour is unstable)
     }
     
     func testCanStillReadAfterUnbindingComputed() {
