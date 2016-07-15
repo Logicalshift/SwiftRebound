@@ -14,7 +14,7 @@
 		4B1EBA261D34DB440013489E /* Trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1EBA251D34DB440013489E /* Trigger.swift */; };
 		4B1EBA281D34DF490013489E /* WeakNotifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1EBA271D34DF490013489E /* WeakNotifiable.swift */; };
 		4B1EBA2A1D34DF680013489E /* NotificationWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1EBA291D34DF680013489E /* NotificationWrapper.swift */; };
-		4B1F71111D36E08600B8014C /* ReboundNSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1F71101D36E08600B8014C /* ReboundNSView.swift */; };
+		4B1F71111D36E08600B8014C /* ReactiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1F71101D36E08600B8014C /* ReactiveView.swift */; };
 		4B2EAEFB1D323E28006D9138 /* SwiftRebound.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B2EAEFA1D323E28006D9138 /* SwiftRebound.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4B2EAF021D323E28006D9138 /* SwiftRebound.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B2EAEF71D323E28006D9138 /* SwiftRebound.framework */; };
 		4B2EAF111D324773006D9138 /* Bound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF101D324773006D9138 /* Bound.swift */; };
@@ -55,7 +55,7 @@
 		4B1EBA251D34DB440013489E /* Trigger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trigger.swift; sourceTree = "<group>"; };
 		4B1EBA271D34DF490013489E /* WeakNotifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeakNotifiable.swift; sourceTree = "<group>"; };
 		4B1EBA291D34DF680013489E /* NotificationWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationWrapper.swift; sourceTree = "<group>"; };
-		4B1F71101D36E08600B8014C /* ReboundNSView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReboundNSView.swift; sourceTree = "<group>"; };
+		4B1F71101D36E08600B8014C /* ReactiveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactiveView.swift; sourceTree = "<group>"; };
 		4B2EAEF71D323E28006D9138 /* SwiftRebound.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftRebound.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B2EAEFA1D323E28006D9138 /* SwiftRebound.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftRebound.h; sourceTree = "<group>"; };
 		4B2EAEFC1D323E28006D9138 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -102,7 +102,7 @@
 		4B1F710F1D36E07900B8014C /* Cocoa */ = {
 			isa = PBXGroup;
 			children = (
-				4B1F71101D36E08600B8014C /* ReboundNSView.swift */,
+				4B1F71101D36E08600B8014C /* ReactiveView.swift */,
 			);
 			path = Cocoa;
 			sourceTree = "<group>";
@@ -306,7 +306,7 @@
 				4B2EAF241D327417006D9138 /* BoundComputable.swift in Sources */,
 				4B2EAF191D32574C006D9138 /* BoundValue.swift in Sources */,
 				4B1EBA261D34DB440013489E /* Trigger.swift in Sources */,
-				4B1F71111D36E08600B8014C /* ReboundNSView.swift in Sources */,
+				4B1F71111D36E08600B8014C /* ReactiveView.swift in Sources */,
 				4B2EAF111D324773006D9138 /* Bound.swift in Sources */,
 				4B1EBA2A1D34DF680013489E /* NotificationWrapper.swift in Sources */,
 				4B4628BE1D38E2DA00CDBB9E /* KeyValueObserving.swift in Sources */,
