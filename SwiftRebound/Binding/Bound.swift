@@ -139,6 +139,10 @@ public class Bound<TBoundType> : Changeable, Notifiable {
     /// Calls a function any time this value is marked as changed
     ///
     public final func whenChanged(target: Notifiable) -> Lifetime {
+        if _actionsOnChanged.count == 0 {
+            beginObserving();
+        }
+        
         // Record this action so we can re-run it when the value changes
         let wrapper = NotificationWrapper(target: target);
         _actionsOnChanged.append(wrapper);
@@ -146,6 +150,7 @@ public class Bound<TBoundType> : Changeable, Notifiable {
         // Stop observing the action once the lifetime expires
         return CallbackLifetime(done: {
             wrapper.target = nil;
+            self.maybeDoneObserving();
         });
     }
 
@@ -189,5 +194,39 @@ public class Bound<TBoundType> : Changeable, Notifiable {
     ///
     internal func computeValue() -> TBoundType {
         fatalError("computeValue not implemented");
+    }
+    
+    ///
+    /// Something has begun observing this object for changes
+    ///
+    public func beginObserving() {
+        // Subclasses may override (eg if they want to add an observer)
+    }
+    
+    ///
+    /// All observers have finished their lifetime (called eagerly; normally observers are removed lazily)
+    ///
+    public func doneObserving() {
+        // Subclasses may override (eg if they want to add an observer)
+    }
+    
+    ///
+    /// Check to see if all notifications are finished with and call doneObserving() if they are
+    ///
+    private func maybeDoneObserving() {
+        // See if all the notifiers are finished with
+        var allDone = true;
+        for notifier in _actionsOnChanged {
+            if notifier.target != nil {
+                allDone = false;
+                break;
+            }
+        }
+        
+        // Clear out eagerly if all notifiers are finished with
+        if allDone {
+            _actionsOnChanged = [];
+            doneObserving();
+        }
     }
 }
