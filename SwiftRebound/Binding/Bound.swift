@@ -247,6 +247,9 @@ public class Bound<TBoundType> : Changeable, Notifiable {
     ///
     /// Returns a binding that is set to true while this binding is being observed
     ///
+    /// This can be used as an opportunity to detach or attach event handlers that update a particular value, by observing when it
+    /// becomes true or false.
+    ///
     public var isBound: Bound<Bool> {
         get {
             if let result = _isBound {
