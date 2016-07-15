@@ -11,7 +11,7 @@ import XCTest
 @testable import SwiftRebound
 
 private class Observable : NSObject {
-    dynamic var someNumber = 0;
+    dynamic var someNumber = 1;
 }
 
 class KvoTests : XCTestCase {
@@ -19,13 +19,21 @@ class KvoTests : XCTestCase {
         let observable  = Observable();
         let binding     = observable.bindKeyPath("someNumber");
         
-        XCTAssertEqual(0, binding.value as? Int);
+        XCTAssertEqual(1, binding.value as? Int);
         
         observable.someNumber = 2;
         XCTAssertEqual(2, binding.value as? Int);
         
         observable.someNumber = 3;
         XCTAssertEqual(3, binding.value as? Int);
+    }
+
+    func testCanJustReadObservableImmediatelyAfterSet() {
+        let observable  = Observable();
+        let binding     = observable.bindKeyPath("someNumber");
+        
+        observable.someNumber = 2;
+        XCTAssertEqual(2, binding.value as? Int);
     }
 
     func testCanBindToObservableKeyPath() {
@@ -36,7 +44,7 @@ class KvoTests : XCTestCase {
         let lifetime = binding.observe { newValue in changeCount += 1 };
         
         XCTAssertEqual(1, changeCount);
-        XCTAssertEqual(0, binding.value as? Int);
+        XCTAssertEqual(1, binding.value as? Int);
         
         observable.someNumber = 2;
         XCTAssertEqual(2, binding.value as? Int);
@@ -54,7 +62,7 @@ class KvoTests : XCTestCase {
         let lifetime = binding.observe { newValue in changeCount += 1 };
         
         XCTAssertEqual(1, changeCount);
-        XCTAssertEqual(0, binding.value);
+        XCTAssertEqual(1, binding.value);
         
         observable.someNumber = 2;
         XCTAssertEqual(2, binding.value);
@@ -68,7 +76,7 @@ class KvoTests : XCTestCase {
         let observable  = Observable();
         let binding     = Binding.computed { observable.bindKeyPath("someNumber").value as! Int };
         
-        XCTAssertEqual(0, binding.value);
+        XCTAssertEqual(1, binding.value);
         
         observable.someNumber = 2;
         XCTAssertEqual(2, binding.value);
