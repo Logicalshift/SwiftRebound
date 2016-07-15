@@ -148,7 +148,8 @@ public extension NSObject {
     ///
     /// Creates a binding that is updated when the specified key path is changed
     ///
-    /// Note that if anything is observing the binding, then the target object will be kept in memory (this includes computed bindings)
+    /// Note that if anything is observing the binding, then the target object will be kept in memory (this includes computed bindings).
+    /// This is done because an exception is thrown if there are any KVO observers attached to an object when it is deinitialised.
     ///
     public func bindKeyPath(keyPath: String) -> Bound<AnyObject?> {
         // Fetch the bindings attached to this object

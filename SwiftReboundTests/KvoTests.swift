@@ -10,7 +10,18 @@ import Foundation
 import XCTest
 @testable import SwiftRebound
 
+private var _observableAllocationCount = 0;
+
 private class Observable : NSObject {
+    override init() {
+        _observableAllocationCount += 1;
+        super.init();
+    }
+    
+    deinit {
+        _observableAllocationCount -= 1;
+    }
+    
     dynamic var someNumber = 1;
 }
 
@@ -19,6 +30,15 @@ private class Observable : NSObject {
 // deinitialised, which is annoying as the binding objects can easily outlive them)
 
 class KvoTests : XCTestCase {
+    override func setUp() {
+        _observableAllocationCount = 0;
+    }
+    
+    override func tearDown() {
+        // Observables should not be stuck in memory
+        XCTAssertEqual(0, _observableAllocationCount);
+    }
+    
     func testCanJustReadObservable() {
         let observable  = Observable();
         let binding     = observable.bindKeyPath("someNumber");
