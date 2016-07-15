@@ -46,3 +46,19 @@ var someView: NSView = view;
 let lifetime = binding.observe { newValue in print(newValue); };
 lifetime.liveAsLongAs(someView); /// binding will go away when the view goes away
 ```
+
+## Do Key-Value observation
+
+```swift
+class ObservableObject : NSObject {
+    dynamic var foo = 0;
+}
+
+let kvo = ObservableObject();
+let bound = kvo.bindKeyPath("foo");
+let value = bound.value as! Int;    // == 0
+
+let lifetime = bound.observe { newValue in print(newValue); }
+kvo.foo = 1;        /// Prints '1'
+lifetime.done();    /// Must stop observing KVO bindings before deallocating the object
+```
