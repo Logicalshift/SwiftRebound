@@ -104,13 +104,20 @@ public class Bound<TBoundType> : Changeable, Notifiable {
         // Resolving a binding creates a dependency in the current context
         BindingContext.current?.addDependency(self);
         
-        if let currentValue = _currentValue {
+        if !needsUpdate() {
             // If the current value is not dirty (ie, we've got it cached), then use that
-            return currentValue;
+            return _currentValue!;
         } else {
             // If the value is dirty, then compute it before returning it
             return rebind();
         }
+    }
+    
+    ///
+    /// Returns true if the cached value needs updating
+    ///
+    public func needsUpdate() -> Bool {
+        return _currentValue == nil;
     }
     
     ///
