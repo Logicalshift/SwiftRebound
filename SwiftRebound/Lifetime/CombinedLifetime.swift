@@ -49,6 +49,13 @@ public class CombinedLifetime : Lifetime {
         
         _combined = [];
     }
+    
+    ///
+    /// Adds a new lifetime to those monitored by this object
+    ///
+    public func addLifetime(newLifetime: Lifetime) {
+        _combined.append(newLifetime);
+    }
 }
 
 extension Lifetime {

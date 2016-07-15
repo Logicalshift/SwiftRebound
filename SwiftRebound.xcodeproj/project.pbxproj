@@ -14,6 +14,7 @@
 		4B1EBA261D34DB440013489E /* Trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1EBA251D34DB440013489E /* Trigger.swift */; };
 		4B1EBA281D34DF490013489E /* WeakNotifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1EBA271D34DF490013489E /* WeakNotifiable.swift */; };
 		4B1EBA2A1D34DF680013489E /* NotificationWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1EBA291D34DF680013489E /* NotificationWrapper.swift */; };
+		4B1F71111D36E08600B8014C /* ReboundNSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1F71101D36E08600B8014C /* ReboundNSView.swift */; };
 		4B2EAEFB1D323E28006D9138 /* SwiftRebound.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B2EAEFA1D323E28006D9138 /* SwiftRebound.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4B2EAF021D323E28006D9138 /* SwiftRebound.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B2EAEF71D323E28006D9138 /* SwiftRebound.framework */; };
 		4B2EAF111D324773006D9138 /* Bound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF101D324773006D9138 /* Bound.swift */; };
@@ -29,6 +30,8 @@
 		4B2EAF2A1D327A93006D9138 /* BindingContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF291D327A93006D9138 /* BindingContext.swift */; };
 		4B2EAF2E1D32844D006D9138 /* BindingContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF2D1D32844D006D9138 /* BindingContextTests.swift */; };
 		4B2EAF301D32B1EF006D9138 /* CallbackNotifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF2F1D32B1EF006D9138 /* CallbackNotifiable.swift */; };
+		4B4628B71D38DB7700CDBB9E /* ReboundNSObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4628B61D38DB7700CDBB9E /* ReboundNSObject.swift */; };
+		4B4628B91D38DE4B00CDBB9E /* NSObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4628B81D38DE4B00CDBB9E /* NSObjectTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +53,7 @@
 		4B1EBA251D34DB440013489E /* Trigger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trigger.swift; sourceTree = "<group>"; };
 		4B1EBA271D34DF490013489E /* WeakNotifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeakNotifiable.swift; sourceTree = "<group>"; };
 		4B1EBA291D34DF680013489E /* NotificationWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationWrapper.swift; sourceTree = "<group>"; };
+		4B1F71101D36E08600B8014C /* ReboundNSView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReboundNSView.swift; sourceTree = "<group>"; };
 		4B2EAEF71D323E28006D9138 /* SwiftRebound.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftRebound.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B2EAEFA1D323E28006D9138 /* SwiftRebound.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftRebound.h; sourceTree = "<group>"; };
 		4B2EAEFC1D323E28006D9138 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -68,6 +72,8 @@
 		4B2EAF291D327A93006D9138 /* BindingContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindingContext.swift; sourceTree = "<group>"; };
 		4B2EAF2D1D32844D006D9138 /* BindingContextTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindingContextTests.swift; sourceTree = "<group>"; };
 		4B2EAF2F1D32B1EF006D9138 /* CallbackNotifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallbackNotifiable.swift; sourceTree = "<group>"; };
+		4B4628B61D38DB7700CDBB9E /* ReboundNSObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReboundNSObject.swift; sourceTree = "<group>"; };
+		4B4628B81D38DE4B00CDBB9E /* NSObjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSObjectTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +95,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B1F710F1D36E07900B8014C /* Cocoa */ = {
+			isa = PBXGroup;
+			children = (
+				4B1F71101D36E08600B8014C /* ReboundNSView.swift */,
+				4B4628B61D38DB7700CDBB9E /* ReboundNSObject.swift */,
+			);
+			path = Cocoa;
+			sourceTree = "<group>";
+		};
 		4B2EAEEB1D323D9A006D9138 = {
 			isa = PBXGroup;
 			children = (
@@ -113,6 +128,7 @@
 			children = (
 				4B2EAF0F1D3241CB006D9138 /* Binding */,
 				4B2EAF1A1D325BA2006D9138 /* Lifetime */,
+				4B1F710F1D36E07900B8014C /* Cocoa */,
 				4B2EAEFA1D323E28006D9138 /* SwiftRebound.h */,
 				4B2EAEFC1D323E28006D9138 /* Info.plist */,
 			);
@@ -128,6 +144,7 @@
 				4B2EAF1F1D325F24006D9138 /* LifetimeTests.swift */,
 				4B2EAF2D1D32844D006D9138 /* BindingContextTests.swift */,
 				4B1BA3461D3432AD000E4223 /* PebkacTests.swift */,
+				4B4628B81D38DE4B00CDBB9E /* NSObjectTests.swift */,
 				4B2EAF081D323E28006D9138 /* Info.plist */,
 			);
 			path = SwiftReboundTests;
@@ -274,7 +291,9 @@
 				4B2EAF241D327417006D9138 /* BoundComputable.swift in Sources */,
 				4B2EAF191D32574C006D9138 /* BoundValue.swift in Sources */,
 				4B1EBA261D34DB440013489E /* Trigger.swift in Sources */,
+				4B1F71111D36E08600B8014C /* ReboundNSView.swift in Sources */,
 				4B2EAF111D324773006D9138 /* Bound.swift in Sources */,
+				4B4628B71D38DB7700CDBB9E /* ReboundNSObject.swift in Sources */,
 				4B1EBA2A1D34DF680013489E /* NotificationWrapper.swift in Sources */,
 				4B2EAF151D325410006D9138 /* Binding.swift in Sources */,
 				4B1EBA241D34D4170013489E /* CombinedChangeable.swift in Sources */,
@@ -290,6 +309,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B4628B91D38DE4B00CDBB9E /* NSObjectTests.swift in Sources */,
 				4B1DAC9E1D3586C1001B0DEF /* TriggerTests.swift in Sources */,
 				4B2EAF2E1D32844D006D9138 /* BindingContextTests.swift in Sources */,
 				4B2EAF261D32750A006D9138 /* ComputedBindingTests.swift in Sources */,
