@@ -18,7 +18,7 @@ public extension Lifetime {
     ///
     /// Attaches a lifetime to an object (the lifetime will last as long as the object
     ///
-    func liveAsLongAs(object: AnyObject!) {
+    public func liveAsLongAs(object: AnyObject!) {
         // Fetch the lifetime attached to this object
         let lifetimeObject = objc_getAssociatedObject(object, &_liveAsLongAsPtr) as? CombinedLifetime;
         
