@@ -40,6 +40,9 @@ private class KvoBound : Bound<AnyObject?> {
     /// The key path that we're bound to
     private let _keyPath: String;
     
+    /// Set to true if we're attached to an observer
+    private var _observing = false;
+    
     init(target: NSObject, keyPath: String) {
         _target     = target;
         _keyPath    = keyPath;
@@ -55,6 +58,7 @@ private class KvoBound : Bound<AnyObject?> {
             
             // Activate the observer for this key path
             target.addObserver(bindings, forKeyPath: _keyPath, options: NSKeyValueObservingOptions.New, context: nil);
+            _observing = true;
         }
     }
     
@@ -64,6 +68,17 @@ private class KvoBound : Bound<AnyObject?> {
             
             // Deactivate the observer for this key path
             target.removeObserver(bindings, forKeyPath: _keyPath, context: nil);
+            _observing = false;
+        }
+    }
+    
+    override private func needsUpdate() -> Bool {
+        if !_observing {
+            // Not attached to the observer: want to read the key value every time
+            return true;
+        } else {
+            // Attached to an observer: we get notified of changes
+            return super.needsUpdate();
         }
     }
 }

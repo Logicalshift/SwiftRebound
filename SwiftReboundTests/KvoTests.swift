@@ -14,6 +14,10 @@ private class Observable : NSObject {
     dynamic var someNumber = 1;
 }
 
+// Note: run these tests in release to check for bad behaviour around lifetimes: when built for debug, the object destruction order can avoid
+// an assertion failure that will happen with release builds. (NSObject will throw an exception if any observers are attached when it's
+// deinitialised, which is annoying as the binding objects can easily outlive them)
+
 class KvoTests : XCTestCase {
     func testCanJustReadObservable() {
         let observable  = Observable();
