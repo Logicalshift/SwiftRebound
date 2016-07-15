@@ -32,6 +32,8 @@
 		4B2EAF301D32B1EF006D9138 /* CallbackNotifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF2F1D32B1EF006D9138 /* CallbackNotifiable.swift */; };
 		4B4628B91D38DE4B00CDBB9E /* NSObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4628B81D38DE4B00CDBB9E /* NSObjectTests.swift */; };
 		4B4628BC1D38E18A00CDBB9E /* ReboundObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4628BB1D38E18A00CDBB9E /* ReboundObject.swift */; };
+		4B4628BE1D38E2DA00CDBB9E /* KeyValueObserving.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4628BD1D38E2DA00CDBB9E /* KeyValueObserving.swift */; };
+		4B4628C01D38EB7100CDBB9E /* KvoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4628BF1D38EB7100CDBB9E /* KvoTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +76,8 @@
 		4B2EAF2F1D32B1EF006D9138 /* CallbackNotifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallbackNotifiable.swift; sourceTree = "<group>"; };
 		4B4628B81D38DE4B00CDBB9E /* NSObjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSObjectTests.swift; sourceTree = "<group>"; };
 		4B4628BB1D38E18A00CDBB9E /* ReboundObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReboundObject.swift; sourceTree = "<group>"; };
+		4B4628BD1D38E2DA00CDBB9E /* KeyValueObserving.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyValueObserving.swift; sourceTree = "<group>"; };
+		4B4628BF1D38EB7100CDBB9E /* KvoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KvoTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +149,7 @@
 				4B2EAF2D1D32844D006D9138 /* BindingContextTests.swift */,
 				4B1BA3461D3432AD000E4223 /* PebkacTests.swift */,
 				4B4628B81D38DE4B00CDBB9E /* NSObjectTests.swift */,
+				4B4628BF1D38EB7100CDBB9E /* KvoTests.swift */,
 				4B2EAF081D323E28006D9138 /* Info.plist */,
 			);
 			path = SwiftReboundTests;
@@ -183,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				4B4628BB1D38E18A00CDBB9E /* ReboundObject.swift */,
+				4B4628BD1D38E2DA00CDBB9E /* KeyValueObserving.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -303,6 +309,7 @@
 				4B1F71111D36E08600B8014C /* ReboundNSView.swift in Sources */,
 				4B2EAF111D324773006D9138 /* Bound.swift in Sources */,
 				4B1EBA2A1D34DF680013489E /* NotificationWrapper.swift in Sources */,
+				4B4628BE1D38E2DA00CDBB9E /* KeyValueObserving.swift in Sources */,
 				4B2EAF151D325410006D9138 /* Binding.swift in Sources */,
 				4B1EBA241D34D4170013489E /* CombinedChangeable.swift in Sources */,
 				4B2EAF131D325066006D9138 /* MutableBound.swift in Sources */,
@@ -321,6 +328,7 @@
 				4B1DAC9E1D3586C1001B0DEF /* TriggerTests.swift in Sources */,
 				4B2EAF2E1D32844D006D9138 /* BindingContextTests.swift in Sources */,
 				4B2EAF261D32750A006D9138 /* ComputedBindingTests.swift in Sources */,
+				4B4628C01D38EB7100CDBB9E /* KvoTests.swift in Sources */,
 				4B2EAF201D325F24006D9138 /* LifetimeTests.swift in Sources */,
 				4B2EAF171D325505006D9138 /* SimpleBindingTests.swift in Sources */,
 				4B1BA3471D3432AD000E4223 /* PebkacTests.swift in Sources */,
