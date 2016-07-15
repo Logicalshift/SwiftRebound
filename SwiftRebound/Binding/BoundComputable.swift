@@ -67,4 +67,12 @@ internal final class BoundComputable<TBoundType> : Bound<TBoundType> {
 
         return result!;
     }
+    
+    override func doneObserving() {
+        _dependencyLifetime?.done();
+        _dependencyLifetime = nil;
+        _dependencies       = nil;
+        
+        markAsChanged();
+    }
 }
