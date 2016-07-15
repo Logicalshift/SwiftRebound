@@ -28,5 +28,7 @@ class KvoTests : XCTestCase {
         observable.someNumber = 2;
         XCTAssertEqual(2, binding.value as? Int);
         XCTAssertEqual(2, changeCount);
+        
+        // Note: triggering the inconsistency exception here when built for release will crash XCode instead of failing the test
     }
 }
