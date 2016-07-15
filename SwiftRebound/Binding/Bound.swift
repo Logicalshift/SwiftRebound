@@ -56,6 +56,11 @@ public class Bound<TBoundType> : Changeable, Notifiable {
     private var _actionsOnChanged: [NotificationWrapper] = [];
     
     ///
+    /// nil, or a binding that is true if this item is bound to something or false if it is not
+    ///
+    private var _isBound: MutableBound<Bool>? = nil;
+    
+    ///
     /// Must be overridden by subclasses: can't be initialised directly
     ///
     internal init() {
@@ -147,6 +152,7 @@ public class Bound<TBoundType> : Changeable, Notifiable {
     ///
     public final func whenChanged(target: Notifiable) -> Lifetime {
         if _actionsOnChanged.count == 0 {
+            _isBound?.value = true;
             beginObserving();
         }
         
@@ -233,7 +239,23 @@ public class Bound<TBoundType> : Changeable, Notifiable {
         // Clear out eagerly if all notifiers are finished with
         if allDone {
             _actionsOnChanged = [];
+            _isBound?.value = false;
             doneObserving();
+        }
+    }
+    
+    ///
+    /// Returns a binding that is set to true while this binding is being observed
+    ///
+    public var isBound: Bound<Bool> {
+        get {
+            if let result = _isBound {
+                return result;
+            } else {
+                let result = Binding.create(_actionsOnChanged.count > 0);
+                _isBound = result;
+                return result;
+            }
         }
     }
 }

@@ -100,6 +100,25 @@ class SimpleBindingTests : XCTestCase {
         XCTAssertEqual(2, observed);
         XCTAssertEqual(2, boundInt.value);
     }
+    
+    func testIsBoundIsFalseWhenNotBound() {
+        let binding = Binding.create(1);
+        
+        XCTAssertEqual(false, binding.isBound.value);
+    }
+    
+    func testIsBoundIsTrueWhenBound() {
+        let binding     = Binding.create(1);
+        let computed    = Binding.computed { binding.value };
+        
+        // Not true initially because the binding isn't forged until we evaluate computed
+        XCTAssertEqual(false, binding.isBound.value);
+        
+        // This generates the binding
+        let _ = computed.value;
+
+        XCTAssertEqual(true, binding.isBound.value);
+    }
 
     func testSecondObservationContinuesEvenWhenFirstIsDone() {
         // Should be able to attach an observer to a binding and get callbacks when it has changed
