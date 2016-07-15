@@ -34,6 +34,11 @@
 		4B4628BC1D38E18A00CDBB9E /* ReboundObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4628BB1D38E18A00CDBB9E /* ReboundObject.swift */; };
 		4B4628BE1D38E2DA00CDBB9E /* KeyValueObserving.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4628BD1D38E2DA00CDBB9E /* KeyValueObserving.swift */; };
 		4B4628C01D38EB7100CDBB9E /* KvoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4628BF1D38EB7100CDBB9E /* KvoTests.swift */; };
+		4BF8621C1D3937FB008B20F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8621B1D3937FB008B20F8 /* AppDelegate.swift */; };
+		4BF8621E1D3937FB008B20F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8621D1D3937FB008B20F8 /* Assets.xcassets */; };
+		4BF862211D3937FB008B20F8 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8621F1D3937FB008B20F8 /* MainMenu.xib */; };
+		4BF862261D393846008B20F8 /* SwiftRebound.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B2EAEF71D323E28006D9138 /* SwiftRebound.framework */; };
+		4BF862281D393857008B20F8 /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF862271D393857008B20F8 /* DemoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +83,12 @@
 		4B4628BB1D38E18A00CDBB9E /* ReboundObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReboundObject.swift; sourceTree = "<group>"; };
 		4B4628BD1D38E2DA00CDBB9E /* KeyValueObserving.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyValueObserving.swift; sourceTree = "<group>"; };
 		4B4628BF1D38EB7100CDBB9E /* KvoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KvoTests.swift; sourceTree = "<group>"; };
+		4BF862191D3937FB008B20F8 /* ReactiveView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactiveView.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4BF8621B1D3937FB008B20F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		4BF8621D1D3937FB008B20F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4BF862201D3937FB008B20F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		4BF862221D3937FB008B20F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4BF862271D393857008B20F8 /* DemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +107,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4BF862161D3937FB008B20F8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4BF862261D393846008B20F8 /* SwiftRebound.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -110,6 +129,7 @@
 		4B2EAEEB1D323D9A006D9138 = {
 			isa = PBXGroup;
 			children = (
+				4BF862291D393A4A008B20F8 /* Examples */,
 				4B2EAEF91D323E28006D9138 /* SwiftRebound */,
 				4B2EAF051D323E28006D9138 /* SwiftReboundTests */,
 				4B1BA3451D3430AC000E4223 /* README.md */,
@@ -122,6 +142,7 @@
 			children = (
 				4B2EAEF71D323E28006D9138 /* SwiftRebound.framework */,
 				4B2EAF011D323E28006D9138 /* SwiftReboundTests.xctest */,
+				4BF862191D3937FB008B20F8 /* ReactiveView.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -193,6 +214,27 @@
 			path = Foundation;
 			sourceTree = "<group>";
 		};
+		4BF8621A1D3937FB008B20F8 /* ReactiveView */ = {
+			isa = PBXGroup;
+			children = (
+				4BF862271D393857008B20F8 /* DemoView.swift */,
+				4BF8621B1D3937FB008B20F8 /* AppDelegate.swift */,
+				4BF8621D1D3937FB008B20F8 /* Assets.xcassets */,
+				4BF8621F1D3937FB008B20F8 /* MainMenu.xib */,
+				4BF862221D3937FB008B20F8 /* Info.plist */,
+			);
+			name = ReactiveView;
+			path = Examples/ReactiveView;
+			sourceTree = "<group>";
+		};
+		4BF862291D393A4A008B20F8 /* Examples */ = {
+			isa = PBXGroup;
+			children = (
+				4BF8621A1D3937FB008B20F8 /* ReactiveView */,
+			);
+			name = Examples;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -243,6 +285,23 @@
 			productReference = 4B2EAF011D323E28006D9138 /* SwiftReboundTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		4BF862181D3937FB008B20F8 /* ReactiveView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4BF862251D3937FB008B20F8 /* Build configuration list for PBXNativeTarget "ReactiveView" */;
+			buildPhases = (
+				4BF862151D3937FB008B20F8 /* Sources */,
+				4BF862161D3937FB008B20F8 /* Frameworks */,
+				4BF862171D3937FB008B20F8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ReactiveView;
+			productName = ReactiveView;
+			productReference = 4BF862191D3937FB008B20F8 /* ReactiveView.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -258,6 +317,9 @@
 					4B2EAF001D323E28006D9138 = {
 						CreatedOnToolsVersion = 7.3.1;
 					};
+					4BF862181D3937FB008B20F8 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
 				};
 			};
 			buildConfigurationList = 4B2EAEEF1D323D9A006D9138 /* Build configuration list for PBXProject "SwiftRebound" */;
@@ -266,6 +328,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 4B2EAEEB1D323D9A006D9138;
 			productRefGroup = 4B2EAEF81D323E28006D9138 /* Products */;
@@ -274,6 +337,7 @@
 			targets = (
 				4B2EAEF61D323E28006D9138 /* SwiftRebound */,
 				4B2EAF001D323E28006D9138 /* SwiftReboundTests */,
+				4BF862181D3937FB008B20F8 /* ReactiveView */,
 			);
 		};
 /* End PBXProject section */
@@ -290,6 +354,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4BF862171D3937FB008B20F8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4BF8621E1D3937FB008B20F8 /* Assets.xcassets in Resources */,
+				4BF862211D3937FB008B20F8 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,6 +386,7 @@
 				4B2EAF151D325410006D9138 /* Binding.swift in Sources */,
 				4B1EBA241D34D4170013489E /* CombinedChangeable.swift in Sources */,
 				4B2EAF131D325066006D9138 /* MutableBound.swift in Sources */,
+				4BF862281D393857008B20F8 /* DemoView.swift in Sources */,
 				4B2EAF1E1D325E08006D9138 /* CallbackLifetime.swift in Sources */,
 				4B1EBA281D34DF490013489E /* WeakNotifiable.swift in Sources */,
 				4B1EBA221D34D0220013489E /* CombinedLifetime.swift in Sources */,
@@ -335,6 +409,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4BF862151D3937FB008B20F8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4BF8621C1D3937FB008B20F8 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -344,6 +426,17 @@
 			targetProxy = 4B2EAF031D323E28006D9138 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4BF8621F1D3937FB008B20F8 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4BF862201D3937FB008B20F8 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		4B2EAEF01D323D9A006D9138 /* Debug */ = {
@@ -564,6 +657,99 @@
 			};
 			name = Release;
 		};
+		4BF862231D3937FB008B20F8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/Examples/ReactiveView/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = io.logicalshift.ReactiveView;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		4BF862241D3937FB008B20F8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/Examples/ReactiveView/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = io.logicalshift.ReactiveView;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -593,6 +779,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		4BF862251D3937FB008B20F8 /* Build configuration list for PBXNativeTarget "ReactiveView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4BF862231D3937FB008B20F8 /* Debug */,
+				4BF862241D3937FB008B20F8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
