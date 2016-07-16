@@ -95,7 +95,6 @@ public class ReactiveView : NSView {
         let newMousePos = convertPoint(event.locationInWindow, fromView: nil);
         var leftDown    = self.leftMouseDown.value;
         var rightDown   = self.rightMouseDown.value;
-        var mouseOver   = self.mouseOver.value;
         let pressure    = event.pressure;
         
         switch (event.type) {
@@ -103,8 +102,6 @@ public class ReactiveView : NSView {
         case NSEventType.LeftMouseUp:       leftDown = false; break;
         case NSEventType.RightMouseDown:    rightDown = true; break;
         case NSEventType.RightMouseUp:      rightDown = false; break;
-        case NSEventType.MouseEntered:      mouseOver = true; break;
-        case NSEventType.MouseExited:       mouseOver = false; break;
         default:                            break;
         }
         
@@ -127,10 +124,6 @@ public class ReactiveView : NSView {
             self.anyMouseDown.value = anyDown;
         }
         
-        if mouseOver != self.mouseOver.value {
-            self.mouseOver.value = mouseOver;
-        }
-        
         if pressure != self.pressure.value {
             self.pressure.value = pressure;
         }
@@ -146,8 +139,9 @@ public class ReactiveView : NSView {
     override public func otherMouseUp(theEvent: NSEvent)        { updateMouseProperties(theEvent); }
     override public func otherMouseDragged(theEvent: NSEvent)   { updateMouseProperties(theEvent); }
     override public func mouseMoved(theEvent: NSEvent)          { updateMouseProperties(theEvent); }
-    override public func mouseEntered(theEvent: NSEvent)        { updateMouseProperties(theEvent); }
-    override public func mouseExited(theEvent: NSEvent)         { updateMouseProperties(theEvent); }
+    
+    override public func mouseEntered(theEvent: NSEvent)        { if !mouseOver.value { mouseOver.value = true; } }
+    override public func mouseExited(theEvent: NSEvent)         { if mouseOver.value { mouseOver.value = false; } }
     
     private var _trackingObserverLifetime: Lifetime?;
     
@@ -155,7 +149,7 @@ public class ReactiveView : NSView {
     /// Sets up the observers for this view
     ///
     private func setupObservers() {
-        let bounds = self.bindKeyPath("bounds");
+        let bounds = self.bindKeyPath("frame");
         
         // Computed that works out whether or not we need a tracking rectangle
         enum NeedsTracking {
@@ -203,7 +197,7 @@ public class ReactiveView : NSView {
             case NeedsTracking.NeedTracking:
                 if let tracking = tracking { self.removeTrackingArea(tracking); }
 
-                let newTracking = NSTrackingArea(rect: bounds, options: NSTrackingAreaOptions.MouseMoved.union(NSTrackingAreaOptions.MouseEnteredAndExited).union(NSTrackingAreaOptions.ActiveInKeyWindow), owner: nil, userInfo: nil);
+                let newTracking = NSTrackingArea(rect: bounds, options: NSTrackingAreaOptions.MouseMoved.union(NSTrackingAreaOptions.MouseEnteredAndExited).union(NSTrackingAreaOptions.ActiveInKeyWindow), owner: self, userInfo: nil);
                 tracking = newTracking;
                 self.addTrackingArea(newTracking);
                 break;
@@ -211,7 +205,7 @@ public class ReactiveView : NSView {
             case NeedsTracking.TrackEnterExitOnly:
                 if let tracking = tracking { self.removeTrackingArea(tracking); }
                 
-                let newTracking = NSTrackingArea(rect: bounds, options: NSTrackingAreaOptions.MouseEnteredAndExited.union(NSTrackingAreaOptions.ActiveInKeyWindow), owner: nil, userInfo: nil);
+                let newTracking = NSTrackingArea(rect: bounds, options: NSTrackingAreaOptions.MouseEnteredAndExited.union(NSTrackingAreaOptions.ActiveInKeyWindow), owner: self, userInfo: nil);
                 tracking = newTracking;
                 self.addTrackingArea(newTracking);
                 break;
