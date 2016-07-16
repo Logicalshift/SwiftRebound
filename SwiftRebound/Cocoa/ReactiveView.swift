@@ -43,7 +43,7 @@ public class ReactiveView : NSView {
                 if !self._isDrawing {
                     self.triggerRedraw();
                 } else {
-                    NSRunLoop.currentRunLoop().performSelector("triggerRedraw", target: self, argument: nil, order: 0, modes: [NSDefaultRunLoopMode]);
+                    NSRunLoop.currentRunLoop().performSelector(#selector(ReactiveView.triggerRedraw), target: self, argument: nil, order: 0, modes: [NSDefaultRunLoopMode]);
                 }
             });
             
@@ -190,7 +190,8 @@ public class ReactiveView : NSView {
         let trackingBounds = Binding.computed({ () -> (NSRect, NeedsTracking) in
             let boundsValue = bounds.value as! NSValue;
             let boundsRect  = boundsValue.rectValue;
-            return (boundsRect, needsTracking.value); });
+            return (boundsRect, needsTracking.value);
+        });
         
         // Add or remove a tracking rectangle if needsTracking changes or the size of the view changes
         var tracking: NSTrackingArea?;
