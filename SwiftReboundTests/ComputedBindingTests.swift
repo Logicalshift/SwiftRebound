@@ -120,6 +120,46 @@ class ComputedBindingTests : XCTestCase {
         XCTAssertEqual(2, changeCount);
     }
     
+    func testBindingChangeDoesntInvalidatedComputed() {
+        // Sort of weird.
+        // When we unbind a value, we set isBound to false
+        // If this happens as a side effect of a computed value, then the computed might observe what happens as a result of the binding changing
+        // This might mean it will flag an update if something used by that side-effect is updated.
+        
+        var computedCount = 0;
+        var _unrelatedStorage = 0;
+        
+        let binding             = Binding.create(1);
+        let unrelatedBinding    = Binding.create(2);
+        let watchBound          = binding.isBound.observe { newValue in _unrelatedStorage = unrelatedBinding.value };
+        
+        let computed    = Binding.computed({ binding.value + 1; });
+        
+        computed.observe {
+            newValue in computedCount += 1;
+        }.forever();
+        
+        XCTAssertEqual(1, computedCount);
+        
+        unrelatedBinding.value = 3;
+        XCTAssertEqual(1, computedCount);
+
+        binding.value = 2;
+        XCTAssertEqual(2, computedCount);
+
+        watchBound.done();
+
+        XCTAssertEqual(2, computedCount);
+        
+        // Unrelated binding is used in the observable for binding, not by the computed, so changing it should not cause the computed value
+        // to change or become invalidated
+        unrelatedBinding.value = 4;
+        XCTAssertEqual(2, computedCount);
+
+        unrelatedBinding.value = 5;
+        XCTAssertEqual(2, computedCount);
+    }
+    
     func testReadComputablePerformance() {
         let simple      = Binding.create(1);
         let computed    = Binding.computed({ return 1 + simple.value });
