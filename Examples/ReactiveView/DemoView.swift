@@ -20,6 +20,13 @@ class DemoView : ReactiveView {
             
             NSColor.blueColor().set();
             NSBezierPath.init(ovalInRect: ovalRect).fill();
+        } else if mouseOver.value {
+            // Draw an square centered on the current position
+            let clickPos    = mousePosition.value;
+            let square      = NSInsetRect(NSRect(origin: clickPos, size: NSSize(width: 0, height: 0)), -16, -16);
+            
+            NSColor.greenColor().set();
+            NSRectFill(square);
         }
     }
 }
