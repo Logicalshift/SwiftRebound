@@ -182,7 +182,6 @@ public class ReactiveView : NSView {
         var tracking: NSTrackingArea?;
         
         _trackingObserverLifetime = trackingBounds.observe({ (bounds, needsTracking) in
-            /*
             switch needsTracking {
             case NeedsTracking.KeepTracking: break;
                 
@@ -208,7 +207,6 @@ public class ReactiveView : NSView {
                     tracking = nil;
                 }
             }
-             */
         });
     }
 }
