@@ -17,6 +17,10 @@ class NSObjectTests : XCTestCase {
         lifetime.liveAsLongAs(obj);
     }
     
+    func useObject(obj: NSObject) {
+        
+    }
+    
     func testCanAttachLifetime() {
         var doneCount               = 0;
         var someObject: NSObject?   = NSObject();
@@ -25,7 +29,7 @@ class NSObjectTests : XCTestCase {
         XCTAssertEqual(0, doneCount);
         
         // Not part of the test: just use the object to make sure it's still around
-        XCTAssertEqual("NSObject", someObject?.className);
+        useObject(someObject!);
         
         // Destroy the object and test that the lifetime ends
         someObject = nil;
