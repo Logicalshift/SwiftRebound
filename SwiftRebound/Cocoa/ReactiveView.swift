@@ -140,7 +140,12 @@ public class ReactiveView : NSView {
     override public func otherMouseDragged(theEvent: NSEvent)   { updateMouseProperties(theEvent); }
     override public func mouseMoved(theEvent: NSEvent)          { updateMouseProperties(theEvent); }
     
-    override public func mouseEntered(theEvent: NSEvent)        { if !mouseOver.value { mouseOver.value = true; } }
+    override public func mouseEntered(theEvent: NSEvent) {
+        if !self.mouseOver.value {
+            self.mouseOver.value        = true;
+            self.mousePosition.value    = self.convertPoint(theEvent.locationInWindow, fromView: nil);
+        }
+    }
     override public func mouseExited(theEvent: NSEvent)         { if mouseOver.value { mouseOver.value = false; } }
     
     private var _trackingObserverLifetime: Lifetime?;
