@@ -27,7 +27,11 @@ public class ReactiveView : NSView {
         setupObservers();
     }
     
+    private var _isDrawing = false;
+    
     override public func drawRect(dirtyRect: NSRect) {
+        _isDrawing = true;
+        
         if let trigger = _drawTrigger {
             // Call the existing trigger
             trigger();
@@ -36,7 +40,11 @@ public class ReactiveView : NSView {
             let (trigger, lifetime) = Binding.trigger({
                 self.drawReactive();
             }, causeUpdate: {
-                self.setNeedsDisplayInRect(self.bounds);
+                if !self._isDrawing {
+                    self.triggerRedraw();
+                } else {
+                    NSRunLoop.currentRunLoop().performSelector("triggerRedraw", target: self, argument: nil, order: 0, modes: [NSDefaultRunLoopMode]);
+                }
             });
             
             _drawTrigger    = trigger;
@@ -44,6 +52,12 @@ public class ReactiveView : NSView {
             
             trigger();
         }
+        
+        _isDrawing = false;
+    }
+    
+    public func triggerRedraw() {
+        self.setNeedsDisplayInRect(self.bounds);
     }
     
     ///
@@ -162,7 +176,7 @@ public class ReactiveView : NSView {
                     return NeedsTracking.KeepTracking;
                 }
             }
-            
+ 
             // If something is observing whether or not we're over the window, then track only enter/exits
             if self.mouseOver.isBound.value {
                 return NeedsTracking.TrackEnterExitOnly;
