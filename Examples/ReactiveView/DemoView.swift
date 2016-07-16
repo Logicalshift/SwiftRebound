@@ -9,7 +9,7 @@
 import Foundation
 
 ///
-/// Click/drag to move the circle
+/// Click/drag to draw a circle. A green box will follow the mouse when the button is not down.
 ///
 class DemoView : ReactiveView {
     override func drawReactive() {
