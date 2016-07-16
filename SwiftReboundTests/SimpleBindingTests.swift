@@ -107,6 +107,37 @@ class SimpleBindingTests : XCTestCase {
         XCTAssertEqual(false, binding.isBound.value);
     }
     
+    func testCanObserveMoreThanOnce() {
+        var observationCount        = 0;
+        var secondObservationCount  = 0;
+        
+        let binding = Binding.create(1);
+        let firstLifetime = binding.observe { _ in observationCount += 1; };
+        let secondLifetime = binding.observe { _ in secondObservationCount += 1; };
+        
+        XCTAssertEqual(1, observationCount);
+        XCTAssertEqual(1, secondObservationCount);
+        
+        binding.value = 2;
+
+        XCTAssertEqual(2, observationCount);
+        XCTAssertEqual(2, secondObservationCount);
+        
+        firstLifetime.done();
+        
+        binding.value = 3;
+        
+        XCTAssertEqual(2, observationCount);
+        XCTAssertEqual(3, secondObservationCount);
+        
+        secondLifetime.done();
+
+        binding.value = 4;
+        
+        XCTAssertEqual(2, observationCount);
+        XCTAssertEqual(3, secondObservationCount);
+    }
+    
     func testIsBoundIsTrueWhenBound() {
         let binding     = Binding.create(1);
         let computed    = Binding.computed { binding.value };
