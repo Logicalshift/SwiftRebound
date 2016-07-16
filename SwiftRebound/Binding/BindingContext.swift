@@ -163,4 +163,11 @@ public class BindingContext {
             }
         }
     }
+    
+    ///
+    /// Begins tracking a new set of dependencies
+    ///
+    public final func resetDependencies() {
+        _dependencies = CombinedChangeable();
+    }
 };
