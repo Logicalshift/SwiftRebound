@@ -56,12 +56,15 @@ internal final class BoundComputable<TBoundType> : Bound<TBoundType> {
             
             if currentContext.dependenciesDiffer {
                 // Clear existing dependencies
-                self._dependencyLifetime?.done();
+                let lastLifetime = self._dependencyLifetime;
 
                 // Create new dependencies
                 let newDependencies         = currentContext.dependencies;
                 self._dependencies          = newDependencies;
                 self._dependencyLifetime    = newDependencies.whenChanged(WeakNotifiable(target: self));
+
+                // Finished with the old dependencies
+                lastLifetime?.done();
             }
         }
 

@@ -125,6 +125,8 @@ class ComputedBindingTests : XCTestCase {
         // When we unbind a value, we set isBound to false
         // If this happens as a side effect of a computed value, then the computed might observe what happens as a result of the binding changing
         // This might mean it will flag an update if something used by that side-effect is updated.
+        // (Basically, an odd effect where the dependencies change because we don't see the 'isBound' dependency, then the old dependencies are
+        // marked as end-of-life, removing all of the bindings for the computed, and triggering 'isBound' to change)
         
         var computedCount = 0;
         var _unrelatedStorage = 0;
