@@ -160,6 +160,7 @@ public class ReactiveView : NSView {
     /// Sets up the observers for this view
     ///
     private func setupObservers() {
+        // TODO: currently keeping this in memory causes a self-reference (our 'keep self while binding active' policy causing us issues, I think)
         let bounds = self.bindKeyPath("frame");
         
         // Computed that works out whether or not we need a tracking rectangle
