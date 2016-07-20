@@ -192,7 +192,7 @@ public class ReactiveView : NSView {
         });
         
         // Tracking bounds tracks whether or not we need a tracking rectangle and whether or not it's active
-        let trackingBounds = Binding.computed({ [unowned self] () -> (NSRect, NeedsTracking) in
+        let trackingBounds = Binding.computed({ () -> (NSRect, NeedsTracking) in
             let boundsValue = bounds.value as! NSValue;
             let boundsRect  = boundsValue.rectValue;
             return (boundsRect, needsTracking.value);
