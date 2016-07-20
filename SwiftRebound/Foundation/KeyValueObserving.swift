@@ -18,7 +18,7 @@ private class ObserverBindings : NSObject {
     /// The target object, or nil if there are no attached bindings
     ///
     /// Cocoa throws an exception if there are any observers attached to an object when it is deinitialised.
-    ////
+    ///
     /// Often, it's unstable in terms of deallocation order of things, so the observers may not get deallocated
     /// first, so this exception is random,
     ///
@@ -26,7 +26,7 @@ private class ObserverBindings : NSObject {
     /// (Ideally, we'd just consider it as a weak reference as a dead object can't update itself, but there's no
     /// way to control object deallocation order sufficiently. This is annoying as for 'natural' bindings the
     /// behaviour is that if a binding goes away it stops updating)
-    private var _target: NSObject? = 0;
+    private var _target: NSObject? = nil;
     
     /// How many active attached bindings there are
     private var _attachCount: Int32 = 0;
