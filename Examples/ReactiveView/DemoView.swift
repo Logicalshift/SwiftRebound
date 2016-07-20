@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftRebound
 
 ///
 /// Click/drag to draw a circle. A green box will follow the mouse when the button is not down.

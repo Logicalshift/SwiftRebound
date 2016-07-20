@@ -34,6 +34,7 @@
 		4B4628BC1D38E18A00CDBB9E /* ReboundObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4628BB1D38E18A00CDBB9E /* ReboundObject.swift */; };
 		4B4628BE1D38E2DA00CDBB9E /* KeyValueObserving.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4628BD1D38E2DA00CDBB9E /* KeyValueObserving.swift */; };
 		4B4628C01D38EB7100CDBB9E /* KvoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4628BF1D38EB7100CDBB9E /* KvoTests.swift */; };
+		4B4A51941D3F690F005D031B /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF862271D393857008B20F8 /* DemoView.swift */; };
 		4B7985BB1D3A31A80043A653 /* SwiftRebound-iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B7985BA1D3A31A80043A653 /* SwiftRebound-iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4B7985C01D3A31B50043A653 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF141D325410006D9138 /* Binding.swift */; };
 		4B7985C11D3A31B50043A653 /* BindingContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF291D327A93006D9138 /* BindingContext.swift */; };
@@ -64,7 +65,6 @@
 		4BF8621E1D3937FB008B20F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8621D1D3937FB008B20F8 /* Assets.xcassets */; };
 		4BF862211D3937FB008B20F8 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BF8621F1D3937FB008B20F8 /* MainMenu.xib */; };
 		4BF862261D393846008B20F8 /* SwiftRebound.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B2EAEF71D323E28006D9138 /* SwiftRebound.framework */; };
-		4BF862281D393857008B20F8 /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF862271D393857008B20F8 /* DemoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -526,7 +526,6 @@
 				4B2EAF151D325410006D9138 /* Binding.swift in Sources */,
 				4B1EBA241D34D4170013489E /* CombinedChangeable.swift in Sources */,
 				4B2EAF131D325066006D9138 /* MutableBound.swift in Sources */,
-				4BF862281D393857008B20F8 /* DemoView.swift in Sources */,
 				4B2EAF1E1D325E08006D9138 /* CallbackLifetime.swift in Sources */,
 				4B1EBA281D34DF490013489E /* WeakNotifiable.swift in Sources */,
 				4B1EBA221D34D0220013489E /* CombinedLifetime.swift in Sources */,
@@ -592,6 +591,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4BF8621C1D3937FB008B20F8 /* AppDelegate.swift in Sources */,
+				4B4A51941D3F690F005D031B /* DemoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1170,6 +1170,7 @@
 				4B7985BE1D3A31A80043A653 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4B7985DA1D3A31D60043A653 /* Build configuration list for PBXNativeTarget "SwiftRebound-iOSTests" */ = {
 			isa = XCConfigurationList;
@@ -1178,6 +1179,7 @@
 				4B7985DC1D3A31D60043A653 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4BF862251D3937FB008B20F8 /* Build configuration list for PBXNativeTarget "ReactiveView" */ = {
 			isa = XCConfigurationList;
