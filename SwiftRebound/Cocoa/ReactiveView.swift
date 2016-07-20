@@ -78,28 +78,36 @@ public class ReactiveView : NSView {
     }
     
     /// The position of the mouse over this view
-    public let mousePosition = Binding.create(NSPoint(x: 0, y: 0));
+    public var mousePosition: Bound<NSPoint> { get { return _mousePosition; } }
+    private let _mousePosition = Binding.create(NSPoint(x: 0, y: 0));
     
     /// True if the mouse is over this view
-    public let mouseOver = Binding.create(false);
+    public var mouseOver: Bound<Bool> { get { return _mouseOver; } }
+    private let _mouseOver = Binding.create(false);
     
     /// The pressure used by the stylus over this view
-    public let pressure = Binding.create(Float(0.0));
+    public var pressure: Bound<Float> { get { return _pressure; } }
+    private let _pressure = Binding.create(Float(0.0));
     
     /// True if any mouse button is down
-    public let anyMouseDown = Binding.create(false);
+    public var anyMouseDown: Bound<Bool> { get { return _anyMouseDown; } }
+    private let _anyMouseDown = Binding.create(false);
     
     /// True if the left mouse button has been clicked over this view
-    public let leftMouseDown = Binding.create(false);
+    public var leftMouseDown: Bound<Bool> { get { return _leftMouseDown; } }
+    private let _leftMouseDown = Binding.create(false);
     
     /// True if the right mouse button has been clicked over this view
-    public let rightMouseDown = Binding.create(false);
+    public var rightMouseDown: Bound<Bool> { get { return _rightMouseDown; } }
+    private let _rightMouseDown = Binding.create(false);
 
     /// The bounds for this view (bound object)
-    public let reactiveBounds = Binding.create(NSRect());
+    public var reactiveBounds: Bound<NSRect> { get { return _reactiveBounds; } }
+    private let _reactiveBounds = Binding.create(NSRect());
     
-    /// The frame for this view (bound objects)
-    public let reactiveFrame = Binding.create(NSRect());
+    /// The frame for this view (bound object)
+    public var reactiveFrame: Bound<NSRect> { get { return _reactiveFrame; } }
+    private let _reactiveFrame = Binding.create(NSRect());
     
     ///
     /// Updates mouse properties for this view from an event
@@ -119,27 +127,27 @@ public class ReactiveView : NSView {
         default:                            break;
         }
         
-        let anyDown     = leftDown || rightDown;
+        let anyDown = leftDown || rightDown;
         
         // Update the properties
         if newMousePos != self.mousePosition.value {
-            self.mousePosition.value = newMousePos;
+            self._mousePosition.value = newMousePos;
         }
         
         if leftDown != self.leftMouseDown.value {
-            self.leftMouseDown.value = leftDown;
+            self._leftMouseDown.value = leftDown;
         }
         
         if rightDown != self.rightMouseDown.value {
-            self.rightMouseDown.value = rightDown;
+            self._rightMouseDown.value = rightDown;
         }
         
         if anyDown != self.anyMouseDown.value {
-            self.anyMouseDown.value = anyDown;
+            self._anyMouseDown.value = anyDown;
         }
         
         if pressure != self.pressure.value {
-            self.pressure.value = pressure;
+            self._pressure.value = pressure;
         }
     }
     
@@ -155,12 +163,14 @@ public class ReactiveView : NSView {
     override public func mouseMoved(theEvent: NSEvent)          { updateMouseProperties(theEvent); }
     
     override public func mouseEntered(theEvent: NSEvent) {
-        if !self.mouseOver.value {
-            self.mouseOver.value        = true;
-            self.mousePosition.value    = self.convertPoint(theEvent.locationInWindow, fromView: nil);
+        if !self._mouseOver.value {
+            self._mouseOver.value        = true;
+            self._mousePosition.value    = self.convertPoint(theEvent.locationInWindow, fromView: nil);
         }
     }
-    override public func mouseExited(theEvent: NSEvent)         { if mouseOver.value { mouseOver.value = false; } }
+    override public func mouseExited(theEvent: NSEvent) {
+        if _mouseOver.value { _mouseOver.value = false; }
+    }
     
     ///
     /// Updates the frame/bounds values, if they're different
@@ -169,12 +179,12 @@ public class ReactiveView : NSView {
         let newBounds   = bounds;
         let newFrame    = frame;
         
-        if reactiveBounds.value != newBounds {
-            reactiveBounds.value = newBounds;
+        if _reactiveBounds.value != newBounds {
+            _reactiveBounds.value = newBounds;
         }
         
-        if reactiveFrame.value != newFrame {
-            reactiveFrame.value = newFrame;
+        if _reactiveFrame.value != newFrame {
+            _reactiveFrame.value = newFrame;
         }
     }
     
