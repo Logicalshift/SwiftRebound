@@ -94,6 +94,12 @@ public class ReactiveView : NSView {
     
     /// True if the right mouse button has been clicked over this view
     public let rightMouseDown = Binding.create(false);
+
+    /// The bounds for this view (bound object)
+    public let reactiveBounds = Binding.create(NSRect());
+    
+    /// The frame for this view (bound objects)
+    public let reactiveFrame = Binding.create(NSRect());
     
     ///
     /// Updates mouse properties for this view from an event
@@ -157,12 +163,49 @@ public class ReactiveView : NSView {
     override public func mouseExited(theEvent: NSEvent)         { if mouseOver.value { mouseOver.value = false; } }
     
     ///
+    /// Updates the frame/bounds values, if they're different
+    ///
+    private func updateFrameAndBounds() {
+        let newBounds   = bounds;
+        let newFrame    = frame;
+        
+        if reactiveBounds.value != newBounds {
+            reactiveBounds.value = newBounds;
+        }
+        
+        if reactiveFrame.value != newFrame {
+            reactiveFrame.value = newFrame;
+        }
+    }
+    
+    override public func setBoundsOrigin(newOrigin: NSPoint) {
+        super.setBoundsOrigin(newOrigin);
+        
+        updateFrameAndBounds();
+    }
+    
+    override public func setBoundsSize(newSize: NSSize) {
+        super.setBoundsSize(newSize);
+        
+        updateFrameAndBounds();
+    }
+    
+    override public func setFrameOrigin(newOrigin: NSPoint) {
+        super.setFrameOrigin(newOrigin);
+        
+        updateFrameAndBounds();
+    }
+    
+    override public func setFrameSize(newSize: NSSize) {
+        super.setFrameSize(newSize);
+        
+        updateFrameAndBounds();
+    }
+    
+    ///
     /// Sets up the observers for this view
     ///
     private func setupObservers() {
-        // TODO: currently keeping this in memory causes a self-reference (our 'keep self while binding active' policy causing us issues, I think)
-        let bounds = self.bindKeyPath("frame");
-        
         // Computed that works out whether or not we need a tracking rectangle
         enum NeedsTracking {
             case KeepTracking
@@ -193,9 +236,8 @@ public class ReactiveView : NSView {
         });
         
         // Tracking bounds tracks whether or not we need a tracking rectangle and whether or not it's active
-        let trackingBounds = Binding.computed({ () -> (NSRect, NeedsTracking) in
-            let boundsValue = bounds.value as! NSValue;
-            let boundsRect  = boundsValue.rectValue;
+        let trackingBounds = Binding.computed({ [unowned self] () -> (NSRect, NeedsTracking) in
+            let boundsRect  = self.reactiveBounds.value;
             return (boundsRect, needsTracking.value);
         });
         
