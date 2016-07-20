@@ -15,6 +15,9 @@ public class ReactiveView : NSView {
     /// Lifetime of the drawReactive() call
     private var _drawLifetime: Lifetime? = nil;
     
+    /// Lifetime of the observer that updates the tracking rectangle
+    private var _trackingObserverLifetime: Lifetime?;
+    
     public override init(frame frameRect: NSRect) {
         super.init(frame: frameRect);
         
@@ -27,6 +30,11 @@ public class ReactiveView : NSView {
         setupObservers();
     }
     
+    deinit {
+        _drawLifetime?.done();
+        _trackingObserverLifetime?.done();
+    }
+    
     private var _isDrawing = false;
     
     override public func drawRect(dirtyRect: NSRect) {
@@ -37,9 +45,9 @@ public class ReactiveView : NSView {
             trigger();
         } else {
             // Create a new trigger
-            let (trigger, lifetime) = Binding.trigger({
+            let (trigger, lifetime) = Binding.trigger({ [unowned self] in
                 self.drawReactive();
-            }, causeUpdate: {
+            }, causeUpdate: { [unowned self] in
                 if !self._isDrawing {
                     self.triggerRedraw();
                 } else {
@@ -148,8 +156,6 @@ public class ReactiveView : NSView {
     }
     override public func mouseExited(theEvent: NSEvent)         { if mouseOver.value { mouseOver.value = false; } }
     
-    private var _trackingObserverLifetime: Lifetime?;
-    
     ///
     /// Sets up the observers for this view
     ///
@@ -164,7 +170,7 @@ public class ReactiveView : NSView {
             case NoTracking
         }
         
-        let needsTracking = Binding.computed({ () -> NeedsTracking in
+        let needsTracking = Binding.computed({ [unowned self] () -> NeedsTracking in
             // If something is observing the mouse position...
             if self.mousePosition.isBound.value {
                 if !self.anyMouseDown.value {
@@ -186,7 +192,7 @@ public class ReactiveView : NSView {
         });
         
         // Tracking bounds tracks whether or not we need a tracking rectangle and whether or not it's active
-        let trackingBounds = Binding.computed({ () -> (NSRect, NeedsTracking) in
+        let trackingBounds = Binding.computed({ [unowned self] () -> (NSRect, NeedsTracking) in
             let boundsValue = bounds.value as! NSValue;
             let boundsRect  = boundsValue.rectValue;
             return (boundsRect, needsTracking.value);
@@ -195,7 +201,7 @@ public class ReactiveView : NSView {
         // Add or remove a tracking rectangle if needsTracking changes or the size of the view changes
         var tracking: NSTrackingArea?;
         
-        _trackingObserverLifetime = trackingBounds.observe({ (bounds, needsTracking) in
+        _trackingObserverLifetime = trackingBounds.observe({ [unowned self] (bounds, needsTracking) in
             switch needsTracking {
             case NeedsTracking.KeepTracking: break;
                 
