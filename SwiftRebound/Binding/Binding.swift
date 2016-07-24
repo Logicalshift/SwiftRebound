@@ -24,6 +24,20 @@ public class Binding {
     }
     
     ///
+    /// Creates a simple binding to a value of a particular type
+    ///
+    static func create<TBoundType : Equatable>(value: TBoundType) -> MutableBound<TBoundType> {
+        return BoundEquatable(value: value);
+    }
+
+    ///
+    /// Creates a simple binding to a value of a particular type
+    ///
+    static func create<TBoundType : AnyObject>(value: TBoundType) -> MutableBound<TBoundType> {
+        return BoundReference(value: value);
+    }
+
+    ///
     /// Creates a computed binding
     ///
     /// Computed bindings can access other bindings and will be automatically invalidated when those

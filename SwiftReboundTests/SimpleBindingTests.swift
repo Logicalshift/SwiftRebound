@@ -59,7 +59,39 @@ class SimpleBindingTests : XCTestCase {
         XCTAssertEqual(3, observed);
         XCTAssertEqual(2, boundInt.value);
     }
-    
+
+    func testDoesntObserveWhenValueUnchanged() {
+        // Should be able to attach an observer to a binding and get callbacks when it has changed
+        var observed = 1;
+        
+        let boundInt = Binding.create(1);
+        
+        boundInt.observe { newValue in
+            // Will get called with the initial value (1) then again with the updated value (2)
+            XCTAssertEqual(observed, newValue);
+            observed += 1;
+        }.forever();
+        
+        XCTAssertEqual(1, boundInt.value);
+        
+        // Should be observed once. Observed will be 2 indicating the value we expect next time it's observed.
+        XCTAssertEqual(2, observed);
+        
+        // Semantics: bindings are only computed when they are used. Setting the value counts as using them.
+        // Observed will update to 3 after setting the value.
+        boundInt.value = 2;
+        XCTAssertEqual(3, observed);
+        XCTAssertEqual(2, boundInt.value);
+
+        boundInt.value = 2;
+        XCTAssertEqual(3, observed);
+        XCTAssertEqual(2, boundInt.value);
+        
+        boundInt.value = 3;
+        XCTAssertEqual(4, observed);
+        XCTAssertEqual(3, boundInt.value);
+    }
+
     func testMarkingSimpleBindingAsChangedNotifiesObservers() {
         var notificationCount = 0;
         let boundInt = Binding.create(1);
