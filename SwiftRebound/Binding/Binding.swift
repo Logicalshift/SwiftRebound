@@ -26,18 +26,21 @@ public class Binding {
     ///
     /// Creates a simple binding to a value of a particular type
     ///
-    static func create<TBoundType : Equatable>(value: TBoundType) -> MutableBound<TBoundType> {
+    public static func create<TBoundType : Equatable>(value: TBoundType) -> MutableBound<TBoundType> {
         return BoundEquatable(value: value);
     }
 
     ///
     /// Creates a simple binding to a value of a particular type
     ///
-    static func create<TBoundType : AnyObject>(value: TBoundType) -> MutableBound<TBoundType> {
+    public static func create<TBoundType : AnyObject>(value: TBoundType) -> MutableBound<TBoundType> {
         return BoundReference(value: value);
     }
     
-    static func create<TBoundType>(value: [TBoundType]) -> ArrayBound<TBoundType> {
+    ///
+    /// Creates a binding for an array value of a particular type
+    ///
+    public static func create<TBoundType>(value: [TBoundType]) -> ArrayBound<TBoundType> {
         return ArrayBound(value: value);
     }
 
