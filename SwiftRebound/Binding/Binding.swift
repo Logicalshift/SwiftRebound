@@ -36,6 +36,10 @@ public class Binding {
     static func create<TBoundType : AnyObject>(value: TBoundType) -> MutableBound<TBoundType> {
         return BoundReference(value: value);
     }
+    
+    static func create<TBoundType>(value: [TBoundType]) -> ArrayBound<TBoundType> {
+        return ArrayBound(value: value);
+    }
 
     ///
     /// Creates a computed binding

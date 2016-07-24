@@ -129,11 +129,11 @@ class ComputedBindingTests : XCTestCase {
         // marked as end-of-life, removing all of the bindings for the computed, and triggering 'isBound' to change)
         
         var computedCount = 0;
-        var _unrelatedStorage = 0;
+        var unrelatedStorage = 0;
         
         let binding             = Binding.create(1);
         let unrelatedBinding    = Binding.create(2);
-        let watchBound          = binding.isBound.observe { newValue in _unrelatedStorage = unrelatedBinding.value };
+        let watchBound          = binding.isBound.observe { newValue in unrelatedStorage = unrelatedBinding.value };
         
         let computed    = Binding.computed({ binding.value + 1; });
         

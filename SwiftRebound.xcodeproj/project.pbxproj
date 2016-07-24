@@ -35,6 +35,7 @@
 		4B4628BE1D38E2DA00CDBB9E /* KeyValueObserving.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4628BD1D38E2DA00CDBB9E /* KeyValueObserving.swift */; };
 		4B4628C01D38EB7100CDBB9E /* KvoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4628BF1D38EB7100CDBB9E /* KvoTests.swift */; };
 		4B4A51941D3F690F005D031B /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF862271D393857008B20F8 /* DemoView.swift */; };
+		4B6ECD7B1D4519A900050C9A /* ArrayBound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6ECD7A1D4519A900050C9A /* ArrayBound.swift */; };
 		4B7985BB1D3A31A80043A653 /* SwiftRebound-iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B7985BA1D3A31A80043A653 /* SwiftRebound-iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4B7985C01D3A31B50043A653 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF141D325410006D9138 /* Binding.swift */; };
 		4B7985C11D3A31B50043A653 /* BindingContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2EAF291D327A93006D9138 /* BindingContext.swift */; };
@@ -116,6 +117,7 @@
 		4B4628BB1D38E18A00CDBB9E /* ReboundObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReboundObject.swift; sourceTree = "<group>"; };
 		4B4628BD1D38E2DA00CDBB9E /* KeyValueObserving.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyValueObserving.swift; sourceTree = "<group>"; };
 		4B4628BF1D38EB7100CDBB9E /* KvoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KvoTests.swift; sourceTree = "<group>"; };
+		4B6ECD7A1D4519A900050C9A /* ArrayBound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayBound.swift; sourceTree = "<group>"; };
 		4B7985B81D3A31A80043A653 /* SwiftRebound.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftRebound.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B7985BA1D3A31A80043A653 /* SwiftRebound-iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftRebound-iOS.h"; sourceTree = "<group>"; };
 		4B7985BC1D3A31A80043A653 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 				4B1EBA291D34DF680013489E /* NotificationWrapper.swift */,
 				4B2EAF101D324773006D9138 /* Bound.swift */,
 				4B2EAF121D325066006D9138 /* MutableBound.swift */,
+				4B6ECD7A1D4519A900050C9A /* ArrayBound.swift */,
 				4B2EAF181D32574C006D9138 /* BoundValue.swift */,
 				4B1EBA271D34DF490013489E /* WeakNotifiable.swift */,
 				4B2EAF231D327417006D9138 /* BoundComputable.swift */,
@@ -523,6 +526,7 @@
 				4B2EAF111D324773006D9138 /* Bound.swift in Sources */,
 				4B1EBA2A1D34DF680013489E /* NotificationWrapper.swift in Sources */,
 				4B4628BE1D38E2DA00CDBB9E /* KeyValueObserving.swift in Sources */,
+				4B6ECD7B1D4519A900050C9A /* ArrayBound.swift in Sources */,
 				4B2EAF151D325410006D9138 /* Binding.swift in Sources */,
 				4B1EBA241D34D4170013489E /* CombinedChangeable.swift in Sources */,
 				4B2EAF131D325066006D9138 /* MutableBound.swift in Sources */,
