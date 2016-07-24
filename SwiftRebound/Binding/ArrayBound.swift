@@ -152,3 +152,14 @@ public final class ArrayBound<TBoundType> : MutableBound<[TBoundType]> {
         return _currentValue!.indexOf(predicate);
     }
 };
+
+extension ArrayBound {
+    func insert(value: TBoundType, at: Int) {
+        self[at..<at] = [value];
+    }
+
+    func append(value: TBoundType) {
+        let count = self.count;
+        self[count..<count] = [value];
+    }
+}
