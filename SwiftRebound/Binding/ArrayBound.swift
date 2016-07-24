@@ -146,7 +146,7 @@ public final class ArrayBound<TBoundType> : MutableBound<[TBoundType]> {
     ///
     /// Returns the index of the first item to match the predicate
     ///
-    func indexOf(predicate: TBoundType -> Bool) -> Int? {
+    public func indexOf(predicate: TBoundType -> Bool) -> Int? {
         BindingContext.current?.addDependency(self);
         
         return _currentValue!.indexOf(predicate);
