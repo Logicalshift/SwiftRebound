@@ -19,7 +19,7 @@ public class Binding {
     ///
     /// Creates a simple binding to a value of a particular type
     ///
-    static func create<TBoundType>(value: TBoundType) -> MutableBound<TBoundType> {
+    public static func create<TBoundType>(value: TBoundType) -> MutableBound<TBoundType> {
         return BoundValue(value: value);
     }
     
@@ -29,7 +29,7 @@ public class Binding {
     /// Computed bindings can access other bindings and will be automatically invalidated when those
     /// bindings change.
     ///
-    static func computed<TBoundType>(compute: () -> TBoundType) -> Bound<TBoundType> {
+    public static func computed<TBoundType>(compute: () -> TBoundType) -> Bound<TBoundType> {
         return BoundComputable(compute: compute);
     }
     
@@ -38,7 +38,7 @@ public class Binding {
     ///
     /// This is something like a drawing function where it can be triggered to update by calling `setNeedsDisplay()`.
     ///
-    static func trigger(action: () -> (), causeUpdate: () -> ()) -> (() -> (), Lifetime) {
+    public static func trigger(action: () -> (), causeUpdate: () -> ()) -> (() -> (), Lifetime) {
         let trigger     = Trigger(action: action);
         let lifetime    = trigger.whenChanged(causeUpdate).liveAsLongAs(trigger);
         
