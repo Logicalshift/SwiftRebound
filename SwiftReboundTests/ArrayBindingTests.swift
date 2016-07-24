@@ -45,7 +45,58 @@ class ArrayBindingTests : XCTestCase {
         XCTAssertEqual(2, computedCount.value);
         XCTAssertEqual(2, observableHitCount);
     }
+
+    func testCanBindToArrayFirst() {
+        let array       = Binding.create([Int]());
+        let firstValue  = Binding.computed { array.first };
+        
+        var observableHitCount = 0;
+        firstValue.observe { newValue in
+            observableHitCount += 1;
+        }.forever();
+        
+        XCTAssertEqual(0, array.count);
+        XCTAssertEqual(nil, firstValue.value);
+        
+        array.append(2);
+        
+        XCTAssertEqual(2, firstValue.value);
+        XCTAssertEqual(2, observableHitCount);
+
+        array.append(3);
+        
+        XCTAssertEqual(2, firstValue.value);
+        XCTAssertEqual(3, observableHitCount);              // TODO: we get notified even though this doesn't change the first value
+    }
     
+    func testCanBindToArrayLast() {
+        let array       = Binding.create([Int]());
+        let lastValue   = Binding.computed { array.last };
+        
+        var observableHitCount = 0;
+        lastValue.observe { newValue in
+            observableHitCount += 1;
+        }.forever();
+        
+        XCTAssertEqual(0, array.count);
+        XCTAssertEqual(nil, lastValue.value);
+        
+        array.append(2);
+        
+        XCTAssertEqual(2, lastValue.value);
+        XCTAssertEqual(2, observableHitCount);
+        
+        array.append(3);
+        
+        XCTAssertEqual(3, lastValue.value);
+        XCTAssertEqual(3, observableHitCount);
+        
+        array.insert(4, at: 0);
+        
+        XCTAssertEqual(3, lastValue.value);
+        XCTAssertEqual(4, observableHitCount);              // TODO: we get notified even though this doesn't change the last value
+    }
+
     func testCanBindToArrayRange() {
         let array   = Binding.create([1]);
         let range   = Binding.computed { array[0..<1] };

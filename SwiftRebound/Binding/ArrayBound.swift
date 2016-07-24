@@ -144,6 +144,28 @@ public final class ArrayBound<TBoundType> : MutableBound<[TBoundType]> {
     }
     
     ///
+    /// First element in the array
+    ///
+    public var first: TBoundType? {
+        get {
+            BindingContext.current?.addDependency(self);
+            
+            return _currentValue!.first;
+        }
+    }
+    
+    ///
+    /// Last element in the array
+    ///
+    public var last: TBoundType? {
+        get {
+            BindingContext.current?.addDependency(self);
+            
+            return _currentValue!.last;
+        }
+    }
+    
+    ///
     /// Returns the index of the first item to match the predicate
     ///
     public func indexOf(predicate: TBoundType -> Bool) -> Int? {
