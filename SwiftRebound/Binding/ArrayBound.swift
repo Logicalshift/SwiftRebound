@@ -154,11 +154,11 @@ public final class ArrayBound<TBoundType> : MutableBound<[TBoundType]> {
 };
 
 extension ArrayBound {
-    func insert(value: TBoundType, at: Int) {
+    public func insert(value: TBoundType, at: Int) {
         self[at..<at] = [value];
     }
 
-    func append(value: TBoundType) {
+    public func append(value: TBoundType) {
         let count = self.count;
         self[count..<count] = [value];
     }
