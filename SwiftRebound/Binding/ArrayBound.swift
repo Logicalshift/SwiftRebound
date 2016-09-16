@@ -13,7 +13,7 @@ import Foundation
 ///
 public struct ArrayReplacement<TBoundType> {
     /// The range of indexes that have been replaced (start, length)
-    let range: Range<Int>;
+    let range: CountableRange<Int>;
     
     /// The data that is being replaced
     let replacedData: [TBoundType];
@@ -47,7 +47,7 @@ public final class ArrayBound<TBoundType> : MutableBound<[TBoundType]> {
         }
     }
     
-    public override func bindNewValue(newValue: [TBoundType]) -> [TBoundType] {
+    public override func bindNewValue(_ newValue: [TBoundType]) -> [TBoundType] {
         return newValue;
     }
     
@@ -80,7 +80,7 @@ public final class ArrayBound<TBoundType> : MutableBound<[TBoundType]> {
             }
         }
     }
-    private var _lastReplacement: MutableBound<ArrayReplacement<TBoundType>>? = nil;
+    fileprivate var _lastReplacement: MutableBound<ArrayReplacement<TBoundType>>? = nil;
     
     ///
     /// Retrieves or replaces a range in this collection
@@ -89,7 +89,7 @@ public final class ArrayBound<TBoundType> : MutableBound<[TBoundType]> {
         set(newData) {
             if _currentValue != nil {
                 let oldData = Array(_currentValue![range]);
-                _currentValue!.replaceRange(range, with: newData);
+                _currentValue!.replaceSubrange(range, with: newData);
 
                 notifyChange();
                 
@@ -168,19 +168,19 @@ public final class ArrayBound<TBoundType> : MutableBound<[TBoundType]> {
     ///
     /// Returns the index of the first item to match the predicate
     ///
-    public func indexOf(predicate: TBoundType -> Bool) -> Int? {
+    public func indexOf(_ predicate: (TBoundType) -> Bool) -> Int? {
         BindingContext.current?.addDependency(self);
         
-        return _currentValue!.indexOf(predicate);
+        return _currentValue!.index(where: predicate);
     }
 };
 
 extension ArrayBound {
-    public func insert(value: TBoundType, at: Int) {
+    public func insert(_ value: TBoundType, at: Int) {
         self[at..<at] = [value];
     }
 
-    public func append(value: TBoundType) {
+    public func append(_ value: TBoundType) {
         let count = self.count;
         self[count..<count] = [value];
     }

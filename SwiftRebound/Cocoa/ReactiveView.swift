@@ -8,15 +8,15 @@
 
 import Cocoa
 
-public class ReactiveView : NSView {
+open class ReactiveView : NSView {
     /// Trigger for the drawReactive() call
-    private var _drawTrigger: Optional<() -> ()> = nil;
+    fileprivate var _drawTrigger: Optional<() -> ()> = nil;
     
     /// Lifetime of the drawReactive() call
-    private var _drawLifetime: Lifetime? = nil;
+    fileprivate var _drawLifetime: Lifetime? = nil;
     
     /// Lifetime of the observer that updates the tracking rectangle
-    private var _trackingObserverLifetime: Lifetime?;
+    fileprivate var _trackingObserverLifetime: Lifetime?;
     
     public override init(frame frameRect: NSRect) {
         super.init(frame: frameRect);
@@ -35,9 +35,9 @@ public class ReactiveView : NSView {
         _trackingObserverLifetime?.done();
     }
     
-    private var _isDrawing = false;
+    fileprivate var _isDrawing = false;
     
-    override public func drawRect(dirtyRect: NSRect) {
+    override open func draw(_ dirtyRect: NSRect) {
         _isDrawing = true;
         
         if let trigger = _drawTrigger {
@@ -51,7 +51,7 @@ public class ReactiveView : NSView {
                 if !self._isDrawing {
                     self.triggerRedraw();
                 } else {
-                    NSRunLoop.currentRunLoop().performSelector(#selector(ReactiveView.triggerRedraw), target: self, argument: nil, order: 0, modes: [NSDefaultRunLoopMode]);
+                    RunLoop.current.perform(#selector(ReactiveView.triggerRedraw), target: self, argument: nil, order: 0, modes: [RunLoopMode.defaultRunLoopMode]);
                 }
             });
             
@@ -64,8 +64,8 @@ public class ReactiveView : NSView {
         _isDrawing = false;
     }
     
-    public func triggerRedraw() {
-        self.setNeedsDisplayInRect(self.bounds);
+    open func triggerRedraw() {
+        self.setNeedsDisplay(self.bounds);
     }
     
     ///
@@ -73,57 +73,57 @@ public class ReactiveView : NSView {
     ///
     /// Any SwiftRebound values used here will be monitored and an update will be triggered if they change
     ///
-    public func drawReactive() {
+    open func drawReactive() {
         // Implement in subclasses
     }
     
     /// The position of the mouse over this view
-    public var mousePosition: Bound<NSPoint> { get { return _mousePosition; } }
-    private let _mousePosition = Binding.create(NSPoint(x: 0, y: 0));
+    open var mousePosition: Bound<NSPoint> { get { return _mousePosition; } }
+    fileprivate let _mousePosition = Binding.create(NSPoint(x: 0, y: 0));
     
     /// True if the mouse is over this view
-    public var mouseOver: Bound<Bool> { get { return _mouseOver; } }
-    private let _mouseOver = Binding.create(false);
+    open var mouseOver: Bound<Bool> { get { return _mouseOver; } }
+    fileprivate let _mouseOver = Binding.create(false);
     
     /// The pressure used by the stylus over this view
-    public var pressure: Bound<Float> { get { return _pressure; } }
-    private let _pressure = Binding.create(Float(0.0));
+    open var pressure: Bound<Float> { get { return _pressure; } }
+    fileprivate let _pressure = Binding.create(Float(0.0));
     
     /// True if any mouse button is down
-    public var anyMouseDown: Bound<Bool> { get { return _anyMouseDown; } }
-    private let _anyMouseDown = Binding.create(false);
+    open var anyMouseDown: Bound<Bool> { get { return _anyMouseDown; } }
+    fileprivate let _anyMouseDown = Binding.create(false);
     
     /// True if the left mouse button has been clicked over this view
-    public var leftMouseDown: Bound<Bool> { get { return _leftMouseDown; } }
-    private let _leftMouseDown = Binding.create(false);
+    open var leftMouseDown: Bound<Bool> { get { return _leftMouseDown; } }
+    fileprivate let _leftMouseDown = Binding.create(false);
     
     /// True if the right mouse button has been clicked over this view
-    public var rightMouseDown: Bound<Bool> { get { return _rightMouseDown; } }
-    private let _rightMouseDown = Binding.create(false);
+    open var rightMouseDown: Bound<Bool> { get { return _rightMouseDown; } }
+    fileprivate let _rightMouseDown = Binding.create(false);
 
     /// The bounds for this view (bound object)
-    public var reactiveBounds: Bound<NSRect> { get { return _reactiveBounds; } }
-    private let _reactiveBounds = Binding.create(NSRect());
+    open var reactiveBounds: Bound<NSRect> { get { return _reactiveBounds; } }
+    fileprivate let _reactiveBounds = Binding.create(NSRect());
     
     /// The frame for this view (bound object)
-    public var reactiveFrame: Bound<NSRect> { get { return _reactiveFrame; } }
-    private let _reactiveFrame = Binding.create(NSRect());
+    open var reactiveFrame: Bound<NSRect> { get { return _reactiveFrame; } }
+    fileprivate let _reactiveFrame = Binding.create(NSRect());
     
     ///
     /// Updates mouse properties for this view from an event
     ///
-    private func updateMouseProperties(event: NSEvent) {
+    fileprivate func updateMouseProperties(_ event: NSEvent) {
         // Read from the event
-        let newMousePos = convertPoint(event.locationInWindow, fromView: nil);
+        let newMousePos = convert(event.locationInWindow, from: nil);
         var leftDown    = self.leftMouseDown.value;
         var rightDown   = self.rightMouseDown.value;
         let pressure    = event.pressure;
         
         switch (event.type) {
-        case NSEventType.LeftMouseDown:     leftDown = true; break;
-        case NSEventType.LeftMouseUp:       leftDown = false; break;
-        case NSEventType.RightMouseDown:    rightDown = true; break;
-        case NSEventType.RightMouseUp:      rightDown = false; break;
+        case NSEventType.leftMouseDown:     leftDown = true; break;
+        case NSEventType.leftMouseUp:       leftDown = false; break;
+        case NSEventType.rightMouseDown:    rightDown = true; break;
+        case NSEventType.rightMouseUp:      rightDown = false; break;
         default:                            break;
         }
         
@@ -151,31 +151,31 @@ public class ReactiveView : NSView {
         }
     }
     
-    override public func mouseDown(theEvent: NSEvent)           { updateMouseProperties(theEvent); }
-    override public func mouseUp(theEvent: NSEvent)             { updateMouseProperties(theEvent); }
-    override public func mouseDragged(theEvent: NSEvent)        { updateMouseProperties(theEvent); }
-    override public func rightMouseDown(theEvent: NSEvent)      { updateMouseProperties(theEvent); }
-    override public func rightMouseUp(theEvent: NSEvent)        { updateMouseProperties(theEvent); }
-    override public func rightMouseDragged(theEvent: NSEvent)   { updateMouseProperties(theEvent); }
-    override public func otherMouseDown(theEvent: NSEvent)      { updateMouseProperties(theEvent); }
-    override public func otherMouseUp(theEvent: NSEvent)        { updateMouseProperties(theEvent); }
-    override public func otherMouseDragged(theEvent: NSEvent)   { updateMouseProperties(theEvent); }
-    override public func mouseMoved(theEvent: NSEvent)          { updateMouseProperties(theEvent); }
+    override open func mouseDown(with theEvent: NSEvent)           { updateMouseProperties(theEvent); }
+    override open func mouseUp(with theEvent: NSEvent)             { updateMouseProperties(theEvent); }
+    override open func mouseDragged(with theEvent: NSEvent)        { updateMouseProperties(theEvent); }
+    override open func rightMouseDown(with theEvent: NSEvent)      { updateMouseProperties(theEvent); }
+    override open func rightMouseUp(with theEvent: NSEvent)        { updateMouseProperties(theEvent); }
+    override open func rightMouseDragged(with theEvent: NSEvent)   { updateMouseProperties(theEvent); }
+    override open func otherMouseDown(with theEvent: NSEvent)      { updateMouseProperties(theEvent); }
+    override open func otherMouseUp(with theEvent: NSEvent)        { updateMouseProperties(theEvent); }
+    override open func otherMouseDragged(with theEvent: NSEvent)   { updateMouseProperties(theEvent); }
+    override open func mouseMoved(with theEvent: NSEvent)          { updateMouseProperties(theEvent); }
     
-    override public func mouseEntered(theEvent: NSEvent) {
+    override open func mouseEntered(with theEvent: NSEvent) {
         if !self._mouseOver.value {
             self._mouseOver.value        = true;
-            self._mousePosition.value    = self.convertPoint(theEvent.locationInWindow, fromView: nil);
+            self._mousePosition.value    = self.convert(theEvent.locationInWindow, from: nil);
         }
     }
-    override public func mouseExited(theEvent: NSEvent) {
+    override open func mouseExited(with theEvent: NSEvent) {
         if _mouseOver.value { _mouseOver.value = false; }
     }
     
     ///
     /// Updates the frame/bounds values, if they're different
     ///
-    private func updateFrameAndBounds() {
+    fileprivate func updateFrameAndBounds() {
         let newBounds   = bounds;
         let newFrame    = frame;
         
@@ -188,25 +188,25 @@ public class ReactiveView : NSView {
         }
     }
     
-    override public func setBoundsOrigin(newOrigin: NSPoint) {
+    override open func setBoundsOrigin(_ newOrigin: NSPoint) {
         super.setBoundsOrigin(newOrigin);
         
         updateFrameAndBounds();
     }
     
-    override public func setBoundsSize(newSize: NSSize) {
+    override open func setBoundsSize(_ newSize: NSSize) {
         super.setBoundsSize(newSize);
         
         updateFrameAndBounds();
     }
     
-    override public func setFrameOrigin(newOrigin: NSPoint) {
+    override open func setFrameOrigin(_ newOrigin: NSPoint) {
         super.setFrameOrigin(newOrigin);
         
         updateFrameAndBounds();
     }
     
-    override public func setFrameSize(newSize: NSSize) {
+    override open func setFrameSize(_ newSize: NSSize) {
         super.setFrameSize(newSize);
         
         updateFrameAndBounds();
@@ -215,13 +215,13 @@ public class ReactiveView : NSView {
     ///
     /// Sets up the observers for this view
     ///
-    private func setupObservers() {
+    fileprivate func setupObservers() {
         // Computed that works out whether or not we need a tracking rectangle
         enum NeedsTracking {
-            case KeepTracking
-            case NeedTracking
-            case TrackEnterExitOnly
-            case NoTracking
+            case keepTracking
+            case needTracking
+            case trackEnterExitOnly
+            case noTracking
         }
         
         let needsTracking = Binding.computed({ [unowned self] () -> NeedsTracking in
@@ -229,20 +229,20 @@ public class ReactiveView : NSView {
             if self.mousePosition.isBound.value {
                 if !self.anyMouseDown.value {
                     // Need to track the mouse if the mouse isn't clicked (we get positions anyway if it is down)
-                    return NeedsTracking.NeedTracking;
+                    return NeedsTracking.needTracking;
                 } else if !self.mouseOver.isBound.value {
                     // Leave the tracking as what it was if the mouse is clicked
-                    return NeedsTracking.KeepTracking;
+                    return NeedsTracking.keepTracking;
                 }
             }
  
             // If something is observing whether or not we're over the window, then track only enter/exits
             if self.mouseOver.isBound.value {
-                return NeedsTracking.TrackEnterExitOnly;
+                return NeedsTracking.trackEnterExitOnly;
             }
             
             // Don't need tracking otherwise
-            return NeedsTracking.NoTracking;
+            return NeedsTracking.noTracking;
         });
         
         // Tracking bounds tracks whether or not we need a tracking rectangle and whether or not it's active
@@ -256,25 +256,25 @@ public class ReactiveView : NSView {
         
         _trackingObserverLifetime = trackingBounds.observe({ [unowned self] (bounds, needsTracking) in
             switch needsTracking {
-            case NeedsTracking.KeepTracking: break;
+            case NeedsTracking.keepTracking: break;
                 
-            case NeedsTracking.NeedTracking:
+            case NeedsTracking.needTracking:
                 if let tracking = tracking { self.removeTrackingArea(tracking); }
 
-                let newTracking = NSTrackingArea(rect: bounds, options: NSTrackingAreaOptions.MouseMoved.union(NSTrackingAreaOptions.MouseEnteredAndExited).union(NSTrackingAreaOptions.ActiveInKeyWindow), owner: self, userInfo: nil);
+                let newTracking = NSTrackingArea(rect: bounds, options: NSTrackingAreaOptions.mouseMoved.union(NSTrackingAreaOptions.mouseEnteredAndExited).union(NSTrackingAreaOptions.activeInKeyWindow), owner: self, userInfo: nil);
                 tracking = newTracking;
                 self.addTrackingArea(newTracking);
                 break;
                 
-            case NeedsTracking.TrackEnterExitOnly:
+            case NeedsTracking.trackEnterExitOnly:
                 if let tracking = tracking { self.removeTrackingArea(tracking); }
                 
-                let newTracking = NSTrackingArea(rect: bounds, options: NSTrackingAreaOptions.MouseEnteredAndExited.union(NSTrackingAreaOptions.ActiveInKeyWindow), owner: self, userInfo: nil);
+                let newTracking = NSTrackingArea(rect: bounds, options: NSTrackingAreaOptions.mouseEnteredAndExited.union(NSTrackingAreaOptions.activeInKeyWindow), owner: self, userInfo: nil);
                 tracking = newTracking;
                 self.addTrackingArea(newTracking);
                 break;
                 
-            case NeedsTracking.NoTracking:
+            case NeedsTracking.noTracking:
                 if let realTracking = tracking {
                     self.removeTrackingArea(realTracking);
                     tracking = nil;

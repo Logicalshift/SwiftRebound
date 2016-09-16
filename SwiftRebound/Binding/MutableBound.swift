@@ -12,11 +12,11 @@ import Foundation
 /// A mutable bound object is a variant of the standard bound object where the value can be set as well
 /// as retrieved
 ///
-public class MutableBound<TBoundType> : Bound<TBoundType> {
+open class MutableBound<TBoundType> : Bound<TBoundType> {
     ///
     /// Gets or sets the value attached to this bound value
     ///
-    override public var value: TBoundType {
+    override open var value: TBoundType {
         @inline(__always)
         get {
             return resolve();
@@ -41,14 +41,14 @@ public class MutableBound<TBoundType> : Bound<TBoundType> {
     ///
     /// Performs action associated with setting the value of this object, returning the actual new value that should be used
     ///
-    internal func bindNewValue(newValue: TBoundType) -> TBoundType {
+    internal func bindNewValue(_ newValue: TBoundType) -> TBoundType {
         return newValue;
     }
     
     ///
     /// Returns true if oldValue is not the same as newValue
     ///
-    internal func isChanged(oldValue oldValue: TBoundType, newValue: TBoundType) -> Bool {
+    internal func isChanged(oldValue: TBoundType, newValue: TBoundType) -> Bool {
         // By default, we don't know, so we always return true
         return true;
     }

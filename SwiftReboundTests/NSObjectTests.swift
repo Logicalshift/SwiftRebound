@@ -12,12 +12,12 @@ import XCTest
 
 class NSObjectTests : XCTestCase {
     /// Creates a lifetime and attaches it to an object, calling done() when it finishes
-    func attachLifetime(obj: NSObject, done: () -> ()) {
+    func attachLifetime(_ obj: NSObject, done: () -> ()) {
         let lifetime = CallbackLifetime(done: done);
         lifetime.liveAsLongAs(obj);
     }
     
-    func useObject(obj: NSObject) {
+    func useObject(_ obj: NSObject) {
         
     }
     

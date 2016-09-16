@@ -13,7 +13,7 @@ import Foundation
 ///
 public final class CombinedChangeable : Changeable {
     /// The chageables that are combined in this one
-    private var _combined: [Changeable];
+    fileprivate var _combined: [Changeable];
     
     public init() {
         _combined = [];
@@ -26,7 +26,7 @@ public final class CombinedChangeable : Changeable {
         for changeable in changeables {
             let alsoCombined = changeable as? CombinedChangeable;
             if let alsoCombined = alsoCombined {
-                flatChangeables.appendContentsOf(alsoCombined._combined);
+                flatChangeables.append(contentsOf: alsoCombined._combined);
             }
         }
         
@@ -36,7 +36,7 @@ public final class CombinedChangeable : Changeable {
     ///
     /// Calls a function any time this value is marked as changed
     ///
-    public func whenChanged(target: Notifiable) -> Lifetime {
+    public func whenChanged(_ target: Notifiable) -> Lifetime {
         var lifetimes = [Lifetime]();
         
         // Combine the changeables and generate a lifetime for each one
@@ -52,14 +52,14 @@ public final class CombinedChangeable : Changeable {
     ///
     /// Adds a new changeable to the changeable items being managed by this object
     ///
-    public func addChangeable(newChangeable: Changeable) {
+    public func addChangeable(_ newChangeable: Changeable) {
         _combined.append(newChangeable);
     }
     
     ///
     /// Finds if this represents the same changeable as the specified combined changeable
     ///
-    public func isSameAs(compareTo: CombinedChangeable) -> Bool {
+    public func isSameAs(_ compareTo: CombinedChangeable) -> Bool {
         // Lengths must be the same
         if _combined.count != compareTo._combined.count {
             return false;

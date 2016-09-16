@@ -27,14 +27,14 @@ public protocol Changeable : class {
     ///
     /// Calls a function any time this value is marked as changed
     ///
-    func whenChanged(target: Notifiable) -> Lifetime;
+    func whenChanged(_ target: Notifiable) -> Lifetime;
 }
 
 public extension Changeable {
     ///
     /// Calls a function any time this value is marked as changed
     ///
-    public final func whenChanged(action: () -> ()) -> Lifetime {
+    public final func whenChanged(_ action: () -> ()) -> Lifetime {
         return whenChanged(CallbackNotifiable(action: action));
     }
 }
@@ -44,7 +44,7 @@ public extension Changeable {
 ///
 /// Bound values are the core of SwiftRebound.
 ///
-public class Bound<TBoundType> : Changeable, Notifiable {
+open class Bound<TBoundType> : Changeable, Notifiable {
     ///
     /// The value that's current bound to this object, or nil if it has been changed and needs recomputing
     ///
@@ -53,12 +53,12 @@ public class Bound<TBoundType> : Changeable, Notifiable {
     ///
     /// The actions that should be executed when this bound value is changed
     ///
-    private var _actionsOnChanged: [NotificationWrapper] = [];
+    fileprivate var _actionsOnChanged: [NotificationWrapper] = [];
     
     ///
     /// nil, or a binding that is true if this item is bound to something or false if it is not
     ///
-    private var _isBound: MutableBound<Bool>? = nil;
+    fileprivate var _isBound: MutableBound<Bool>? = nil;
     
     ///
     /// Must be overridden by subclasses: can't be initialised directly
@@ -121,7 +121,7 @@ public class Bound<TBoundType> : Changeable, Notifiable {
     ///
     /// Returns true if the cached value needs updating
     ///
-    public func needsUpdate() -> Bool {
+    open func needsUpdate() -> Bool {
         return _currentValue == nil;
     }
     
@@ -130,7 +130,7 @@ public class Bound<TBoundType> : Changeable, Notifiable {
     ///
     /// The next time the value is resolved, it will register as a change and the observers will be called.
     ///
-    public func markAsChanged() {
+    open func markAsChanged() {
         if _currentValue != nil {
             _currentValue = nil;
             notifyChange();
@@ -140,7 +140,7 @@ public class Bound<TBoundType> : Changeable, Notifiable {
     ///
     /// Reads the value that this object is bound to
     ///
-    public var value: TBoundType {
+    open var value: TBoundType {
         @inline(__always)
         get {
             return resolve();
@@ -150,7 +150,7 @@ public class Bound<TBoundType> : Changeable, Notifiable {
     ///
     /// Calls a function any time this value is marked as changed
     ///
-    public final func whenChanged(target: Notifiable) -> Lifetime {
+    public final func whenChanged(_ target: Notifiable) -> Lifetime {
         if _actionsOnChanged.count == 0 {
             _isBound?.value = true;
             beginObserving();
@@ -171,7 +171,7 @@ public class Bound<TBoundType> : Changeable, Notifiable {
     /// Calls a function any time this value is changed. The function will be called at least once
     /// with the current value of this bound object
     ///
-    public final func observe(action: (TBoundType) -> ()) -> Lifetime {
+    public final func observe(_ action: @escaping (TBoundType) -> ()) -> Lifetime {
         var resolving           = false;
         var resolveAgain        = false;
         
@@ -212,21 +212,21 @@ public class Bound<TBoundType> : Changeable, Notifiable {
     ///
     /// Something has begun observing this object for changes
     ///
-    public func beginObserving() {
+    open func beginObserving() {
         // Subclasses may override (eg if they want to add an observer)
     }
     
     ///
     /// All observers have finished their lifetime (called eagerly; normally observers are removed lazily)
     ///
-    public func doneObserving() {
+    open func doneObserving() {
         // Subclasses may override (eg if they want to add an observer)
     }
     
     ///
     /// Check to see if all notifications are finished with and call doneObserving() if they are
     ///
-    private func maybeDoneObserving() {
+    fileprivate func maybeDoneObserving() {
         // See if all the notifiers are finished with
         var allDone = true;
         for notifier in _actionsOnChanged {
@@ -250,7 +250,7 @@ public class Bound<TBoundType> : Changeable, Notifiable {
     /// This can be used as an opportunity to detach or attach event handlers that update a particular value, by observing when it
     /// becomes true or false.
     ///
-    public var isBound: Bound<Bool> {
+    open var isBound: Bound<Bool> {
         get {
             if let result = _isBound {
                 return result;

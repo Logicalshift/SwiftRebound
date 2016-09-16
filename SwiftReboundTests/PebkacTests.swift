@@ -77,7 +77,7 @@ class PebkacTests : XCTestCase {
         
         XCTAssertEqual(5, binding.value );
         
-        self.measureBlock {
+        self.measure {
             binding.value = -100000;
             XCTAssertEqual(5, binding.value);
         }

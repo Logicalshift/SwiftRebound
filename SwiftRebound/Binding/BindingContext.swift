@@ -9,7 +9,7 @@
 import Foundation
 
 private let _contextSpecificNameString  = "io.logicalshift.SwiftRebound.BindingContext";
-private let _contextSpecificName        = UnsafePointer<Void>((_contextSpecificNameString as NSString).UTF8String);
+private let _contextSpecificName        = UnsafeRawPointer((_contextSpecificNameString as NSString).utf8String);
 
 ///
 /// Binding context queue to use if the current queue is not already a binding queue
@@ -33,41 +33,41 @@ private class QueueBindingContext {
 ///
 /// The binding context is used to keep track of what bindings are being accessed
 ///
-public class BindingContext {
+open class BindingContext {
     ///
     /// The dependencies that have been created in this context
     ///
-    private var _dependencies = CombinedChangeable();
+    fileprivate var _dependencies = CombinedChangeable();
     
     ///
     /// Dependencies that we expected to see
     ///
-    private var _expectedDependencies: CombinedChangeable?;
+    fileprivate var _expectedDependencies: CombinedChangeable?;
     
     ///
     /// Call BindingContext.current to get the binding context for the current queue
     ///
-    private init() {
+    fileprivate init() {
     }
     
-    private static var currentStorage: QueueBindingContext? {
+    fileprivate static var currentStorage: QueueBindingContext? {
         @inline(__always)
         get {
             // Get the context pointer from the queue
-            let unmanagedContext = dispatch_get_specific(_contextSpecificName);
+            let unmanagedContext = DispatchQueue.getSpecific(_contextSpecificName);
             if unmanagedContext == nil {
                 return nil;
             }
             
             // Convert from the unmanaged value
-            return Unmanaged<QueueBindingContext>.fromOpaque(COpaquePointer(unmanagedContext)).takeUnretainedValue();
+            return Unmanaged<QueueBindingContext>.fromOpaque(OpaquePointer(unmanagedContext)).takeUnretainedValue();
         }
     }
     
     ///
     /// Retrieves the binding context for the current queue (or nil if there isn't one)
     ///
-    public static var current: BindingContext? {
+    open static var current: BindingContext? {
         get {
             return currentStorage?.context;
         }
@@ -76,18 +76,18 @@ public class BindingContext {
     ///
     /// Creates a new dispatch queue with a new binding context
     ///
-    public static func createQueueWithNewContext() -> dispatch_queue_t {
+    open static func createQueueWithNewContext() -> DispatchQueue {
         // Generate a new context
         let newContext  = BindingContext();
         
         // Create a queue to use the context in
-        let queue       = dispatch_queue_create("io.logicalshift.binding", nil);
+        let queue       = DispatchQueue(label: "io.logicalshift.binding", attributes: []);
         let storage     = QueueBindingContext(context: newContext);
         let retained    = Unmanaged<QueueBindingContext>.passRetained(storage).toOpaque();
         
-        dispatch_queue_set_specific(queue, _contextSpecificName, UnsafeMutablePointer<Void>(retained), { context in
+        queue.setSpecific(key: /*Migrator FIXME: Use a variable of type DispatchSpecificKey*/ _contextSpecificName, value: UnsafeMutableRawPointer(retained), { context in
             // Release the context
-            Unmanaged<QueueBindingContext>.fromOpaque(COpaquePointer(context)).release();
+            Unmanaged<QueueBindingContext>.fromOpaque(OpaquePointer(context)).release();
         });
         
         return queue;
@@ -97,7 +97,7 @@ public class BindingContext {
     /// Creates a new binding context (which can be retrieved with current) and performs the specified action with
     /// it in effect
     ///
-    public static func withNewContext(action: () -> ()) {
+    open static func withNewContext(_ action: () -> ()) {
         if let existingStorage = BindingContext.currentStorage {
             // Generate a new context
             let oldContext  = existingStorage.context;
@@ -111,7 +111,7 @@ public class BindingContext {
         } else {
             // Current queue doesn't have any context stored, move on to the default queue
             // Could also call createQueueWithNewContext() here, but that is slow
-            dispatch_sync(_defaultContextQueue, {
+            _defaultContextQueue.sync(execute: {
                 let existingStorage = BindingContext.currentStorage!;
                 
                 // Generate a new context
@@ -130,14 +130,14 @@ public class BindingContext {
     ///
     /// Sets the set of expected dependencies for this item
     ///
-    public final func setExpectedDependencies(dependencies: CombinedChangeable) {
+    public final func setExpectedDependencies(_ dependencies: CombinedChangeable) {
         _expectedDependencies = dependencies;
     }
     
     ///
     /// Adds a new dependency to the current context (the current context item will be marked as changed)
     ///
-    public final func addDependency(dependentOn: Changeable) {
+    public final func addDependency(_ dependentOn: Changeable) {
         _dependencies.addChangeable(dependentOn);
     }
     

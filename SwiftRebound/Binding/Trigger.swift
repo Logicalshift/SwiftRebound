@@ -16,18 +16,18 @@ internal class Trigger : Changeable, Notifiable, Lifetime {
     let action: () -> ();
     
     /// The dependencies for the last time the action was run
-    private var _dependencies: CombinedChangeable?;
+    fileprivate var _dependencies: CombinedChangeable?;
 
     /// The actions that should be executed when this trigger value is changed
-    private var _actionsOnChanged: [NotificationWrapper] = [];
+    fileprivate var _actionsOnChanged: [NotificationWrapper] = [];
     
     /// Lifetime of the dependency change monitor
-    private var _dependencyLifetime: Lifetime?;
+    fileprivate var _dependencyLifetime: Lifetime?;
     
     /// True if an update is pending (we only call the update function once when invalidated, and only call it again once the action runs)
-    private var _updatePending = false;
+    fileprivate var _updatePending = false;
 
-    init(action: () -> ()) {
+    init(action: @escaping () -> ()) {
         self.action = action;
     }
     
@@ -67,7 +67,7 @@ internal class Trigger : Changeable, Notifiable, Lifetime {
     ///
     /// Calls a function any time this value is marked as changed
     ///
-    func whenChanged(target: Notifiable) -> Lifetime {
+    func whenChanged(_ target: Notifiable) -> Lifetime {
         // Record this action so we can re-run it when the value changes
         let wrapper = NotificationWrapper(target: target);
         _actionsOnChanged.append(wrapper);

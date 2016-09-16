@@ -11,8 +11,8 @@ import Foundation
 ///
 /// Lifetime object that represents the combination of many lifetimes into one
 ///
-public class CombinedLifetime : Lifetime {
-    private var _combined: [Lifetime];
+open class CombinedLifetime : Lifetime {
+    fileprivate var _combined: [Lifetime];
     
     public init(lifetimes: [Lifetime]) {
         var flatLifetimes = [Lifetime]();
@@ -21,7 +21,7 @@ public class CombinedLifetime : Lifetime {
         for lifetime in lifetimes {
             let alsoComposite = lifetime as? CombinedLifetime;
             if let alsoComposite = alsoComposite {
-                flatLifetimes.appendContentsOf(alsoComposite._combined);
+                flatLifetimes.append(contentsOf: alsoComposite._combined);
             } else {
                 flatLifetimes.append(lifetime);
             }
@@ -33,7 +33,7 @@ public class CombinedLifetime : Lifetime {
     ///
     /// Indicates that this object should survive even when this Lifetime object has been deinitialised
     ///
-    public func forever() -> Void {
+    open func forever() -> Void {
         for lifetime in _combined {
             lifetime.forever();
         }
@@ -42,7 +42,7 @@ public class CombinedLifetime : Lifetime {
     ///
     /// Indicates that this object has been finished with
     ///
-    public func done() -> Void {
+    open func done() -> Void {
         for lifetime in _combined {
             lifetime.done();
         }
@@ -53,7 +53,7 @@ public class CombinedLifetime : Lifetime {
     ///
     /// Adds a new lifetime to those monitored by this object
     ///
-    public func addLifetime(newLifetime: Lifetime) {
+    open func addLifetime(_ newLifetime: Lifetime) {
         _combined.append(newLifetime);
     }
 }
@@ -62,9 +62,9 @@ extension Lifetime {
     ///
     /// Creates a new lifetime that binds many lifetimes into a single one
     ///
-    func liveAsLongAs(lifetimes: Lifetime...) -> Lifetime {
+    func liveAsLongAs(_ lifetimes: Lifetime...) -> Lifetime {
         var compose: [Lifetime] = [self];
-        compose.appendContentsOf(lifetimes);
+        compose.append(contentsOf: lifetimes);
         return CombinedLifetime(lifetimes: compose);
     }
 }

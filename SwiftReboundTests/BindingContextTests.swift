@@ -22,7 +22,7 @@ class BindingContextTests : XCTestCase {
     }
     
     func testNewContextPerformance() {
-        self.measureBlock {
+        self.measure {
             for _ in 0..<100000 {
                 BindingContext.withNewContext { };
             }
@@ -31,7 +31,7 @@ class BindingContextTests : XCTestCase {
 
     func testNewContextPerformanceWithNesting() {
         BindingContext.withNewContext {
-            self.measureBlock {
+            self.measure {
                 for _ in 0..<100000 {
                     BindingContext.withNewContext { };
                 }
@@ -41,7 +41,7 @@ class BindingContextTests : XCTestCase {
 
     func testReadContextPerformance() {
         BindingContext.withNewContext {
-            self.measureBlock {
+            self.measure {
                 for _ in 0..<100000 {
                     if BindingContext.current == nil {
                         XCTAssert(false);

@@ -12,9 +12,9 @@ import Foundation
 /// Notifiable implementation that calls a function whenever a value changes
 ///
 internal class CallbackNotifiable : Notifiable {
-    private let _action: () -> ();
+    fileprivate let _action: () -> ();
     
-    init(action: () -> ()) {
+    init(action: @escaping () -> ()) {
         _action = action;
     }
     

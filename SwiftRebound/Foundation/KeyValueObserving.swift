@@ -13,7 +13,7 @@ import Foundation
 ///
 private class ObserverBindings : NSObject {
     /// The active bindings on this observer
-    private var _attachedBindings = [String: KvoBound]();
+    fileprivate var _attachedBindings = [String: KvoBound]();
     
     /// The target object, or nil if there are no attached bindings
     ///
@@ -26,15 +26,15 @@ private class ObserverBindings : NSObject {
     /// (Ideally, we'd just consider it as a weak reference as a dead object can't update itself, but there's no
     /// way to control object deallocation order sufficiently. This is annoying as for 'natural' bindings the
     /// behaviour is that if a binding goes away it stops updating)
-    private var _target: NSObject? = nil;
+    fileprivate var _target: NSObject? = nil;
     
     /// How many active attached bindings there are
-    private var _attachCount: Int32 = 0;
+    fileprivate var _attachCount: Int32 = 0;
     
     ///
     /// Attaches a binding and ensures that the target object is kept in memory
     ///
-    func attachBinding(target: NSObject) {
+    func attachBinding(_ target: NSObject) {
         OSAtomicIncrement32(&_attachCount);
         _target = target;
     }
@@ -50,7 +50,7 @@ private class ObserverBindings : NSObject {
     }
 
     /// Callback when an observed binding changes
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         // Keypath must exist
         if let keyPath = keyPath {
             // Must be observing the keypath
@@ -67,38 +67,38 @@ private class ObserverBindings : NSObject {
 ///
 private class KvoBound : Bound<AnyObject?> {
     /// The object we're bound to, or nil if it has gone away
-    private weak var _target: NSObject?;
+    fileprivate weak var _target: NSObject?;
     
     /// The observer bindings object marks changes as having happened
-    private weak var _observerBindings: ObserverBindings?;
+    fileprivate weak var _observerBindings: ObserverBindings?;
     
     /// The key path that we're bound to
-    private let _keyPath: String;
+    fileprivate let _keyPath: String;
     
     /// Set to true if we're attached to an observer
-    private var _observing = false;
+    fileprivate var _observing = false;
     
     init(target: NSObject, keyPath: String) {
         _target     = target;
         _keyPath    = keyPath;
     }
     
-    override private func computeValue() -> AnyObject? {
-        return _target?.valueForKey(_keyPath);
+    override fileprivate func computeValue() -> AnyObject? {
+        return _target?.value(forKey: _keyPath) as AnyObject?;
     }
     
-    override private func beginObserving() {
+    override fileprivate func beginObserving() {
         if let target = _target {
             let bindings = target.getObserverBindings();
             
             // Activate the observer for this key path
             bindings.attachBinding(target);
-            target.addObserver(bindings, forKeyPath: _keyPath, options: NSKeyValueObservingOptions.New, context: nil);
+            target.addObserver(bindings, forKeyPath: _keyPath, options: NSKeyValueObservingOptions.new, context: nil);
             _observing = true;
         }
     }
     
-    override private func doneObserving() {
+    override fileprivate func doneObserving() {
         if let target = _target {
             let bindings = target.getObserverBindings();
             
@@ -109,7 +109,7 @@ private class KvoBound : Bound<AnyObject?> {
         }
     }
     
-    override private func needsUpdate() -> Bool {
+    override fileprivate func needsUpdate() -> Bool {
         if !_observing {
             // Not attached to the observer: want to read the key value every time
             return true;
@@ -127,7 +127,7 @@ public extension NSObject {
     ///
     /// Retrieves the observer bindings attached to a NSObject
     ///
-    private func getObserverBindings() -> ObserverBindings {
+    fileprivate func getObserverBindings() -> ObserverBindings {
         // We're a swift object and don't conform to NSObject, so we use an ObserverBindings object which does conform as the target
         // (this also ensures that we only add one observer in total)
         
@@ -151,7 +151,7 @@ public extension NSObject {
     /// Note that if anything is observing the binding, then the target object will be kept in memory (this includes computed bindings).
     /// This is done because an exception is thrown if there are any KVO observers attached to an object when it is deinitialised.
     ///
-    public func bindKeyPath(keyPath: String) -> Bound<AnyObject?> {
+    public func bindKeyPath(_ keyPath: String) -> Bound<AnyObject?> {
         // Fetch the bindings attached to this object
         let attachedBindings = self.getObserverBindings();
         

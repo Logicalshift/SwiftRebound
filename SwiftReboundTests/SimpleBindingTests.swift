@@ -242,7 +242,7 @@ class SimpleBindingTests : XCTestCase {
     func test100kReads() {
         let boundInt = Binding.create(1);
         
-        self.measureBlock {
+        self.measure {
             for _ in 0..<100000 {
                 if boundInt.value != 1 {
                     XCTAssert(false);
@@ -254,7 +254,7 @@ class SimpleBindingTests : XCTestCase {
     func test100kReadsNotBound() {
         let unboundInt = 1;
         
-        self.measureBlock {
+        self.measure {
             for _ in 0..<100000 {
                 if unboundInt != 1 {
                     XCTAssert(false);
@@ -266,7 +266,7 @@ class SimpleBindingTests : XCTestCase {
     func test100kWrites() {
         let boundInt = Binding.create(1);
         
-        self.measureBlock {
+        self.measure {
             for _ in 0..<100000 {
                 boundInt.value = 2;
             }

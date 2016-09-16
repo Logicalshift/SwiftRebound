@@ -22,11 +22,11 @@ class LifetimeTests : XCTestCase {
         XCTAssert(done);
     }
     
-    func limitedLife(callback: () -> ()) {
+    func limitedLife(_ callback: () -> ()) {
         let _ = CallbackLifetime(done: callback);
     }
     
-    func keepAlive(callback: () -> ()) {
+    func keepAlive(_ callback: () -> ()) {
         let alive = CallbackLifetime(done: callback);
         alive.forever();
     }

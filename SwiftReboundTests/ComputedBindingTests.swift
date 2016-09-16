@@ -89,7 +89,7 @@ class ComputedBindingTests : XCTestCase {
         XCTAssertEqual(4, computed.value);
     }
     
-    func doComputedBinding(binding: MutableBound<Int>, onChange: () -> ()) {
+    func doComputedBinding(_ binding: MutableBound<Int>, onChange: @escaping () -> ()) {
         // Create a simple computed value
         let computed = Binding.computed({ () -> Int in return binding.value + 1 });
         
@@ -166,7 +166,7 @@ class ComputedBindingTests : XCTestCase {
         let simple      = Binding.create(1);
         let computed    = Binding.computed({ return 1 + simple.value });
         
-        self.measureBlock {
+        self.measure {
             for _ in 0..<100000 {
                 if computed.value != 2 {
                     XCTAssert(false);
@@ -179,7 +179,7 @@ class ComputedBindingTests : XCTestCase {
         // Part of a baseline: measure time taken to just update a value
         let simple      = Binding.create(1);
         
-        self.measureBlock {
+        self.measure {
             for x in 0..<100000 {
                 simple.value = x;
                 if simple.value+1 != x+1 {
@@ -195,7 +195,7 @@ class ComputedBindingTests : XCTestCase {
         let simple2     = Binding.create(2);
         simple.observe { newValue in simple2.value = newValue+1 }.forever();
         
-        self.measureBlock {
+        self.measure {
             for x in 0..<100000 {
                 simple.value = x;
                 if simple2.value != x+1 {
@@ -211,7 +211,7 @@ class ComputedBindingTests : XCTestCase {
         let computed    = Binding.computed({ simple + 1 });
         
         BindingContext.withNewContext {
-            self.measureBlock {
+            self.measure {
                 for x in 0..<100000 {
                     simple = x;
                     computed.markAsChanged();
@@ -227,7 +227,7 @@ class ComputedBindingTests : XCTestCase {
         let simple      = Binding.create(1);
         let computed    = Binding.computed({ return 1 + simple.value });
         
-        self.measureBlock {
+        self.measure {
             for x in 0..<100000 {
                 simple.value = x;
                 if computed.value != x+1 {
@@ -243,7 +243,7 @@ class ComputedBindingTests : XCTestCase {
         
         computed.observe({ newValue in }).forever();
         
-        self.measureBlock {
+        self.measure {
             for x in 0..<100000 {
                 simple.value = x;
                 if computed.value != x+1 {
@@ -258,7 +258,7 @@ class ComputedBindingTests : XCTestCase {
         let computed    = Binding.computed({ return 1 + simple.value });
         
         BindingContext.withNewContext {
-            self.measureBlock {
+            self.measure {
                 for x in 0..<100000 {
                     simple.value = x;
                     if computed.value != x+1 {

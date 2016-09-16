@@ -11,14 +11,14 @@ import Foundation
 ///
 /// Lifetime that calls a function when it is finished with
 ///
-public class CallbackLifetime : Lifetime {
+open class CallbackLifetime : Lifetime {
     /// Called when this object has been finished with (set to nil immediately after calling)
-    private var _done: Optional<() -> ()>;
+    fileprivate var _done: Optional<() -> ()>;
     
     /// True if we should not call done() from deinit
-    private var _isKept = false;
+    fileprivate var _isKept = false;
     
-    public init(done: () -> ()) {
+    public init(done: @escaping () -> ()) {
         _done = done;
     }
     
@@ -34,7 +34,7 @@ public class CallbackLifetime : Lifetime {
     ///
     /// Indicates that this object should survive even when this Lifetime object has been deinitialised
     ///
-    public func forever() -> Void {
+    open func forever() -> Void {
         _isKept = true;
         _done = nil;
     }
@@ -42,7 +42,7 @@ public class CallbackLifetime : Lifetime {
     ///
     /// Indicates that this object has been finished with
     ///
-    public func done() -> Void {
+    open func done() -> Void {
         if let done = _done {
             done();
             _done = nil;

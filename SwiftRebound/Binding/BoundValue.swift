@@ -18,7 +18,7 @@ internal class BoundValue<TBoundType> : MutableBound<TBoundType> {
         _currentValue = value;
     }
     
-    override func bindNewValue(newValue: TBoundType) -> TBoundType {
+    override func bindNewValue(_ newValue: TBoundType) -> TBoundType {
         return newValue;
     }
     
@@ -43,7 +43,7 @@ internal final class BoundReference<TBoundType : AnyObject> : BoundValue<TBoundT
         super.init(value: value);
     }
         
-    internal override func isChanged(oldValue oldValue: TBoundType, newValue: TBoundType) -> Bool {
+    internal override func isChanged(oldValue: TBoundType, newValue: TBoundType) -> Bool {
         return oldValue !== newValue;
     }
 }
@@ -53,7 +53,7 @@ internal final class BoundEquatable<TBoundType : Equatable> : BoundValue<TBoundT
         super.init(value: value);
     }
 
-    internal override func isChanged(oldValue oldValue: TBoundType, newValue: TBoundType) -> Bool {
+    internal override func isChanged(oldValue: TBoundType, newValue: TBoundType) -> Bool {
         return oldValue != newValue;
     }
 }

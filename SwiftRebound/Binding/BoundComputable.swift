@@ -16,15 +16,15 @@ import Foundation
 ///
 internal final class BoundComputable<TBoundType> : Bound<TBoundType> {
     /// The function to compute
-    private let _compute: () -> TBoundType;
+    fileprivate let _compute: () -> TBoundType;
     
     /// Dependencies created the last time this value was computed
-    private var _dependencies: CombinedChangeable?;
+    fileprivate var _dependencies: CombinedChangeable?;
     
     /// Lifetime of the dependencies
-    private var _dependencyLifetime: Lifetime?;
+    fileprivate var _dependencyLifetime: Lifetime?;
     
-    init(compute: () -> TBoundType) {
+    init(compute: @escaping () -> TBoundType) {
         _compute = compute;
 
         super.init();
