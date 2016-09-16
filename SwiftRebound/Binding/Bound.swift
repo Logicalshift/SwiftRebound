@@ -34,7 +34,7 @@ public extension Changeable {
     ///
     /// Calls a function any time this value is marked as changed
     ///
-    public final func whenChanged(_ action: () -> ()) -> Lifetime {
+    public final func whenChanged(_ action: @escaping () -> ()) -> Lifetime {
         return whenChanged(CallbackNotifiable(action: action));
     }
 }
