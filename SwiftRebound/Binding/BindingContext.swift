@@ -54,7 +54,7 @@ open class BindingContext {
         @inline(__always)
         get {
             // Get the context pointer from the queue
-            let unmanagedContext = DispatchQueue.getSpecific(_contextSpecificName);
+            let unmanagedContext = DispatchQueue.getSpecific(key: _contextSpecificName);
             if unmanagedContext == nil {
                 return nil;
             }
