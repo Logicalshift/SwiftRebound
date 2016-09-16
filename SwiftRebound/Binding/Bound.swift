@@ -27,7 +27,7 @@ public protocol Changeable : class {
     ///
     /// Calls a function any time this value is marked as changed
     ///
-    func whenChanged(_ target: Notifiable) -> Lifetime;
+    func whenChangedNotify(_ target: Notifiable) -> Lifetime;
 }
 
 public extension Changeable {
@@ -35,7 +35,7 @@ public extension Changeable {
     /// Calls a function any time this value is marked as changed
     ///
     public final func whenChanged(_ action: @escaping () -> ()) -> Lifetime {
-        return whenChanged(CallbackNotifiable(action: action));
+        return whenChangedNotify(CallbackNotifiable(action: action));
     }
 }
 
@@ -150,7 +150,7 @@ open class Bound<TBoundType> : Changeable, Notifiable {
     ///
     /// Calls a function any time this value is marked as changed
     ///
-    public final func whenChanged(_ target: Notifiable) -> Lifetime {
+    public final func whenChangedNotify(_ target: Notifiable) -> Lifetime {
         if _actionsOnChanged.count == 0 {
             _isBound?.value = true;
             beginObserving();

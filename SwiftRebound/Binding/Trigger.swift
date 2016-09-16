@@ -56,7 +56,7 @@ internal class Trigger : Changeable, Notifiable, Lifetime {
                 
                 let newDependencies         = currentContext.dependencies;
                 self._dependencies          = newDependencies;
-                self._dependencyLifetime    = newDependencies.whenChanged(WeakNotifiable(target: self));
+                self._dependencyLifetime    = newDependencies.whenChangedNotify(WeakNotifiable(target: self));
 
                 currentContext.resetDependencies();
                 lastLifetime?.done();
@@ -67,7 +67,7 @@ internal class Trigger : Changeable, Notifiable, Lifetime {
     ///
     /// Calls a function any time this value is marked as changed
     ///
-    func whenChanged(_ target: Notifiable) -> Lifetime {
+    func whenChangedNotify(_ target: Notifiable) -> Lifetime {
         // Record this action so we can re-run it when the value changes
         let wrapper = NotificationWrapper(target: target);
         _actionsOnChanged.append(wrapper);

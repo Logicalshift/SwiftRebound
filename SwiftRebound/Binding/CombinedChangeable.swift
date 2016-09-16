@@ -36,12 +36,12 @@ public final class CombinedChangeable : Changeable {
     ///
     /// Calls a function any time this value is marked as changed
     ///
-    public func whenChanged(_ target: Notifiable) -> Lifetime {
+    public func whenChangedNotify(_ target: Notifiable) -> Lifetime {
         var lifetimes = [Lifetime]();
         
         // Combine the changeables and generate a lifetime for each one
         for changeable in _combined {
-            let lifetime = changeable.whenChanged(target);
+            let lifetime = changeable.whenChangedNotify(target);
             lifetimes.append(lifetime);
         }
         

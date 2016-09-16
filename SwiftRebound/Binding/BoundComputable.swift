@@ -61,7 +61,7 @@ internal final class BoundComputable<TBoundType> : Bound<TBoundType> {
                 // Create new dependencies
                 let newDependencies         = currentContext.dependencies;
                 self._dependencies          = newDependencies;
-                self._dependencyLifetime    = newDependencies.whenChanged(WeakNotifiable(target: self));
+                self._dependencyLifetime    = newDependencies.whenChangedNotify(WeakNotifiable(target: self));
 
                 // Start tracking a new dependency set in case ending the lifetime creates accidental bindings
                 currentContext.resetDependencies();
