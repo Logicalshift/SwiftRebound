@@ -50,7 +50,7 @@ open class Binding {
     /// Computed bindings can access other bindings and will be automatically invalidated when those
     /// bindings change.
     ///
-    open static func computed<TBoundType>(_ compute: () -> TBoundType) -> Bound<TBoundType> {
+    open static func computed<TBoundType>(_ compute: @escaping () -> TBoundType) -> Bound<TBoundType> {
         return BoundComputable(compute: compute);
     }
     
@@ -59,7 +59,7 @@ open class Binding {
     ///
     /// This is something like a drawing function where it can be triggered to update by calling `setNeedsDisplay()`.
     ///
-    open static func trigger(_ action: () -> (), causeUpdate: () -> ()) -> (() -> (), Lifetime) {
+    open static func trigger(_ action: @escaping () -> (), causeUpdate: () -> ()) -> (() -> (), Lifetime) {
         let trigger     = Trigger(action: action);
         let lifetime    = trigger.whenChanged(causeUpdate).liveAsLongAs(trigger);
         
