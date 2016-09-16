@@ -85,7 +85,7 @@ public final class ArrayBound<TBoundType> : MutableBound<[TBoundType]> {
     ///
     /// Retrieves or replaces a range in this collection
     ///
-    public subscript(range: Range<Int>) -> [TBoundType] {
+    public subscript(range: CountableRange<Int>) -> [TBoundType] {
         set(newData) {
             if _currentValue != nil {
                 let oldData = Array(_currentValue![range]);
