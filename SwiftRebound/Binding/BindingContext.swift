@@ -9,7 +9,7 @@
 import Foundation
 
 private let _contextSpecificNameString  = "io.logicalshift.SwiftRebound.BindingContext";
-private let _contextSpecificName        = UnsafeRawPointer((_contextSpecificNameString as NSString).utf8String);
+private let _contextSpecificName        = DispatchSpecificKey<QueueBindingContext>();
 
 ///
 /// Binding context queue to use if the current queue is not already a binding queue
@@ -54,13 +54,7 @@ open class BindingContext {
         @inline(__always)
         get {
             // Get the context pointer from the queue
-            let unmanagedContext = DispatchQueue.getSpecific(key: _contextSpecificName);
-            if unmanagedContext == nil {
-                return nil;
-            }
-            
-            // Convert from the unmanaged value
-            return Unmanaged<QueueBindingContext>.fromOpaque(OpaquePointer(unmanagedContext)).takeUnretainedValue();
+            return DispatchQueue.getSpecific(key: _contextSpecificName);
         }
     }
     
@@ -83,12 +77,8 @@ open class BindingContext {
         // Create a queue to use the context in
         let queue       = DispatchQueue(label: "io.logicalshift.binding", attributes: []);
         let storage     = QueueBindingContext(context: newContext);
-        let retained    = Unmanaged<QueueBindingContext>.passRetained(storage).toOpaque();
         
-        queue.setSpecific(key: /*Migrator FIXME: Use a variable of type DispatchSpecificKey*/ _contextSpecificName, value: UnsafeMutableRawPointer(retained), { context in
-            // Release the context
-            Unmanaged<QueueBindingContext>.fromOpaque(OpaquePointer(context)).release();
-        });
+        queue.setSpecific(key: _contextSpecificName, value: storage);
         
         return queue;
     }
