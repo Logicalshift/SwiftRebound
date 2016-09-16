@@ -12,7 +12,7 @@ import XCTest
 
 class NSObjectTests : XCTestCase {
     /// Creates a lifetime and attaches it to an object, calling done() when it finishes
-    func attachLifetime(_ obj: NSObject, done: () -> ()) {
+    func attachLifetime(_ obj: NSObject, done: @escaping () -> ()) {
         let lifetime = CallbackLifetime(done: done);
         lifetime.liveAsLongAs(obj);
     }
