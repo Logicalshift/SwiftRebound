@@ -59,7 +59,7 @@ open class Binding {
     ///
     /// This is something like a drawing function where it can be triggered to update by calling `setNeedsDisplay()`.
     ///
-    open static func trigger(_ action: @escaping () -> (), causeUpdate: () -> ()) -> (() -> (), Lifetime) {
+    open static func trigger(_ action: @escaping () -> (), causeUpdate: @escaping () -> ()) -> (() -> (), Lifetime) {
         let trigger     = Trigger(action: action);
         let lifetime    = trigger.whenChanged(causeUpdate).liveAsLongAs(trigger);
         
