@@ -15,7 +15,7 @@
 ///
 /// Layer that provides a way to draw and layout reactively
 ///
-class ReactiveLayer : CALayer {
+open class ReactiveLayer : CALayer {
     /// Trigger for the drawReactive() call
     fileprivate var _drawTrigger: Optional<() -> ()> = nil;
     
@@ -85,7 +85,7 @@ class ReactiveLayer : CALayer {
         }
     }
     
-    override func draw(in ctx: CGContext) {
+    override open func draw(in ctx: CGContext) {
         let trigger = getDrawTrigger();
         
         _queue.sync {
@@ -95,7 +95,7 @@ class ReactiveLayer : CALayer {
         }
     }
     
-    override func layoutSublayers() {
+    override open func layoutSublayers() {
         let trigger = getLayoutTrigger();
         
         _queue.sync {
