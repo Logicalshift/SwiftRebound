@@ -35,6 +35,8 @@
 		4B4628BE1D38E2DA00CDBB9E /* KeyValueObserving.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4628BD1D38E2DA00CDBB9E /* KeyValueObserving.swift */; };
 		4B4628C01D38EB7100CDBB9E /* KvoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4628BF1D38EB7100CDBB9E /* KvoTests.swift */; };
 		4B4A51941D3F690F005D031B /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF862271D393857008B20F8 /* DemoView.swift */; };
+		4B58CD481DCBE0C4006FC585 /* ReactiveLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B58CD471DCBE0C4006FC585 /* ReactiveLayer.swift */; };
+		4B58CD491DCBE0C9006FC585 /* ReactiveLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B58CD471DCBE0C4006FC585 /* ReactiveLayer.swift */; };
 		4B6ECD7B1D4519A900050C9A /* ArrayBound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6ECD7A1D4519A900050C9A /* ArrayBound.swift */; };
 		4B6ECD7C1D45209900050C9A /* ArrayBound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6ECD7A1D4519A900050C9A /* ArrayBound.swift */; };
 		4B6ECD7E1D4520A400050C9A /* ArrayBindingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6ECD7D1D4520A400050C9A /* ArrayBindingTests.swift */; };
@@ -119,6 +121,7 @@
 		4B4628BB1D38E18A00CDBB9E /* ReboundObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReboundObject.swift; sourceTree = "<group>"; };
 		4B4628BD1D38E2DA00CDBB9E /* KeyValueObserving.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyValueObserving.swift; sourceTree = "<group>"; };
 		4B4628BF1D38EB7100CDBB9E /* KvoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KvoTests.swift; sourceTree = "<group>"; };
+		4B58CD471DCBE0C4006FC585 /* ReactiveLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactiveLayer.swift; sourceTree = "<group>"; };
 		4B6ECD7A1D4519A900050C9A /* ArrayBound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayBound.swift; sourceTree = "<group>"; };
 		4B6ECD7D1D4520A400050C9A /* ArrayBindingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayBindingTests.swift; sourceTree = "<group>"; };
 		4B7985B81D3A31A80043A653 /* SwiftRebound.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftRebound.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -214,6 +217,7 @@
 			children = (
 				4B2EAF0F1D3241CB006D9138 /* Binding */,
 				4B2EAF1A1D325BA2006D9138 /* Lifetime */,
+				4B58CD461DCBE098006FC585 /* UI */,
 				4B1F710F1D36E07900B8014C /* Cocoa */,
 				4B4628BA1D38E18A00CDBB9E /* Foundation */,
 				4B2EAEFA1D323E28006D9138 /* SwiftRebound.h */,
@@ -276,6 +280,14 @@
 				4B4628BD1D38E2DA00CDBB9E /* KeyValueObserving.swift */,
 			);
 			path = Foundation;
+			sourceTree = "<group>";
+		};
+		4B58CD461DCBE098006FC585 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				4B58CD471DCBE0C4006FC585 /* ReactiveLayer.swift */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 		4B7985B91D3A31A80043A653 /* SwiftRebound-iOS */ = {
@@ -536,6 +548,7 @@
 				4B2EAF151D325410006D9138 /* Binding.swift in Sources */,
 				4B1EBA241D34D4170013489E /* CombinedChangeable.swift in Sources */,
 				4B2EAF131D325066006D9138 /* MutableBound.swift in Sources */,
+				4B58CD481DCBE0C4006FC585 /* ReactiveLayer.swift in Sources */,
 				4B2EAF1E1D325E08006D9138 /* CallbackLifetime.swift in Sources */,
 				4B1EBA281D34DF490013489E /* WeakNotifiable.swift in Sources */,
 				4B1EBA221D34D0220013489E /* CombinedLifetime.swift in Sources */,
@@ -571,6 +584,7 @@
 				4B7985C61D3A31B50043A653 /* WeakNotifiable.swift in Sources */,
 				4B7985CB1D3A31BC0043A653 /* Lifetime.swift in Sources */,
 				4B6ECD7C1D45209900050C9A /* ArrayBound.swift in Sources */,
+				4B58CD491DCBE0C9006FC585 /* ReactiveLayer.swift in Sources */,
 				4B7985E61D3A32D20043A653 /* KeyValueObserving.swift in Sources */,
 				4B7985C91D3A31B50043A653 /* CombinedChangeable.swift in Sources */,
 				4B7985C41D3A31B50043A653 /* MutableBound.swift in Sources */,
