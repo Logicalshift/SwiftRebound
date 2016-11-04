@@ -50,7 +50,7 @@ open class ReactiveLayer : CALayer {
                 }, causeUpdate: { [unowned self] in
                     // Perform the display request async on the queue (we won't queue while we're already drawing)
                     self._queue.async {
-                        RunLoop.main.performSelector(inBackground: #selector(self.setNeedsDisplay), with: self);
+                        RunLoop.main.perform(#selector(self.setNeedsDisplay), target: self, argument: nil, order: 0, modes: [RunLoopMode.defaultRunLoopMode, RunLoopMode.UITrackingRunLoopMode]);
                     }
             });
             
@@ -74,7 +74,7 @@ open class ReactiveLayer : CALayer {
                 }, causeUpdate: { [unowned self] in
                     // Perform the layout request async on the queue (we won't queue while we're already laying out)
                     self._queue.async {
-                        RunLoop.main.performSelector(inBackground: #selector(self.setNeedsLayout), with: self);
+                        RunLoop.main.perform(#selector(self.setNeedsLayout), target: self, argument: nil, order: 0, modes: [RunLoopMode.defaultRunLoopMode, RunLoopMode.UITrackingRunLoopMode]);
                     }
             });
             
