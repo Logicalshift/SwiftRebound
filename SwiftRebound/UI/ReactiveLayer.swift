@@ -8,8 +8,12 @@
 
 #if os(OSX)
     import Cocoa
+    
+    fileprivate let runLoopModes = [ RunLoopMode.defaultRunLoopMode, RunLoopMode.eventTrackingRunLoopMode ];
 #else
     import UIKit
+    
+    fileprivate let runLoopModes = [ RunLoopMode.defaultRunLoopMode, RunLoopMode.UITrackingRunLoopMode ];
 #endif
 
 ///
@@ -50,7 +54,7 @@ open class ReactiveLayer : CALayer {
                 }, causeUpdate: { [unowned self] in
                     // Perform the display request async on the queue (we won't queue while we're already drawing)
                     self._queue.async {
-                        RunLoop.main.perform(#selector(self.setNeedsDisplay), target: self, argument: nil, order: 0, modes: [RunLoopMode.defaultRunLoopMode, RunLoopMode.UITrackingRunLoopMode]);
+                        RunLoop.main.perform(#selector(self.setNeedsDisplay), target: self, argument: nil, order: 0, modes: runLoopModes);
                     }
             });
             
@@ -74,7 +78,7 @@ open class ReactiveLayer : CALayer {
                 }, causeUpdate: { [unowned self] in
                     // Perform the layout request async on the queue (we won't queue while we're already laying out)
                     self._queue.async {
-                        RunLoop.main.perform(#selector(self.setNeedsLayout), target: self, argument: nil, order: 0, modes: [RunLoopMode.defaultRunLoopMode, RunLoopMode.UITrackingRunLoopMode]);
+                        RunLoop.main.perform(#selector(self.setNeedsLayout), target: self, argument: nil, order: 0, modes: runLoopModes);
                     }
             });
             
