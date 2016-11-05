@@ -37,6 +37,10 @@
 		4B4A51941D3F690F005D031B /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF862271D393857008B20F8 /* DemoView.swift */; };
 		4B58CD481DCBE0C4006FC585 /* ReactiveLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B58CD471DCBE0C4006FC585 /* ReactiveLayer.swift */; };
 		4B58CD491DCBE0C9006FC585 /* ReactiveLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B58CD471DCBE0C4006FC585 /* ReactiveLayer.swift */; };
+		4B6061B51DCDF5760037537F /* AttachmentPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6061B41DCDF5760037537F /* AttachmentPoint.swift */; };
+		4B6061B61DCDF6C40037537F /* AttachmentPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6061B41DCDF5760037537F /* AttachmentPoint.swift */; };
+		4B6061B81DCDF8280037537F /* AttachmentPointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6061B71DCDF8280037537F /* AttachmentPointTests.swift */; };
+		4B6061B91DCDF8280037537F /* AttachmentPointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6061B71DCDF8280037537F /* AttachmentPointTests.swift */; };
 		4B6ECD7B1D4519A900050C9A /* ArrayBound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6ECD7A1D4519A900050C9A /* ArrayBound.swift */; };
 		4B6ECD7C1D45209900050C9A /* ArrayBound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6ECD7A1D4519A900050C9A /* ArrayBound.swift */; };
 		4B6ECD7E1D4520A400050C9A /* ArrayBindingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6ECD7D1D4520A400050C9A /* ArrayBindingTests.swift */; };
@@ -122,6 +126,8 @@
 		4B4628BD1D38E2DA00CDBB9E /* KeyValueObserving.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyValueObserving.swift; sourceTree = "<group>"; };
 		4B4628BF1D38EB7100CDBB9E /* KvoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KvoTests.swift; sourceTree = "<group>"; };
 		4B58CD471DCBE0C4006FC585 /* ReactiveLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactiveLayer.swift; sourceTree = "<group>"; };
+		4B6061B41DCDF5760037537F /* AttachmentPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachmentPoint.swift; sourceTree = "<group>"; };
+		4B6061B71DCDF8280037537F /* AttachmentPointTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachmentPointTests.swift; sourceTree = "<group>"; };
 		4B6ECD7A1D4519A900050C9A /* ArrayBound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayBound.swift; sourceTree = "<group>"; };
 		4B6ECD7D1D4520A400050C9A /* ArrayBindingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayBindingTests.swift; sourceTree = "<group>"; };
 		4B7985B81D3A31A80043A653 /* SwiftRebound.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftRebound.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -231,6 +237,7 @@
 			children = (
 				4B2EAF161D325505006D9138 /* SimpleBindingTests.swift */,
 				4B6ECD7D1D4520A400050C9A /* ArrayBindingTests.swift */,
+				4B6061B71DCDF8280037537F /* AttachmentPointTests.swift */,
 				4B2EAF251D32750A006D9138 /* ComputedBindingTests.swift */,
 				4B1DAC9D1D3586C1001B0DEF /* TriggerTests.swift */,
 				4B2EAF1F1D325F24006D9138 /* LifetimeTests.swift */,
@@ -251,6 +258,7 @@
 				4B1EBA291D34DF680013489E /* NotificationWrapper.swift */,
 				4B2EAF101D324773006D9138 /* Bound.swift */,
 				4B2EAF121D325066006D9138 /* MutableBound.swift */,
+				4B6061B41DCDF5760037537F /* AttachmentPoint.swift */,
 				4B6ECD7A1D4519A900050C9A /* ArrayBound.swift */,
 				4B2EAF181D32574C006D9138 /* BoundValue.swift */,
 				4B1EBA271D34DF490013489E /* WeakNotifiable.swift */,
@@ -542,6 +550,7 @@
 				4B1EBA261D34DB440013489E /* Trigger.swift in Sources */,
 				4B1F71111D36E08600B8014C /* ReactiveView.swift in Sources */,
 				4B2EAF111D324773006D9138 /* Bound.swift in Sources */,
+				4B6061B51DCDF5760037537F /* AttachmentPoint.swift in Sources */,
 				4B1EBA2A1D34DF680013489E /* NotificationWrapper.swift in Sources */,
 				4B4628BE1D38E2DA00CDBB9E /* KeyValueObserving.swift in Sources */,
 				4B6ECD7B1D4519A900050C9A /* ArrayBound.swift in Sources */,
@@ -561,6 +570,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B4628B91D38DE4B00CDBB9E /* NSObjectTests.swift in Sources */,
+				4B6061B81DCDF8280037537F /* AttachmentPointTests.swift in Sources */,
 				4B1DAC9E1D3586C1001B0DEF /* TriggerTests.swift in Sources */,
 				4B2EAF2E1D32844D006D9138 /* BindingContextTests.swift in Sources */,
 				4B2EAF261D32750A006D9138 /* ComputedBindingTests.swift in Sources */,
@@ -579,6 +589,7 @@
 				4B7985C81D3A31B50043A653 /* CallbackNotifiable.swift in Sources */,
 				4B7985C51D3A31B50043A653 /* BoundValue.swift in Sources */,
 				4B7985E51D3A32D00043A653 /* ReboundObject.swift in Sources */,
+				4B6061B61DCDF6C40037537F /* AttachmentPoint.swift in Sources */,
 				4B7985C01D3A31B50043A653 /* Binding.swift in Sources */,
 				4B7985CD1D3A31BC0043A653 /* CombinedLifetime.swift in Sources */,
 				4B7985C61D3A31B50043A653 /* WeakNotifiable.swift in Sources */,
@@ -602,6 +613,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B7985E31D3A31E40043A653 /* NSObjectTests.swift in Sources */,
+				4B6061B91DCDF8280037537F /* AttachmentPointTests.swift in Sources */,
 				4B7985E11D3A31E30043A653 /* BindingContextTests.swift in Sources */,
 				4B7985E01D3A31E30043A653 /* LifetimeTests.swift in Sources */,
 				4B7985DF1D3A31E30043A653 /* TriggerTests.swift in Sources */,

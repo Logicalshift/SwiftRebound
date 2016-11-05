@@ -43,6 +43,17 @@ open class Binding {
     open static func create<TBoundType>(_ value: [TBoundType]) -> ArrayBound<TBoundType> {
         return ArrayBound(value: value);
     }
+    
+    ///
+    /// Creates a binding that can be used as an attachment point for other bindings
+    ///
+    /// Attachments are bindings that track the value of a different binding
+    ///
+    open static func attachment<TBoundType>(_ defaultValue: TBoundType) -> AttachmentPoint<TBoundType> {
+        let defaultBinding = create(defaultValue);
+        
+        return AttachmentPoint(defaultAttachment: defaultBinding);
+    }
 
     ///
     /// Creates a computed binding
