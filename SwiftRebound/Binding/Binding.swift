@@ -47,8 +47,6 @@ public class Binding {
     ///
     /// Creates a binding that can be used as an attachment point for other bindings
     ///
-    /// Attachments are bindings that track the value of a different binding
-    ///
     public static func attachment<TBoundType>(_ defaultValue: TBoundType) -> AttachmentPoint<TBoundType> {
         let defaultBinding = create(defaultValue);
         
@@ -62,6 +60,22 @@ public class Binding {
     ///
     public static func attachment<TBoundType>(_ initialAttachment: Bound<TBoundType>) -> AttachmentPoint<TBoundType> {
         return AttachmentPoint(defaultAttachment: initialAttachment);
+    }
+    
+    ///
+    /// Creates a binding that can be used as an attachment point for other mutable bindings
+    ///
+    public static func attachment<TBoundType>(mutable: TBoundType) -> MutableAttachmentPoint<TBoundType> {
+        let defaultBinding = create(mutable);
+        
+        return Binding.attachment(mutable: defaultBinding);
+    }
+    
+    ///
+    /// Creates a binding that can be used as an attachment point for other mutable bindings
+    ///
+    public static func attachment<TBoundType>(mutable: MutableBound<TBoundType>) -> MutableAttachmentPoint<TBoundType> {
+        return MutableAttachmentPoint(defaultAttachment: mutable);
     }
 
     ///
