@@ -33,7 +33,7 @@ private class QueueBindingContext {
 ///
 /// The binding context is used to keep track of what bindings are being accessed
 ///
-open class BindingContext {
+public class BindingContext {
     ///
     /// The dependencies that have been created in this context
     ///
@@ -61,7 +61,7 @@ open class BindingContext {
     ///
     /// Retrieves the binding context for the current queue (or nil if there isn't one)
     ///
-    open static var current: BindingContext? {
+    public static var current: BindingContext? {
         get {
             return currentStorage?.context;
         }
@@ -70,7 +70,7 @@ open class BindingContext {
     ///
     /// Creates a new dispatch queue with a new binding context
     ///
-    open static func createQueueWithNewContext() -> DispatchQueue {
+    public static func createQueueWithNewContext() -> DispatchQueue {
         // Generate a new context
         let newContext  = BindingContext();
         
@@ -87,7 +87,7 @@ open class BindingContext {
     /// Creates a new binding context (which can be retrieved with current) and performs the specified action with
     /// it in effect
     ///
-    open static func withNewContext(_ action: () -> ()) {
+    public static func withNewContext(_ action: () -> ()) {
         if let existingStorage = BindingContext.currentStorage {
             // Generate a new context
             let oldContext  = existingStorage.context;

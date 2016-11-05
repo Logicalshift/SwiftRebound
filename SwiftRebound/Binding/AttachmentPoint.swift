@@ -14,7 +14,7 @@ import Foundation
 /// This is useful when a binding is defined in another object and needs to be passed around, or when the item that's bound to
 /// in a particular place needs to be changable.
 ///
-open class AttachmentPoint<TBoundType> : Bound<TBoundType> {
+public class AttachmentPoint<TBoundType> : Bound<TBoundType> {
     /// The binding that this is tracking
     fileprivate var _attachedTo: Bound<TBoundType>;
     
@@ -45,7 +45,7 @@ open class AttachmentPoint<TBoundType> : Bound<TBoundType> {
     ///
     /// Changes the binding that this is attached to
     ///
-    public func attachTo(_ newBinding: Bound<TBoundType>) {
+    public final func attachTo(_ newBinding: Bound<TBoundType>) {
         _observeAttachedChanged = nil;
         _attachedTo             = newBinding;
         watchAttachment();

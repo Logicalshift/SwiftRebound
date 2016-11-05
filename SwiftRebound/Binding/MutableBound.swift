@@ -12,7 +12,7 @@ import Foundation
 /// A mutable bound object is a variant of the standard bound object where the value can be set as well
 /// as retrieved
 ///
-open class MutableBound<TBoundType> : Bound<TBoundType> {
+public class MutableBound<TBoundType> : Bound<TBoundType> {
     ///
     /// Gets or sets the value attached to this bound value
     ///
