@@ -55,6 +55,14 @@ public final class AttachmentPoint<TBoundType> : Bound<TBoundType> {
 }
 
 ///
+/// What a mutable attachment point is attached to
+///
+fileprivate enum MutableAttachedTo<TBoundType> {
+    case Binding(MutableBound<TBoundType>)
+    case Attachment(MutableAttachmentPoint<TBoundType>)
+}
+
+///
 /// An attachment point is a type of binding that can be used to attach a different bound value.
 ///
 /// This is useful when a binding is defined in another object and needs to be passed around, or when the item that's bound to
@@ -62,13 +70,17 @@ public final class AttachmentPoint<TBoundType> : Bound<TBoundType> {
 ///
 public final class MutableAttachmentPoint<TBoundType> : Bound<TBoundType> {
     /// The binding that this is tracking
-    fileprivate var _attachedTo: MutableBound<TBoundType>;
+    fileprivate var _attachedTo: Bound<TBoundType>;
+    
+    /// What to use to update this binding
+    fileprivate var _mutableAttachedTo: MutableAttachedTo<TBoundType>;
     
     /// Lifetime of the observing the attached
     fileprivate var _observeAttachedChanged: Lifetime?;
     
     init(defaultAttachment: MutableBound<TBoundType>) {
-        _attachedTo = defaultAttachment;
+        _attachedTo         = defaultAttachment;
+        _mutableAttachedTo  = MutableAttachedTo.Binding(defaultAttachment);
         super.init();
         
         watchAttachment();
@@ -94,6 +106,19 @@ public final class MutableAttachmentPoint<TBoundType> : Bound<TBoundType> {
     public func attachTo(_ newBinding: MutableBound<TBoundType>) {
         _observeAttachedChanged = nil;
         _attachedTo             = newBinding;
+        _mutableAttachedTo      = MutableAttachedTo.Binding(newBinding);
+        watchAttachment();
+        
+        markAsChanged();
+    }
+    
+    ///
+    /// Changes the binding that this is attached to
+    ///
+    public func attachTo(_ newBinding: MutableAttachmentPoint<TBoundType>) {
+        _observeAttachedChanged = nil;
+        _attachedTo             = newBinding;
+        _mutableAttachedTo      = MutableAttachedTo.Attachment(newBinding);
         watchAttachment();
         
         markAsChanged();
@@ -108,7 +133,15 @@ public final class MutableAttachmentPoint<TBoundType> : Bound<TBoundType> {
             return resolve();
         }
         set (newValue) {
-            _attachedTo.value = newValue;
+            switch (_mutableAttachedTo) {
+            case MutableAttachedTo.Binding(let binding):
+                binding.value = newValue;
+                break;
+
+            case MutableAttachedTo.Attachment(let attachment):
+                attachment.value = newValue;
+                break;
+            }
         }
     }
 }

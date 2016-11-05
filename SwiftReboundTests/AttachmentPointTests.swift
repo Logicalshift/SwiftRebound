@@ -81,4 +81,34 @@ class AttachmentPointTests : XCTestCase {
         lifetime1.done();
         lifetime2.done();
     }
+    
+    func testObservesMutableAttachmentMultiLayer() {
+        let binding         = Binding.create(2);
+        let attachment      = Binding.attachment(mutable: binding);
+        let attachment2     = Binding.attachment(mutable: 0);
+        var observedAttach  = 0;
+        var observedBinding = 0;
+        
+        attachment2.attachTo(attachment);
+        
+        let lifetime1 = binding.observe { newValue in observedBinding = newValue; }
+        let lifetime2 = attachment2.observe { newValue in observedAttach = newValue; }
+        XCTAssertEqual(2, observedBinding);
+        XCTAssertEqual(2, observedAttach);
+        
+        attachment2.value = 3;
+        XCTAssertEqual(3, attachment.value);
+        XCTAssertEqual(3, binding.value);
+        XCTAssertEqual(3, observedBinding);
+        XCTAssertEqual(3, observedAttach);
+        
+        binding.value = 4;
+        XCTAssertEqual(4, attachment.value);
+        XCTAssertEqual(4, binding.value);
+        XCTAssertEqual(4, observedBinding);
+        XCTAssertEqual(4, observedAttach);
+        
+        lifetime1.done();
+        lifetime2.done();
+    }
 }
