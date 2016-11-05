@@ -52,7 +52,16 @@ public class Binding {
     public static func attachment<TBoundType>(_ defaultValue: TBoundType) -> AttachmentPoint<TBoundType> {
         let defaultBinding = create(defaultValue);
         
-        return AttachmentPoint(defaultAttachment: defaultBinding);
+        return Binding.attachment(defaultBinding);
+    }
+    
+    ///
+    /// Creates a binding that can be used as an attachment point for other bindings
+    ///
+    /// Attachments are bindings that track the value of a different binding
+    ///
+    public static func attachment<TBoundType>(_ initialAttachment: Bound<TBoundType>) -> AttachmentPoint<TBoundType> {
+        return AttachmentPoint(defaultAttachment: initialAttachment);
     }
 
     ///
