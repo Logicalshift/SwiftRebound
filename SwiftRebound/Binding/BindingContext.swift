@@ -8,8 +8,7 @@
 
 import Foundation
 
-private let _contextSpecificNameString  = "io.logicalshift.SwiftRebound.BindingContext";
-private let _contextSpecificName        = DispatchSpecificKey<QueueBindingContext>();
+private let _contextSpecificName = DispatchSpecificKey<QueueBindingContext>();
 
 ///
 /// Binding context queue to use if the current queue is not already a binding queue
