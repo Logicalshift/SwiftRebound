@@ -74,4 +74,13 @@ public final class CombinedChangeable : Changeable {
         
         return true;
     }
+    
+    ///
+    /// True if there are no elements in the binding
+    ///
+    public var isEmpty: Bool {
+        get {
+            return _combined.isEmpty;
+        }
+    }
 }

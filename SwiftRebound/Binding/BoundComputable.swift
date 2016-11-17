@@ -62,6 +62,12 @@ internal final class BoundComputable<TBoundType> : Bound<TBoundType> {
                 let newDependencies         = currentContext.dependencies;
                 self._dependencies          = newDependencies;
                 self._dependencyLifetime    = newDependencies.whenChangedNotify(WeakNotifiable(target: self));
+                
+                #if DEBUG
+                if newDependencies.isEmpty {
+                    NSLog("Warning: computed value is bound to nothing (will never trigger an update)");
+                }
+                #endif
 
                 // Start tracking a new dependency set in case ending the lifetime creates accidental bindings
                 currentContext.resetDependencies();
