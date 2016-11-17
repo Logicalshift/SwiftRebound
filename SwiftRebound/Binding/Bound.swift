@@ -8,6 +8,9 @@
 
 import Foundation
 
+/// Queue used to serialize updates to the binding notifications
+fileprivate let _bindingUpdateQueue = DispatchQueue(label: "io.logicalshift.bindingUpdate");
+
 ///
 /// Protocol implemented by objects that can be notified that they need to recalculate themselves
 ///
@@ -151,14 +154,18 @@ open class Bound<TBoundType> : Changeable, Notifiable {
     /// Calls a function any time this value is marked as changed
     ///
     public final func whenChangedNotify(_ target: Notifiable) -> Lifetime {
-        if _actionsOnChanged.count == 0 {
-            _isBound?.value = true;
-            beginObserving();
-        }
-        
         // Record this action so we can re-run it when the value changes
         let wrapper = NotificationWrapper(target: target);
-        _actionsOnChanged.append(wrapper);
+        let isFirstBinding: Bool = _bindingUpdateQueue.sync {
+            _actionsOnChanged.append(wrapper);
+            return _actionsOnChanged.count == 1;
+        }
+        
+        // Perform actions if this is the first binding attached to this object
+        if isFirstBinding {
+            updateIsBound();
+            beginObserving();
+        }
         
         // Stop observing the action once the lifetime expires
         return CallbackLifetime(done: {
@@ -224,22 +231,39 @@ open class Bound<TBoundType> : Changeable, Notifiable {
     }
     
     ///
+    /// Updates the isBound value so it's current
+    ///
+    fileprivate func updateIsBound() {
+        if let isBound = _isBound {
+            isBound.value = _bindingUpdateQueue.sync { _actionsOnChanged.count > 0 };
+        }
+    }
+    
+    ///
     /// Check to see if all notifications are finished with and call doneObserving() if they are
     ///
     fileprivate func maybeDoneObserving() {
         // See if all the notifiers are finished with
         var allDone = true;
-        for notifier in _actionsOnChanged {
-            if notifier.target != nil {
-                allDone = false;
-                break;
+        
+        // Check if we're done
+        _bindingUpdateQueue.sync {
+            for notifier in _actionsOnChanged {
+                if notifier.target != nil {
+                    allDone = false;
+                    break;
+                }
+            }
+            
+            // Clear out eagerly if all notifiers are finished with
+            if allDone {
+                _actionsOnChanged = [];
             }
         }
         
-        // Clear out eagerly if all notifiers are finished with
+        // Notify if we're finished
         if allDone {
-            _actionsOnChanged = [];
-            _isBound?.value = false;
+            updateIsBound();
             doneObserving();
         }
     }
