@@ -76,8 +76,10 @@ open class Bound<TBoundType> : Changeable, Notifiable {
     internal final func notifyChange() {
         var needToTidy = false;
         
+        let actions = _bindingUpdateQueue.sync { _actionsOnChanged };
+        
         // Run any actions that result from this value being updated
-        for notificationWrapper in _actionsOnChanged {
+        for notificationWrapper in actions {
             if let action = notificationWrapper.target {
                 action.markAsChanged();
             } else {
@@ -86,9 +88,7 @@ open class Bound<TBoundType> : Changeable, Notifiable {
         }
         
         if needToTidy {
-            _actionsOnChanged = _actionsOnChanged.filter { notificationWrapper in
-                return notificationWrapper.target != nil
-            };
+            maybeDoneObserving();
         }
     }
     
