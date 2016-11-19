@@ -57,6 +57,13 @@ internal class Trigger : Changeable, Notifiable, Lifetime {
                 let newDependencies         = currentContext.dependencies;
                 self._dependencies          = newDependencies;
                 self._dependencyLifetime    = newDependencies.whenChangedNotify(WeakNotifiable(target: self));
+                
+                #if DEBUG
+                if newDependencies.isEmpty {
+                    // There's more legitimate reasons for creating triggers with no dependencies than computables so this warning is not necessarily serious
+                    NSLog("Warning: trigger with no dependencies");
+                }
+                #endif
 
                 currentContext.resetDependencies();
                 lastLifetime?.done();
