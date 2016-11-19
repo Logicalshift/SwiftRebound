@@ -24,6 +24,9 @@ open class ReactiveView : UIView {
     /// Lifetime for the trigger
     fileprivate var _layoutSubviewsLifetime: Lifetime? = nil;
     
+    /// Whether or not a draw or a layout is pending for this view
+    fileprivate var (_layoutPending, _drawPending) = (false, false);
+    
     /// Queue used for synchronising drawing requests
     fileprivate let _queue = DispatchQueue(label: "io.logicalshift.ReactiveView");
 
@@ -39,9 +42,14 @@ open class ReactiveView : UIView {
                     // The caller should run on the queue and set the draw context
                     self.drawReactive();
                 }, causeUpdate: { [unowned self] in
-                    // Perform the display request async on the queue (we won't queue while we're already drawing)
-                    self._queue.async {
-                        DispatchQueue.main.sync { self.setNeedsDisplay(); }
+                    // Perform the display request on the main queue
+                    MainQueue.perform {
+                        self._queue.sync {
+                            if !self._drawPending {
+                                self._drawPending = true;
+                                self.setNeedsDisplay();
+                            }
+                        }
                     }
                 });
                 
@@ -65,9 +73,14 @@ open class ReactiveView : UIView {
                     // The caller should run on the queue
                     self.layoutSubviewsReactive();
                     }, causeUpdate: { [unowned self] in
-                        // Perform the layout request async on the queue (we won't queue while we're already laying out)
-                        self._queue.async {
-                            DispatchQueue.main.sync { self.setNeedsLayout() };
+                        // Perform the layout request on the main queue
+                        MainQueue.perform {
+                            self._queue.sync {
+                                if !self._layoutPending {
+                                    self._layoutPending = true;
+                                    self.setNeedsLayout();
+                                }
+                            }
                         }
                 });
                 
@@ -83,6 +96,7 @@ open class ReactiveView : UIView {
         let trigger = getDrawTrigger();
         
         _queue.sync {
+            _drawPending = false;
             trigger();
         }
     }
@@ -98,6 +112,7 @@ open class ReactiveView : UIView {
         let trigger = getLayoutTrigger();
         
         _queue.sync {
+            _layoutPending = false;
             trigger();
         }
     }

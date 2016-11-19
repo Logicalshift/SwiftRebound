@@ -52,14 +52,12 @@ open class ReactiveLayer : CALayer {
                 // The caller should run on the queue and set the draw context
                 self.drawReactive(in: self._drawCtx!);
                 }, causeUpdate: { [unowned self] in
-                    // Perform the display request async on the queue (we won't queue while we're already drawing)
-                    self._queue.async {
-                        MainQueue.perform {
-                            self._queue.sync {
-                                if !self._drawPending {
-                                    self._drawPending = true;
-                                    self.setNeedsDisplay();
-                                }
+                    // Perform the display request on the main queue
+                    MainQueue.perform {
+                        self._queue.sync {
+                            if !self._drawPending {
+                                self._drawPending = true;
+                                self.setNeedsDisplay();
                             }
                         }
                     }
@@ -83,7 +81,7 @@ open class ReactiveLayer : CALayer {
                 // The caller should run on the queue
                 self.layoutSublayersReactive();
                 }, causeUpdate: { [unowned self] in
-                    // Perform the layout request async on the queue (we won't queue while we're already laying out)
+                    // Perform the layout request on the main queue
                     MainQueue.perform {
                         self._queue.sync {
                             if !self._layoutPending {
