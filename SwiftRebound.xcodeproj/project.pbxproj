@@ -36,6 +36,8 @@
 		4B4628C01D38EB7100CDBB9E /* KvoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4628BF1D38EB7100CDBB9E /* KvoTests.swift */; };
 		4B46C93C1DDBA4B10079FBE5 /* ReactiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B46C93B1DDBA4B10079FBE5 /* ReactiveView.swift */; };
 		4B4A51941D3F690F005D031B /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF862271D393857008B20F8 /* DemoView.swift */; };
+		4B53D8CA1DE0F1B300517D3D /* MainQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B53D8C91DE0F1B300517D3D /* MainQueue.swift */; };
+		4B53D8CB1DE0F1B300517D3D /* MainQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B53D8C91DE0F1B300517D3D /* MainQueue.swift */; };
 		4B58CD481DCBE0C4006FC585 /* ReactiveLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B58CD471DCBE0C4006FC585 /* ReactiveLayer.swift */; };
 		4B58CD491DCBE0C9006FC585 /* ReactiveLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B58CD471DCBE0C4006FC585 /* ReactiveLayer.swift */; };
 		4B6061B51DCDF5760037537F /* AttachmentPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6061B41DCDF5760037537F /* AttachmentPoint.swift */; };
@@ -127,6 +129,7 @@
 		4B4628BD1D38E2DA00CDBB9E /* KeyValueObserving.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyValueObserving.swift; sourceTree = "<group>"; };
 		4B4628BF1D38EB7100CDBB9E /* KvoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KvoTests.swift; sourceTree = "<group>"; };
 		4B46C93B1DDBA4B10079FBE5 /* ReactiveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactiveView.swift; sourceTree = "<group>"; };
+		4B53D8C91DE0F1B300517D3D /* MainQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainQueue.swift; sourceTree = "<group>"; };
 		4B58CD471DCBE0C4006FC585 /* ReactiveLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactiveLayer.swift; sourceTree = "<group>"; };
 		4B6061B41DCDF5760037537F /* AttachmentPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachmentPoint.swift; sourceTree = "<group>"; };
 		4B6061B71DCDF8280037537F /* AttachmentPointTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachmentPointTests.swift; sourceTree = "<group>"; };
@@ -288,6 +291,7 @@
 			children = (
 				4B4628BB1D38E18A00CDBB9E /* ReboundObject.swift */,
 				4B4628BD1D38E2DA00CDBB9E /* KeyValueObserving.swift */,
+				4B53D8C91DE0F1B300517D3D /* MainQueue.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -561,6 +565,7 @@
 				4B1EBA241D34D4170013489E /* CombinedChangeable.swift in Sources */,
 				4B2EAF131D325066006D9138 /* MutableBound.swift in Sources */,
 				4B58CD481DCBE0C4006FC585 /* ReactiveLayer.swift in Sources */,
+				4B53D8CA1DE0F1B300517D3D /* MainQueue.swift in Sources */,
 				4B2EAF1E1D325E08006D9138 /* CallbackLifetime.swift in Sources */,
 				4B1EBA281D34DF490013489E /* WeakNotifiable.swift in Sources */,
 				4B1EBA221D34D0220013489E /* CombinedLifetime.swift in Sources */,
@@ -605,6 +610,7 @@
 				4B7985CA1D3A31B50043A653 /* Trigger.swift in Sources */,
 				4B7985C71D3A31B50043A653 /* BoundComputable.swift in Sources */,
 				4B7985CC1D3A31BC0043A653 /* CallbackLifetime.swift in Sources */,
+				4B53D8CB1DE0F1B300517D3D /* MainQueue.swift in Sources */,
 				4B7985C21D3A31B50043A653 /* NotificationWrapper.swift in Sources */,
 				4B7985C31D3A31B50043A653 /* Bound.swift in Sources */,
 				4B7985C11D3A31B50043A653 /* BindingContext.swift in Sources */,
