@@ -29,11 +29,11 @@ open class ReactiveLayer : CALayer {
     /// Trigger for the layoutReactive() call
     fileprivate var _layoutSublayersTrigger: Optional<() -> ()> = nil;
     
+    /// Whether or not a draw or a layout is pending for this layer
+    fileprivate var (_layoutPending, _drawPending) = (false, false);
+    
     /// Lifetime for the trigger
     fileprivate var _layoutSublayersLifetime: Lifetime? = nil;
-    
-    /// Tracks whether or not we're going to redraw
-    fileprivate var _isDrawing = false;
     
     /// Queue used for synchronising drawing requests
     fileprivate let _queue = DispatchQueue(label: "io.logicalshift.ReactiveLayer");
@@ -54,7 +54,14 @@ open class ReactiveLayer : CALayer {
                 }, causeUpdate: { [unowned self] in
                     // Perform the display request async on the queue (we won't queue while we're already drawing)
                     self._queue.async {
-                        DispatchQueue.main.sync { self.setNeedsDisplay(); }
+                        MainQueue.perform {
+                            self._queue.sync {
+                                if !self._drawPending {
+                                    self._drawPending = true;
+                                    self.setNeedsDisplay();
+                                }
+                            }
+                        }
                     }
             });
             
@@ -77,8 +84,13 @@ open class ReactiveLayer : CALayer {
                 self.layoutSublayersReactive();
                 }, causeUpdate: { [unowned self] in
                     // Perform the layout request async on the queue (we won't queue while we're already laying out)
-                    self._queue.async {
-                        DispatchQueue.main.sync { self.setNeedsLayout() };
+                    MainQueue.perform {
+                        self._queue.sync {
+                            if !self._layoutPending {
+                                self._layoutPending = true;
+                                self.setNeedsLayout();
+                            }
+                        }
                     }
             });
             
@@ -93,6 +105,7 @@ open class ReactiveLayer : CALayer {
         let trigger = getDrawTrigger();
         
         _queue.sync {
+            self._drawPending = false;
             self._drawCtx = ctx;
             trigger();
             self._drawCtx = nil;
@@ -103,6 +116,7 @@ open class ReactiveLayer : CALayer {
         let trigger = getLayoutTrigger();
         
         _queue.sync {
+            self._layoutPending = false;
             trigger();
         }
     }
