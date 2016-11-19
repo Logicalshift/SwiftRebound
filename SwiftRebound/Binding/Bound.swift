@@ -279,8 +279,9 @@ open class Bound<TBoundType> : Changeable, Notifiable {
             if let result = _isBound {
                 return result;
             } else {
-                let result = Binding.create(_actionsOnChanged.count > 0);
+                let result = Binding.create(false);
                 _isBound = result;
+                updateIsBound();
                 return result;
             }
         }
