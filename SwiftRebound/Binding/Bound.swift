@@ -8,8 +8,14 @@
 
 import Foundation
 
-/// Queue used to serialize updates to the binding notifications
-fileprivate let _bindingUpdateQueue = DispatchQueue(label: "io.logicalshift.bindingUpdate");
+///
+/// Semaphore used to protect this value against races when being updated on multiple queues
+///
+/// We don't hold the semaphore for long periods of time and bindings are not supposed to be used for bulk data storage (so
+/// very high performance is not a concern) so we share a single semaphore between all bindings instead of having one per
+/// binding.
+///
+fileprivate let _bindingUpdateSemaphore = DispatchSemaphore(value: 1);
 
 ///
 /// Protocol implemented by objects that can be notified that they need to recalculate themselves
@@ -76,7 +82,10 @@ open class Bound<TBoundType> : Changeable, Notifiable {
     internal final func notifyChange() {
         var needToTidy = false;
         
-        let actions = _bindingUpdateQueue.sync { _actionsOnChanged };
+        // Synchronise access to the actions
+        _bindingUpdateSemaphore.wait();
+        let actions = _actionsOnChanged;
+        _bindingUpdateSemaphore.signal();
         
         // Run any actions that result from this value being updated
         for notificationWrapper in actions {
@@ -156,10 +165,11 @@ open class Bound<TBoundType> : Changeable, Notifiable {
     public final func whenChangedNotify(_ target: Notifiable) -> Lifetime {
         // Record this action so we can re-run it when the value changes
         let wrapper = NotificationWrapper(target: target);
-        let isFirstBinding: Bool = _bindingUpdateQueue.sync {
-            _actionsOnChanged.append(wrapper);
-            return _actionsOnChanged.count == 1;
-        }
+        
+        _bindingUpdateSemaphore.wait();
+        _actionsOnChanged.append(wrapper);
+        let isFirstBinding = _actionsOnChanged.count == 1;
+        _bindingUpdateSemaphore.signal();
         
         // Perform actions if this is the first binding attached to this object
         if isFirstBinding {
@@ -235,7 +245,11 @@ open class Bound<TBoundType> : Changeable, Notifiable {
     ///
     fileprivate func updateIsBound() {
         if let isBound = _isBound {
-            isBound.value = _bindingUpdateQueue.sync { _actionsOnChanged.count > 0 };
+            _bindingUpdateSemaphore.wait();
+            let isNowBound = _actionsOnChanged.count > 0;
+            _bindingUpdateSemaphore.signal();
+            
+            isBound.value = isNowBound;
         }
     }
     
@@ -247,19 +261,21 @@ open class Bound<TBoundType> : Changeable, Notifiable {
         var allDone = true;
         
         // Check if we're done
-        _bindingUpdateQueue.sync {
-            for notifier in _actionsOnChanged {
-                if notifier.target != nil {
-                    allDone = false;
-                    break;
-                }
-            }
-            
-            // Clear out eagerly if all notifiers are finished with
-            if allDone {
-                _actionsOnChanged = [];
+        _bindingUpdateSemaphore.wait();
+
+        for notifier in _actionsOnChanged {
+            if notifier.target != nil {
+                allDone = false;
+                break;
             }
         }
+        
+        // Clear out eagerly if all notifiers are finished with
+        if allDone {
+            _actionsOnChanged = [];
+        }
+        
+        _bindingUpdateSemaphore.signal();
         
         // Notify if we're finished
         if allDone {
