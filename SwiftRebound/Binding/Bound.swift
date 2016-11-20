@@ -15,7 +15,7 @@ import Foundation
 /// very high performance is not a concern) so we share a single semaphore between all bindings instead of having one per
 /// binding.
 ///
-fileprivate let _bindingUpdateSemaphore = DispatchSemaphore(value: 1);
+internal let _bindingUpdateSemaphore = DispatchSemaphore(value: 1);
 
 ///
 /// Protocol implemented by objects that can be notified that they need to recalculate themselves
