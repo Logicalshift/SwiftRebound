@@ -107,9 +107,23 @@ open class Bound<TBoundType> : Changeable, Notifiable {
     public final func rebind() -> TBoundType {
         // Update the current value
         let currentValue    = computeValue();
+        
+        _bindingUpdateSemaphore.wait();
         _currentValue       = currentValue;
+        _bindingUpdateSemaphore.signal();
         
         return currentValue;
+    }
+    
+    ///
+    /// Retrieves the current vaue of this bound value, or nil if it is currently unresolved
+    ///
+    @inline(__always)
+    public final func getCurrentValue() -> TBoundType? {
+        _bindingUpdateSemaphore.wait();
+        let result = _currentValue;
+        _bindingUpdateSemaphore.signal();
+        return result;
     }
     
     ///
@@ -121,20 +135,11 @@ open class Bound<TBoundType> : Changeable, Notifiable {
         // Resolving a binding creates a dependency in the current context
         BindingContext.current?.addDependency(self);
         
-        if !needsUpdate() {
-            // If the current value is not dirty (ie, we've got it cached), then use that
-            return _currentValue!;
+        if let currentValue = getCurrentValue() {
+            return currentValue;
         } else {
-            // If the value is dirty, then compute it before returning it
             return rebind();
         }
-    }
-    
-    ///
-    /// Returns true if the cached value needs updating
-    ///
-    open func needsUpdate() -> Bool {
-        return _currentValue == nil;
     }
     
     ///
@@ -143,9 +148,16 @@ open class Bound<TBoundType> : Changeable, Notifiable {
     /// The next time the value is resolved, it will register as a change and the observers will be called.
     ///
     open func markAsChanged() {
+        // Notify a change if we're currently resolved (otherwise, assume that the change is still pending and we don't need to notify again)
+        _bindingUpdateSemaphore.wait();
+        
         if _currentValue != nil {
             _currentValue = nil;
+            _bindingUpdateSemaphore.signal();
+            
             notifyChange();
+        } else {
+            _bindingUpdateSemaphore.signal();
         }
     }
     
@@ -249,6 +261,7 @@ open class Bound<TBoundType> : Changeable, Notifiable {
             let isNowBound = _actionsOnChanged.count > 0;
             _bindingUpdateSemaphore.signal();
             
+            // TODO: really need to set the value within the semaphore
             isBound.value = isNowBound;
         }
     }
