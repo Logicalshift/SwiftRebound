@@ -116,6 +116,13 @@ open class Bound<TBoundType> : Changeable, Notifiable {
     }
     
     ///
+    /// Returns true if the current value needs updating
+    ///
+    open func needsUpdate() -> Bool {
+        return getCurrentValue() == nil;
+    }
+    
+    ///
     /// Retrieves the current vaue of this bound value, or nil if it is currently unresolved
     ///
     @inline(__always)
@@ -135,6 +142,13 @@ open class Bound<TBoundType> : Changeable, Notifiable {
         // Resolving a binding creates a dependency in the current context
         BindingContext.current?.addDependency(self);
         
+        // Always update if this is flagged for an update
+        if needsUpdate() {
+            return rebind();
+        }
+        
+        // Also update if there is no current value
+        // (this can occasionally happen due to a race condition, or because of the way needsUpdate is implemented in a subclass)
         if let currentValue = getCurrentValue() {
             return currentValue;
         } else {
