@@ -292,11 +292,20 @@ open class Bound<TBoundType> : Changeable, Notifiable {
     ///
     open var isBound: Bound<Bool> {
         get {
+            _bindingUpdateSemaphore.wait();
+            
             if let result = _isBound {
+                // Use the existing isBound value
+                _bindingUpdateSemaphore.signal();
+                
                 return result;
             } else {
+                // Create a new isBound value
                 let result = Binding.create(false);
                 _isBound = result;
+                
+                _bindingUpdateSemaphore.signal();
+                
                 updateIsBound();
                 return result;
             }
