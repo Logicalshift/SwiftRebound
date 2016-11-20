@@ -9,6 +9,11 @@
 import Foundation
 
 ///
+/// Semaphore used to ensure that only one thread can update the dependencies for a computable
+///
+private let _computableSemaphore = DispatchSemaphore(value: 1);
+
+///
 /// Represents a bound item whose value is computed by a function
 ///
 /// If the function resolves other bindable methods, then those will be automatically added as dependencies -
@@ -40,8 +45,10 @@ internal final class BoundComputable<TBoundType> : Bound<TBoundType> {
         var result: TBoundType? = nil;
         
         // Input for the computation
+        _computableSemaphore.wait();
         let compute         = _compute;
         let oldDependencies = _dependencies;
+        _computableSemaphore.signal();
 
         BindingContext.withNewContext {
             let currentContext = BindingContext.current!;
@@ -55,6 +62,9 @@ internal final class BoundComputable<TBoundType> : Bound<TBoundType> {
             result = compute();
             
             if currentContext.dependenciesDiffer {
+                _computableSemaphore.wait();
+                defer { _computableSemaphore.signal(); }
+                
                 // Clear existing dependencies
                 let lastLifetime = self._dependencyLifetime;
 
@@ -81,9 +91,13 @@ internal final class BoundComputable<TBoundType> : Bound<TBoundType> {
     }
     
     override func doneObserving() {
+        _computableSemaphore.wait();
+        
         _dependencyLifetime?.done();
         _dependencyLifetime = nil;
         _dependencies       = nil;
+        
+        _computableSemaphore.signal();
         
         markAsChanged();
     }
