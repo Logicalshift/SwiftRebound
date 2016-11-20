@@ -15,6 +15,9 @@ import Foundation
 /// very high performance is not a concern) so we share a single semaphore between all bindings instead of having one per
 /// binding.
 ///
+/// This has to be public otherwise the Swift optimiser decides we don't need this variable and removes it. Then it complains
+/// it's not present :-/
+///
 public let _bindingUpdateSemaphore = DispatchSemaphore(value: 1);
 
 ///
