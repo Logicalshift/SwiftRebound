@@ -120,11 +120,11 @@ open class ReactiveView : NSView {
         let pressure    = event.pressure;
         
         switch (event.type) {
-        case NSEventType.leftMouseDown:     leftDown = true; break;
-        case NSEventType.leftMouseUp:       leftDown = false; break;
-        case NSEventType.rightMouseDown:    rightDown = true; break;
-        case NSEventType.rightMouseUp:      rightDown = false; break;
-        default:                            break;
+        case .leftMouseDown:    leftDown = true; break;
+        case .leftMouseUp:      leftDown = false; break;
+        case .rightMouseDown:   rightDown = true; break;
+        case .rightMouseUp:     rightDown = false; break;
+        default:                break;
         }
         
         let anyDown = leftDown || rightDown;
@@ -256,9 +256,9 @@ open class ReactiveView : NSView {
         
         _trackingObserverLifetime = trackingBounds.observe({ [unowned self] (bounds, needsTracking) in
             switch needsTracking {
-            case NeedsTracking.keepTracking: break;
+            case .keepTracking: break;
                 
-            case NeedsTracking.needTracking:
+            case .needTracking:
                 if let tracking = tracking { self.removeTrackingArea(tracking); }
 
                 let newTracking = NSTrackingArea(rect: bounds, options: NSTrackingAreaOptions.mouseMoved.union(NSTrackingAreaOptions.mouseEnteredAndExited).union(NSTrackingAreaOptions.activeInKeyWindow), owner: self, userInfo: nil);
@@ -266,7 +266,7 @@ open class ReactiveView : NSView {
                 self.addTrackingArea(newTracking);
                 break;
                 
-            case NeedsTracking.trackEnterExitOnly:
+            case .trackEnterExitOnly:
                 if let tracking = tracking { self.removeTrackingArea(tracking); }
                 
                 let newTracking = NSTrackingArea(rect: bounds, options: NSTrackingAreaOptions.mouseEnteredAndExited.union(NSTrackingAreaOptions.activeInKeyWindow), owner: self, userInfo: nil);
@@ -274,7 +274,7 @@ open class ReactiveView : NSView {
                 self.addTrackingArea(newTracking);
                 break;
                 
-            case NeedsTracking.noTracking:
+            case .noTracking:
                 if let realTracking = tracking {
                     self.removeTrackingArea(realTracking);
                     tracking = nil;

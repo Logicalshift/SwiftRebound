@@ -134,11 +134,11 @@ public final class MutableAttachmentPoint<TBoundType> : Bound<TBoundType> {
         }
         set (newValue) {
             switch (_mutableAttachedTo) {
-            case MutableAttachedTo.Binding(let binding):
+            case .Binding(let binding):
                 binding.value = newValue;
                 break;
 
-            case MutableAttachedTo.Attachment(let attachment):
+            case .Attachment(let attachment):
                 attachment.value = newValue;
                 break;
             }
