@@ -93,11 +93,13 @@ internal final class BoundComputable<TBoundType> : Bound<TBoundType> {
     override func doneObserving() {
         _computableSemaphore.wait();
         
-        _dependencyLifetime?.done();
+        let finishedLifetime = _dependencyLifetime;
         _dependencyLifetime = nil;
         _dependencies       = nil;
         
         _computableSemaphore.signal();
+        
+        finishedLifetime?.done();
         
         markAsChanged();
     }
