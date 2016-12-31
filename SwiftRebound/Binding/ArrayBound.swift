@@ -13,13 +13,13 @@ import Foundation
 ///
 public struct ArrayReplacement<TBoundType> {
     /// The range of indexes that have been replaced (start, length)
-    let range: CountableRange<Int>;
+    public let range: CountableRange<Int>;
     
     /// The data that is being replaced
-    let replacedData: [TBoundType];
+    public let replacedData: [TBoundType];
     
     /// The replacement data for the range
-    let newData: [TBoundType];
+    public let newData: [TBoundType];
 }
 
 ///
