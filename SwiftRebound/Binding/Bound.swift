@@ -128,7 +128,6 @@ open class Bound<TBoundType> : Changeable, Notifiable {
     ///
     /// Retrieves the current vaue of this bound value, or nil if it is currently unresolved
     ///
-    @inline(__always)
     public final func getCurrentValue() -> TBoundType? {
         _bindingUpdateSemaphore.wait();
         let result = _currentValue;

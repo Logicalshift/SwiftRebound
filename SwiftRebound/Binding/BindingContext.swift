@@ -216,7 +216,6 @@ public class BindingContext {
     /// The changeable objects that have been added as dependencies for this context
     ///
     public final var dependencies: CombinedChangeable {
-        @inline(__always)
         get {
             return _dependencies;
         }
